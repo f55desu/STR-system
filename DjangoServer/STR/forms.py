@@ -1,17 +1,17 @@
-from .models import TestTask
+from .models import Ticket
 from django.forms import ModelForm, TextInput, Textarea
 
-class TestTaskForm(ModelForm):
+class TicketForm(ModelForm):
     class Meta:
-        model = TestTask
-        fields = ["title", "task"]
+        model = Ticket
+        fields = ["name", "description"]
         widgets = {
-            "title": TextInput(attrs={
+            "name": TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Введите название'
+                'placeholder': 'Введите название учебного предмета'
             }),
-            "task": Textarea(attrs={
+            "description": Textarea(attrs={
                 'class': 'form-control',
-                'placeholder': 'Введите описание'
+                'placeholder': 'Введите описание учебного предмета'
             }),
         }

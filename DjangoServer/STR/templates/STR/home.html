@@ -6,11 +6,11 @@
 
 {% block content %}
     <h1>Home</h1>
-    {% if tasks %}
-        {% for el in tasks %}
+    {% if tickets %}
+        {% for el in tickets %}
             <div class="alert alert-warning mt-2">
-                <h3>{{ el.title }}</h3>
-                <p>{{ el.task }}</p>
+                <h3>{{ el.name }}</h3>
+                <p>{{ el.description }}</p>
             </div>
         {% endfor %}
     {% else %}

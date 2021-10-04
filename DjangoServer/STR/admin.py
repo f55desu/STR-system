@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import TestTask
+from .models import Ticket
 
 # Register your models here.
-admin.site.register(TestTask)
+admin.site.register(Ticket)
