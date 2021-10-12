@@ -9,8 +9,8 @@ def home(request):
     return render(request, 'STR/home.html', {'title': 'Главная страница сайта', 'tickets': tickets})
     # return HttpResponse("<h4>Hello</h4>")
 
-def about(request):
-    return render(request, 'STR/about.html')
+def rating(request):
+    return render(request, 'STR/rating.html')
     # return render("<h4>About</h4>")
 
 def registration(request):
