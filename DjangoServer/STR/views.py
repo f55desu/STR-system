@@ -1,12 +1,12 @@
 from django.shortcuts import redirect, render
-from STR.forms import TicketForm
+from STR.forms import RegistrationForm
 # from django.http import HttpResponse
-from .models import Ticket
+from .models import Student
 
 # Create your views here.
 def home(request):
-    tickets = Ticket.objects.order_by('-id')
-    return render(request, 'STR/home.html', {'title': 'Главная страница сайта', 'tickets': tickets})
+    students = Student.objects.order_by('-id')
+    return render(request, 'STR/home.html', {'title': 'Главная страница сайта', 'tickets': students})
     # return HttpResponse("<h4>Hello</h4>")
 
 def rating(request):
@@ -16,14 +16,14 @@ def rating(request):
 def registration(request):
     error = ''
     if request.method == 'POST':
-        form = TicketForm(request.POST)
+        form = RegistrationForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect('home')
         else:
             error = 'Форма была неверной'
 
-    form = TicketForm()
+    form = RegistrationForm()
     context = {
         'form': form,
         'error': error

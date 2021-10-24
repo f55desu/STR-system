@@ -5,12 +5,15 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Создать тикет</h1>
+    <h1>Регистрация</h1>
     <form method="post">
         {% csrf_token %}
         {{ form.name }}<br>
-        {{ form.description }}<br>
-        <button type="submit" class="btn btn-success">Добавить</button>
+        {{ form.surname }}<br>
+        {{ form.lastname }}<br>
+        {{ form.login }}<br>
+        {{ form.password }}<br>
+        <button type="submit" class="btn btn-success">Зарегистрироваться</button>
         <span>{{ error }}</span>
     </form>
 {% endblock %}
