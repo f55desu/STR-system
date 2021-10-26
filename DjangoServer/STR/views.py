@@ -1,11 +1,12 @@
 from django.shortcuts import redirect, render
 from STR.forms import RegistrationForm, LoginForm
 # from django.http import HttpResponse
+import sqlite3
 from django.contrib import auth
 from .models import Teacher
 
-# con = sqlite3.connect("db.sqlite3")  # подключение к базе данных
-# curs = con.cursor()
+con = sqlite3.connect("db.sqlite3")  # подключение к базе данных
+curs = con.cursor()
 
 # Create your views here.
 def home(request):
@@ -27,18 +28,19 @@ def registration(request):
     print(f'POST = {request}')
     error = ''
     if request.method == 'POST' and 'login_button' in request.POST:
-        form_login = LoginForm(request.POST)
-        if form_login.is_valid():
+        pass
+        #form_login = LoginForm(request.POST)
+        # if form_login.is_valid():
+        #     login = request.POST['login']
+        #     password = request.POST['password']
             
-            login = request.POST['login']
-            password = request.POST['password']
-            
-            user = auth.authenticate(username=login, password=password)
-            if user is not None and user.is_active:
-                auth.login(request, user)           
-                return redirect('home')
-            else:
-                error = 'Ошибка!'
+        #     curs.execute(f"SELECT * FROM STR_student WHERE login='{login}' AND password='{password}'")
+        #     list=curs.fetchall()
+
+        #     if list[0][0] == login and list[0][1]:           
+        #          return redirect('home')
+        #     else:
+        #          error = 'Ошибка!'
     if request.method == 'POST' and 'reg_button' in request.POST:    
         form_reg = RegistrationForm(request.POST)
         if form_reg.is_valid():
