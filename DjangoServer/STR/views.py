@@ -1,31 +1,61 @@
 from django.shortcuts import redirect, render
-from STR.forms import RegistrationForm
+from STR.forms import RegistrationForm, LoginForm
 # from django.http import HttpResponse
-from .models import Student
+from django.contrib import auth
+from .models import Teacher
+
+# con = sqlite3.connect("db.sqlite3")  # подключение к базе данных
+# curs = con.cursor()
 
 # Create your views here.
 def home(request):
-    students = Student.objects.order_by('-id')
-    return render(request, 'STR/home.html', {'title': 'Главная страница сайта', 'tickets': students})
+    # if request.user.is_authenticated():
+    teachers = Teacher.objects.order_by('-id')
+    return render(request, 'STR/home.html', {'title': 'Главная страница сайта', 'teachers': teachers})
+    # else:
+    #     pass
     # return HttpResponse("<h4>Hello</h4>")
 
 def rating(request):
+    # if request.user.is_authenticated():
     return render(request, 'STR/rating.html')
+    # else:
+    #     pass
     # return render("<h4>About</h4>")
 
 def registration(request):
+    print(f'POST = {request}')
     error = ''
-    if request.method == 'POST':
-        form = RegistrationForm(request.POST)
-        if form.is_valid():
-            form.save()
+    if request.method == 'POST' and 'login_button' in request.POST:
+        form_login = LoginForm(request.POST)
+        if form_login.is_valid():
+            
+            login = request.POST['login']
+            password = request.POST['password']
+            
+            user = auth.authenticate(username=login, password=password)
+            if user is not None and user.is_active:
+                auth.login(request, user)           
+                return redirect('home')
+            else:
+                error = 'Ошибка!'
+    if request.method == 'POST' and 'reg_button' in request.POST:    
+        form_reg = RegistrationForm(request.POST)
+        if form_reg.is_valid():
+
+            new_user = form_reg.save(commit=False)
+            new_user.set_password(form_reg.cleaned_data['password'])
+            new_user.save()
+
             return redirect('home')
         else:
             error = 'Форма была неверной'
 
-    form = RegistrationForm()
+    form_reg = RegistrationForm()
+    form_login = LoginForm()
     context = {
-        'form': form,
+        'form_login': form_login,
+        'form_reg': form_reg,
         'error': error
     }
 

@@ -14,6 +14,9 @@ class Student(Person):
     password = models.CharField('Пароль', max_length=16)
     marks = [[1,2,3],[4,5,6]]
 
+    def set_password(self, password):
+        self.password = password
+
 class Teacher(Person): 
     email = models.CharField('Почта', max_length=30)
     mark_avg = models.FloatField('Средняя оценка')

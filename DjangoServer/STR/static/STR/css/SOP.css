@@ -1,0 +1,374 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+}
+
+.form-content {
+    margin: 50px 0;
+}
+
+/*Сама шапка*/
+header {
+    height: 70px;
+    background-color: rgb(81, 111, 163);
+    color: black;
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+}
+
+/*СОП*/
+h2 {
+    padding: 4px 0;
+    font-size: 24px;
+    font-weight: 400;
+    margin-left: 200px;
+}
+
+/*языки*/
+select {
+    background: none;
+    border: none;
+    padding: 4px 0;
+    font-size: 18px;
+    font-weight: 400;
+    margin-left: 22px;
+}
+
+/*Вы не вошли в систему*/
+header label {
+    padding: 4px 0;
+    font-size: 24px;
+    font-weight: 400;
+    margin-left: 850px; /*margin-left: 1281px; в фигме*/
+}
+
+/*все иконки*/
+.header-icons{
+    margin-left: 10px;
+}
+
+/*Кнопки иконок*/
+.header-icons button {
+    background: none;
+    border: none;
+}
+
+/*Сами иконки*/
+.header-icons svg {
+    height: 30px;
+    width: 30px;
+    color: white;
+}
+
+/*Основная часть*/
+.form {
+    z-index: 15;
+    position: relative;
+    min-height: 100vh;
+    background-color:rgb(250, 182, 182);
+    color: black;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.form-body {
+    display: flex;
+    flex-direction: column;
+}
+
+/*Блок логотипа и наименования*/
+.LogoName {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 168px;
+    background-color:rgb(252, 190, 97);
+    color: black;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+}
+
+/*Сам логотип*/
+.LogoName img{
+    margin-left: 21px;
+    float: right;
+    clear: right;
+}
+
+/*Наименование*/
+.LogoName p{
+    padding: 4px 0;
+    font-size: 36px;
+    font-weight: 700;
+    margin-left: 49px;
+}
+
+/*Слайдеры*/
+.carousel {
+    width: 100%;
+    height: 574px;
+    background-color:rgb(250, 125, 233);
+    color: black;
+}
+
+/*само окно входа*/
+.form-panel.one {
+    position: relative;
+    margin-left: auto;
+    display: flex;
+    width: 380px;
+    height: 380px;
+    background-color:rgb(131, 255, 152);
+    color: black;
+    font-size: 18px;
+}
+
+.form-panel-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: calc(100% - 28px);
+    display: flex;
+    flex-direction: column;
+    padding: 10px 17px 10px 17px;
+}
+
+/*Затемнение формы входа, когда поверх открывается окно регистрации*/
+.overlay, .form-panel.one:before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+    background: rgba(0, 0, 0, 0.8);
+    width: 100%;
+    height: 100%;
+}
+
+/*само окно регистрации*/
+.form-panel.two {
+    width: 100%;
+    z-index: 20;
+    position: absolute;
+    right: -300%;
+    padding: 10px 40px 10px 40px;
+    /*padding: 60px calc(10% + 60px) 60px 60px;*/
+    background-color:rgb(232, 255, 102);
+    color: black;
+    font-size: 18px;
+    -webkit-transition: 0.3s ease;
+    transition: 0.3s ease;
+    cursor: pointer;
+}
+
+.form-panel.visible {
+    right: 0;
+}
+
+.psevdobtn {
+    background-color: red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 28px;
+    height: 380px;
+    cursor: pointer;
+}
+
+.psevdobtn p{
+    transform: rotate(90deg);
+    font-size: 18px;
+    font-weight: 700;
+    padding-bottom: 4px;
+}
+
+h1 {
+    padding: 4px 0;
+    font-size: 36px;
+    font-weight: 500;
+}
+
+/*устаканивание всех элементов в окнах*/
+.form-group {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+}
+
+.form-group:last-child {
+    margin: 0;
+}
+
+/*названия полей*/
+.form-group label {
+    margin: 3px 0;
+    display: block;
+    color: rgba(0, 0, 0, 0.6);
+    width: 73px;
+    height: 23px;
+    font-size: 18px;
+    font-weight: 500;
+    white-space: nowrap;
+    color: #516FA3;
+}
+
+/*поля ввода*/
+.form-group input {
+    outline: none;
+    width: 100%;
+    display: block;
+    background: rgba(0, 0, 0, 0.1);
+    border: 0;
+    padding: 12px 20px;
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 18px;
+    font-weight: 500;
+    -webkit-transition: 0.3s ease;
+    transition: 0.3s ease;
+}
+
+/*ХЗ шо это значит*/
+.form-group input:focus {
+    color: rgba(0, 0, 0, 0.8);
+}
+.two .form-group input {
+    color: #000000;
+}
+.two .form-group input:focus {
+    color: #000000;
+}
+
+/*кнопки */
+.form-group button {
+    outline: none;
+    margin-top: 5px;
+    background:  rgb(81, 111, 163);
+    width: 390px;
+    height: 51px;
+    border: 0;
+    border-radius: 4px;
+    padding: 12px 20px;
+    color: #FFFFFF;
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+
+.form-group .form-recovery {
+    color:  rgb(81, 111, 163);
+    font-size: 18px;
+    text-decoration: none;
+}
+
+.form-panel {
+    /*padding: 60px calc(5% + 60px) 60px 60px;*/
+    box-sizing: border-box;
+}
+
+.form-panel.one:before {
+    content: '';
+    display: block;
+    opacity: 0;
+    visibility: hidden;
+    -webkit-transition: 0.3s ease;
+    transition: 0.3s ease;
+}
+
+.form-panel.one.hidden:before {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+}
+
+.form-panel.two:before, .form-panel.two:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 60px;
+    left: 1.5%;
+    background: rgba(255, 255, 255, 0.2);
+    height: 30px;
+    width: 2px;
+    -webkit-transition: 0.3s ease;
+    transition: 0.3s ease;
+}
+.form-panel.two:after {
+    left: 3%;
+}
+
+/*где и как находится окно регистрации, когда появилось уже*/
+.form-panel.two.active {
+    left: 65%;
+    cursor: default;
+    opacity: 1;
+}
+
+.form-panel.two.active:before, .form-panel.two.active:after {
+    opacity: 0;
+}
+
+
+/*КРЕЕЕЕЕЕЕЕЕЕЕЕЕЕЕСТИИИИИИИИИИИИИИИК*/
+
+/*Крестик в углу формы регистрации (+фон крестика)*/
+.form-toggle {
+    z-index: 10;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;/*настройка перехода*/
+}
+
+.form-toggle:before, .form-toggle:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 30px;
+    height: 4px;
+    border-radius: 2px; /*концы крестика закруглены*/
+    background:  rgb(81, 111, 163); /*Цвет крестика*/
+    -webkit-transform: translate(-50%, -50%);/*настройка перехода*/
+            transform: translate(-50%, -50%);/*настройка перехода*/
+}
+
+/*настройка появления крестика (аля увеличивается из точки)*/
+.form-toggle:before {
+    -webkit-transform: translate(-50%, -50%) rotate(45deg);/*настройка перехода*/
+            transform: translate(-50%, -50%) rotate(45deg);/*настройка перехода*/
+}
+
+/*настройка исчезания крестика (аля уменьшается в точку)*/
+.form-toggle:after {
+    -webkit-transform: translate(-50%, -50%) rotate(-45deg);/*настройка перехода*/
+            transform: translate(-50%, -50%) rotate(-45deg);/*настройка перехода*/
+}
+
+/*настройка видимости крестика*/
+.form-toggle.visible {
+    -webkit-transform: translate(0, -25%) scale(1); 
+            transform: translate(0, -25%) scale(1);
+    opacity: 1;
+}
+
+/*Футер*/
+.footer {
+    height: 44px;
+    background-color:rgb(81, 111, 163);
+    color: black;
+    margin: 0 auto;
+}

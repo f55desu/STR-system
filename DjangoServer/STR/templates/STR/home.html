@@ -5,12 +5,14 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Предметы</h1>
-    {% if tickets %}
-        {% for el in tickets %}
+    <h1>Преподаватели</h1>
+    {% if teachers %}
+        {% for el in teachers %}
             <div class="alert alert-warning mt-2">
-                <h3>{{ el.name }}</h3>
-                <p>{{ el.description }}</p>
+                <h3>{{ el.surname }} {{ el.name }} {{ el.lastname }}</h3>
+                <p>Средняя оценка: {{ el.mark_avg }} </p>
+                <!-- <p>Предмет: {{ el.name }} </p> -->
+                <p>Почта: {{ el.email }} </p>
             </div>
         {% endfor %}
     {% else %}
