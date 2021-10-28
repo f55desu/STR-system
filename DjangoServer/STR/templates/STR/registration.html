@@ -18,7 +18,25 @@
             <div class="row form-content">
                 <div class="col-md-8">
                     <div class="carousel">
-                        КАРУСЕЛЬ
+                        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                            <div class="carousel-inner">
+                              <div class="carousel-item active">
+                                {% load static %}  <img  src="{% static 'images/slide1.png'%}" alt="First slide">
+                              </div>
+                              <div class="carousel-item">
+                                {% load static %}  <img  src="{% static 'images/slide2.png'%}" alt="Second slide">
+                              </div>
+                              <div class="carousel-item">
+                                {% load static %}  <img  src="{% static 'images/slide3.png'%}" alt="Third slide">
+                              </div>
+                            </div>
+                            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            </a>
+                            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            </a>
+                          </div>
                     </div>
                 </div>
                 <div class="col-md-4">
