@@ -6,11 +6,12 @@
 
 {% block content %}
     <div class="form ">
+        {% load static %} 
         <div class="container form-body">
             <div class="row">
                 <div class="col-md-12">
                     <div class="LogoName">
-                        <img src="Лого.png"/>
+                        <img src="{% static 'STR/media/Logo.png' %}"/>
                         <p>СТУДЕНЧЕСКАЯ <br> ОЦЕНКА ПРЕПОДАВАТЕЛЕЙ</p>
                     </div>
                 </div>
@@ -21,13 +22,13 @@
                         <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                             <div class="carousel-inner">
                               <div class="carousel-item active">
-                                {% load static %}  <img  src="{% static 'images/slide1.png'%}" alt="First slide">
+                                <img  src="{% static 'STR/media/slide1.png' %}" alt="First slide">
                               </div>
                               <div class="carousel-item">
-                                {% load static %}  <img  src="{% static 'images/slide2.png'%}" alt="Second slide">
+                                <img  src="{% static 'STR/media/slide2.png' %}" alt="Second slide">
                               </div>
                               <div class="carousel-item">
-                                {% load static %}  <img  src="{% static 'images/slide3.png'%}" alt="Third slide">
+                                <img  src="{% static 'STR/media/slide3.png' %}" alt="Third slide">
                               </div>
                             </div>
                             <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
