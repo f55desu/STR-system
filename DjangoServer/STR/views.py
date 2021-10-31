@@ -3,15 +3,19 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.forms import UserCreationForm
 
 # from django.http import HttpResponse
-import sqlite3
+# import sqlite3
 from django.contrib import auth
 from .models import Teacher
 
-con = sqlite3.connect("db.sqlite3")  # подключение к базе данных
-curs = con.cursor()
+# con = sqlite3.connect("db.sqlite3")  # подключение к базе данных
+# curs = con.cursor()
 
 # Create your views here.
 def home(request):
+    if request.method == 'POST' and 'button_logout' in request.POST:
+        auth.logout(request)
+        return redirect('registration')
+
     # if request.user.is_authenticated():
     teachers = Teacher.objects.order_by('-id')
     return render(request, 'STR/home.html', {'title': 'Главная страница сайта', 'teachers': teachers})
@@ -27,7 +31,9 @@ def rating(request):
     # return render("<h4>About</h4>")
 
 def registration(request):
-    print(f'POST = {request}')
+    if request.user.is_authenticated:
+        return redirect('home')
+
     error = ''
     if request.method == 'POST' and 'login_button' in request.POST:
         username = request.POST.get('login', '')
@@ -62,6 +68,9 @@ def registration(request):
 
             form.save()
             return redirect('registration')
+    elif request.method == 'POST' and 'button_logout' in request.POST:
+        auth.logout(request)
+        return redirect('registration')
     # else:
     #     error = 'Форма была неверной'
 
