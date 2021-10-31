@@ -1,5 +1,5 @@
 from .models import Ticket
-from .models import Student
+# from .models import Student
 from django.forms import ModelForm, TextInput, Textarea, PasswordInput
 from django.core.exceptions import ValidationError
 from django.forms.fields import CharField
@@ -31,65 +31,65 @@ class TicketForm(ModelForm):
 #         <span>{{ error }}</span>
 #     </form> -->
 
-class LoginForm(ModelForm):
-    login = CharField()
-    password = CharField(widget=PasswordInput)
+# class LoginForm(ModelForm):
+#     login = CharField()
+#     password = CharField(widget=PasswordInput)
 
-    class Meta:
-        model = Student
-        fields = ["login", "password"]
-        widgets = {
-            "login": TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Логин'
-            }),
-            "password": TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Пароль'
-            }),
-        }
+#     class Meta:
+#         model = Student
+#         fields = ["login", "password"]
+#         widgets = {
+#             "login": TextInput(attrs={
+#                 'class': 'form-control',
+#                 'placeholder': 'Логин'
+#             }),
+#             "password": TextInput(attrs={
+#                 'class': 'form-control',
+#                 'placeholder': 'Пароль'
+#             }),
+#         }
 
-class RegistrationForm(ModelForm):
-    password = CharField(label='Пароль', widget=PasswordInput)
-    password2 = CharField(label='Повторите пароль', widget=PasswordInput)
+# class RegistrationForm(ModelForm):
+#     password = CharField(label='Пароль', widget=PasswordInput)
+#     password2 = CharField(label='Повторите пароль', widget=PasswordInput)
 
-    class Meta:
-        model = Student
-        fields = ["surname", "name", "lastname", "login", "password"]
-        # widgets = {
-        #     "surname": TextInput(attrs={
-        #         'class': 'form-control',
-        #         'placeholder': 'Введите фамилию'
-        #     }),
-        #     "name": TextInput(attrs={
-        #         'class': 'form-control',
-        #         'placeholder': 'Введите имя'
-        #     }),
-        #     "lastname": TextInput(attrs={
-        #         'class': 'form-control',
-        #         'placeholder': 'Введите отчество'
-        #     }),
-        #     "login": TextInput(attrs={
-        #         'class': 'form-control',
-        #         'placeholder': 'Введите логин'
-        #     }),
-        #     "password": TextInput(attrs={
-        #         'class': 'form-control',
-        #         'placeholder': 'Введите пароль'
-        #     }),
-        #     "password2": TextInput(attrs={
-        #         'class': 'form-control',
-        #         'placeholder': 'Повторите пароль'
-        #     }),
-        # }
+#     class Meta:
+#         model = Student
+#         fields = ["surname", "name", "lastname", "login", "password"]
+#         # widgets = {
+#         #     "surname": TextInput(attrs={
+#         #         'class': 'form-control',
+#         #         'placeholder': 'Введите фамилию'
+#         #     }),
+#         #     "name": TextInput(attrs={
+#         #         'class': 'form-control',
+#         #         'placeholder': 'Введите имя'
+#         #     }),
+#         #     "lastname": TextInput(attrs={
+#         #         'class': 'form-control',
+#         #         'placeholder': 'Введите отчество'
+#         #     }),
+#         #     "login": TextInput(attrs={
+#         #         'class': 'form-control',
+#         #         'placeholder': 'Введите логин'
+#         #     }),
+#         #     "password": TextInput(attrs={
+#         #         'class': 'form-control',
+#         #         'placeholder': 'Введите пароль'
+#         #     }),
+#         #     "password2": TextInput(attrs={
+#         #         'class': 'form-control',
+#         #         'placeholder': 'Повторите пароль'
+#         #     }),
+#         # }
 
-    def clean_password2(self):
-        cd = self.cleaned_data
-        if cd['password'] != cd['password2']:
-            wrongPass = "console.log('Пароли не совпадают!')"
-            js2py.eval_js(wrongPass)
-        return cd['password2']        
+#     def clean_password2(self):
+#         cd = self.cleaned_data
+#         if cd['password'] != cd['password2']:
+#             wrongPass = "console.log('Пароли не совпадают!')"
+#             js2py.eval_js(wrongPass)
+#         return cd['password2']        
 
-        # вывод ошибки при повторном вводе пароля
-        #if widgets[5] != widgets[4]:
-           # pass   
+#         # вывод ошибки при повторном вводе пароля
+#         #if widgets[5] != widgets[4]:
+#            # pass   

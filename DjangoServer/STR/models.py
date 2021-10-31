@@ -9,13 +9,13 @@ class Person(models.Model):
     name = models.CharField('Имя', max_length=50)
     lastname = models.CharField('Отчество', max_length=50)
 
-class Student(Person):
-    login = models.CharField('Логин', max_length=30)
-    password = models.CharField('Пароль', max_length=16)
-    marks = [[1,2,3],[4,5,6]]
+# class Student(Person):
+#     login = models.CharField('Логин', max_length=30)
+#     password = models.CharField('Пароль', max_length=16)
+#     marks = [[1,2,3],[4,5,6]]
 
-    def set_password(self, password):
-        self.password = password
+#     def set_password(self, password):
+#         self.password = password
 
 class Teacher(Person): 
     email = models.CharField('Почта', max_length=30)

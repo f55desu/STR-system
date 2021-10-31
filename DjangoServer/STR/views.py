@@ -1,5 +1,7 @@
 from django.shortcuts import redirect, render
-from STR.forms import RegistrationForm, LoginForm
+# from STR.forms import RegistrationForm, LoginForm
+from django.contrib.auth.forms import UserCreationForm
+
 # from django.http import HttpResponse
 import sqlite3
 from django.contrib import auth
@@ -28,7 +30,17 @@ def registration(request):
     print(f'POST = {request}')
     error = ''
     if request.method == 'POST' and 'login_button' in request.POST:
-        pass
+        username = request.POST.get('login', '')
+        password = request.POST.get('password', '')
+
+        user = auth.authenticate(username=username, password=password)
+        if user is not None and user.is_active:
+            auth.login(request, user)
+            return redirect('home')
+        else:
+            # error msg
+            pass
+
         #form_login = LoginForm(request.POST)
         # if form_login.is_valid():
         #     login = request.POST['login']
@@ -41,23 +53,23 @@ def registration(request):
         #          return redirect('home')
         #     else:
         #          error = 'Ошибка!'
-    if request.method == 'POST' and 'reg_button' in request.POST:    
-        form_reg = RegistrationForm(request.POST)
-        if form_reg.is_valid():
+    elif request.method == 'POST' and 'reg_button' in request.POST:    
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            # new_user = form_reg.save(commit=False)
+            # new_user.set_password(form_reg.cleaned_data['password'])
+            # new_user.save()
 
-            new_user = form_reg.save(commit=False)
-            new_user.set_password(form_reg.cleaned_data['password'])
-            new_user.save()
+            form.save()
+            return redirect('registration')
+    # else:
+    #     error = 'Форма была неверной'
 
-            return redirect('home')
-        else:
-            error = 'Форма была неверной'
-
-    form_reg = RegistrationForm()
-    form_login = LoginForm()
+    form = UserCreationForm()
+    # form_login = None
     context = {
-        'form_login': form_login,
-        'form_reg': form_reg,
+        # 'form_login': form_login,
+        'form': form,
         'error': error
     }
 

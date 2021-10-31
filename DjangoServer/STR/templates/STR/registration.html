@@ -48,14 +48,14 @@
                                     {% csrf_token %}
                                     <div class="form-group">
                                         <label for="login">Логин</label>
-                                        {{ form_login.login }}
-                                        <!-- <input type="text" id="login" name="login" required="required"/> <br /> -->
+                                        <input type="text" id="login" name="login" required="required"/>
+                                        <br/>
                                     </div> 
                                     
                                     <div class="form-group">
                                         <label for="password">Пароль</label>
-                                        {{ form_login.password }}
-                                        <!-- <input type="password" id="password" name="password" required="required"/> <br /> -->
+                                        <input type="password" id="password" name="password" required="required"/>
+                                        <br/>
                                     </div>
             
                                     <div class="form-group">
@@ -71,45 +71,10 @@
                             <div class="form-toggle"></div>
                             <div class="form-panel-body">
                                 <h1>Регистрация</h1>
-                                <div class="">
+                                <div>
                                     <form method="post">
                                         {% csrf_token %}
-                                        <div class="form-group">
-                                            <label for="usersurname">Фамилия<br></label>
-                                            {{ form_reg.surname }}
-                                            <!-- <input type="text" id="usersurname" name="usersurname" required="required"/> -->
-                                        </div>
-                                        
-                                        <div class="form-group">
-                                            <label for="username">Имя<br></label>
-                                            {{ form_reg.name }}
-                                            <!-- <input type="text" id="username" name="username" required="required"/> -->
-                                        </div>
-            
-                                        <div class="form-group">
-                                            <label for="usermiddlename">Отчество<br></label>
-                                            {{ form_reg.lastname }}
-                                            <!-- <input type="text" id="usermiddlename" name="usermiddlename" required="required"/> -->
-                                        </div>
-            
-                                        <div class="form-group">
-                                            <label for="userlogin">Логин<br></label>
-                                            {{ form_reg.login }}
-                                            <!-- <input type="text" id="userlogin" name="userlogin" required="required"/> -->
-                                        </div>
-            
-                                        <div class="form-group">
-                                            <label for="password">Пароль<br></label>
-                                            {{ form_reg.password }}
-                                            <!-- <input type="password" id="password" name="password" required="required"/> -->
-                                        </div>
-            
-                                        <div class="form-group">
-                                            <label for="cpassword">Повторный пароль<br></label>
-                                            {{ form_reg.password2 }}
-                                            <!-- <input type="password" id="cpassword" name="cpassword" required="required"/> -->
-                                        </div>
-            
+                                        {{ form.as_p }}            
                                         <div class="form-group">
                                             <button type="submit" name="reg_button">Зарегистрироваться</button>
                                         </div>

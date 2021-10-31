@@ -27,8 +27,12 @@
             <option value="2">Английский (EN)</option>
             <option value="3">Немецкий (DE)</option>
         </select>
-
-        <label> Вы не вошли в систему </label>
+        
+        {% if user.is_authenticated %}
+            <label>{{ user.username }}</label>
+        {% else %}
+            <label>Вы не вошли в систему</label>
+        {% endif %}
         <div class="header-icons">
             <button types="button" names="button"> <a href="#">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
