@@ -65,6 +65,8 @@ def registration(request):
             # new_user = form_reg.save(commit=False)
             # new_user.set_password(form_reg.cleaned_data['password'])
             # new_user.save()
+            if form._meta.model.USERNAME_FIELD in form.fields:
+                form.fields[form._meta.model.USERNAME_FIELD].widget.attrs['autofocus'] = False
 
             form.save()
             return redirect('registration')

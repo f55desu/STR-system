@@ -291,7 +291,7 @@ svg {
     -webkit-transition: 0.3s ease;
     transition: 0.3s ease;
     cursor: pointer;
-    opacity: 0;
+    visibility: collapse;
 }
 
 .form-panel.visible {
@@ -441,7 +441,7 @@ h1 {
 }
 
 .form-panel.visible {
-    opacity: 1;
+    visibility: unset;
 }
 
 /*где и как находится окно регистрации, когда появилось уже*/
