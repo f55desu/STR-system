@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function initRatings() {
         let ratingActive, ratingValue;
+        const MAX_VALUE = 5;
 
         for (let i = 0; i < ratings.length; i++) {
             const rating = ratings[i];
@@ -19,6 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
             initRatingVars(rating);
 
             setRatingActiveWidth();
+            setAVGRating();
             setRating(rating, readonly);
         }
 
@@ -28,9 +30,25 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         function setRatingActiveWidth(index = ratingValue.innerHTML) {
-            const MAX_VALUE = 5;
             const ratingActiveWidth = index / MAX_VALUE * 100;
             ratingActive.style.width = ratingActiveWidth + "%";
+        }
+
+        function setAVGRating() {
+            let values = [];
+
+            ratings.forEach((r, i) => {
+                const rating = r.querySelector('.rating__value');
+                if (i === ratings.length - 1) return;
+                values.push(Number(rating.innerHTML));
+            })
+
+            const lastRating = ratings[ratings.length - 1];
+            const avg = values.reduce((a, b) => a + b, 0) / values.length;
+
+            lastRating.querySelector(".rating__value").innerHTML = avg;
+            lastRating.querySelector(".rating__value").value = avg;
+            lastRating.querySelector(".rating__active").style.width = `${avg / MAX_VALUE * 100}%`;
         }
         
         function setRating(rating, readonly) {
@@ -53,8 +71,9 @@ document.addEventListener("DOMContentLoaded", () => {
                         initRatingVars(rating);
     
                         ratingValue.innerHTML = i + 1;
-                        rating.value.value = i  + 1;
+                        ratingValue.value = i  + 1;
                         setRatingActiveWidth();
+                        setAVGRating();
                     });
                 }
             }
