@@ -6,17 +6,22 @@ body {
     min-height: 100vh;
 }
 
+.container {
+    margin-top: 50px;
+}
+
 .form-content {
-    margin: 50px 0;
+    margin: 20px 0;
 }
 
 /*Сама шапка*/
 header {
     height: 70px;
     background-color: rgb(81, 111, 163);
-    color: black;
+    color: rgb(255, 255, 255);
     display: flex;
     align-items: center;
+    justify-content: space-around;
     margin: 0 auto;
 }
 
@@ -25,7 +30,6 @@ h2 {
     padding: 4px 0;
     font-size: 24px;
     font-weight: 400;
-    margin-left: 200px;
 }
 
 /*языки*/
@@ -33,9 +37,24 @@ select {
     background: none;
     border: none;
     padding: 4px 0;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 400;
-    margin-left: 22px;
+    margin-left: 20px;
+    color:rgb(255, 255, 255);
+}
+
+.lefteltop {
+    /* margin-left: 150px; */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.righteltop {
+    /* margin-right: 150px; */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 /*Вы не вошли в систему*/
@@ -43,22 +62,18 @@ header label {
     padding: 4px 0;
     font-size: 24px;
     font-weight: 400;
-    margin-left: 850px; /*margin-left: 1281px; в фигме*/
-}
-
-/*все иконки*/
-.header-icons{
-    margin-left: 10px;
+    margin-right: 20px;
+    /* margin-left: 850px; margin-left: 1281px; в фигме */
 }
 
 /*Кнопки иконок*/
-.header-icons button {
+button {
     background: none;
     border: none;
 }
 
 /*Сами иконки*/
-.header-icons svg {
+svg {
     height: 30px;
     width: 30px;
     color: white;
@@ -68,8 +83,9 @@ header label {
 .form {
     z-index: 15;
     position: relative;
-    min-height: 100vh;
-    background-color:rgb(250, 182, 182);
+    min-height: 120vh;
+    background: url('../media/background.png') no-repeat;
+    background-size: 100% 1500px;
     color: black;
     margin: 0 auto;
     overflow: hidden;
@@ -86,7 +102,7 @@ header label {
     justify-content: center;
     width: 100%;
     height: 168px;
-    background-color:rgb(252, 190, 97);
+    background-color: none;
     color: black;
     margin: 0 auto;
     display: flex;
@@ -106,14 +122,15 @@ header label {
     font-size: 36px;
     font-weight: 700;
     margin-left: 49px;
+    color: white;
 }
 
 .carousel {
     position: relative;
     width: 100%;
     height: 574px;
-    background-color:rgb(250, 125, 233);
     color: black;
+    border-radius: 5px;
 }
 .carousel-inner {
     position: relative;
@@ -131,45 +148,46 @@ header label {
     -webkit-perspective: 1000px;
     perspective: 1000px;
     opacity: 0;
-    transition-duration: 0.6s;
+    transition-duration: 0.2s;
     transition-property: opacity;
 }
-  
+
 .carousel-item-next,
 .carousel-item-prev,
 .carousel-item.active {
     display: block;
-    transition: -webkit-transform 0.6s ease;
-    transition: transform 0.6s ease;
-    transition: transform 0.6s ease, -webkit-transform 0.6s ease;
+    transition: -webkit-transform 0.2s ease;
+    transition: transform 0.2s ease;
+    transition: transform 0.2s ease, -webkit-transform 0.2s ease;
 }
-    
+
 .carousel-item-next,
 .carousel-item-prev {
     position: absolute;
     top: 0;
 }
-  
+  /*ПЛАВНЫЙ ПЕРЕХОД без него как раз та проблема с пустотой перед слайдом*/
+.carousel-item-next.carousel-item-left,
+.carousel-item-prev.carousel-item-right {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+}
+.carousel-item {
+    opacity: 0;
+    transition-duration: 0.7s;
+    transition-property: opacity;
+}
 .carousel-item-next.carousel-item-left,
 .carousel-item-prev.carousel-item-right,
 .carousel-item.active {
-    opacity: 1;
+      opacity: 1;
 }
 
 .active.carousel-item-left,
 .active.carousel-item-right {
-    opacity: 0;
+      opacity: 0;
 }
-
-.active.carousel-item-left,
-.active.carousel-item-prev,
-.carousel-item-next,
-.carousel-item-prev,
-.carousel-item.active {
-    -webkit-transform: translateX(0);
-    transform: translateX(0);
-}
-
+      
 /*Расположение стрелок (серые)*/
 .carousel-control-next,
 .carousel-control-prev {
@@ -186,35 +204,37 @@ header label {
     opacity: 0.5;
 }
 
-/*Черная стрелка при наведении*/
+  /*Черная стрелка при наведении*/
 .carousel-control-next:hover,
 .carousel-control-prev:hover {
     opacity: 1;
 }
-/*Расположение левой стрелки*/
+
+  /*Расположение левой стрелки*/
 .carousel-control-prev {
     left: -10;
 }
- /*Расположение правой стрелки*/
+
+   /*Расположение правой стрелки*/
 .carousel-control-next {
     right: 800;
 }
 
-/*Иконки стрелок*/
+ /*Иконки стрелок*/
 .carousel-control-next-icon,
 .carousel-control-prev-icon {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    background: transparent no-repeat center center;
-    background-size: 100% 100%;
+     display: inline-block;
+     width: 20px;
+     height: 20px;
+     background: transparent no-repeat center center;
+     background-size: 100% 100%;
 }
-/*Сами иконки*/
+    /*Сами иконки*/
 .carousel-control-prev-icon {
-    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
+     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
 }
 .carousel-control-next-icon {
-    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
+     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
 }
 
 /*само окно входа*/
@@ -224,9 +244,13 @@ header label {
     display: flex;
     width: 380px;
     height: 380px;
-    background-color:rgb(131, 255, 152);
+    background-color: #FFFFFF;
+    /* background-color:rgb(131, 255, 152); */
     color: black;
     font-size: 18px;
+    border-radius: 5px;
+    border-width: 3px;
+    border-color: #C4C4C4;
 }
 
 .form-panel-body {
@@ -256,14 +280,18 @@ header label {
     z-index: 20;
     position: absolute;
     right: -300%;
-    padding: 10px 40px 10px 40px;
-    /*padding: 60px calc(10% + 60px) 60px 60px;*/
-    background-color:rgb(232, 255, 102);
+    padding: 10px 5px 10px 20px;
+    border-radius: 5px;
+    border-width: 3px;
+    border-color: #C4C4C4;
+    background-color: #FFFFFF;
+    /* background-color:rgb(232, 255, 102); */
     color: black;
     font-size: 18px;
     -webkit-transition: 0.3s ease;
     transition: 0.3s ease;
     cursor: pointer;
+    opacity: 0;
 }
 
 .form-panel.visible {
@@ -271,26 +299,31 @@ header label {
 }
 
 .psevdobtn {
-    background-color: red;
+    background-color: rgb(81, 111, 163);
     display: flex;
     justify-content: center;
     align-items: center;
     width: 28px;
     height: 380px;
     cursor: pointer;
+    border-radius: 0 5px 5px 0;
+    border-color: #C4C4C4;
 }
 
 .psevdobtn p{
     transform: rotate(90deg);
+    color: white;
     font-size: 18px;
-    font-weight: 700;
+    font-weight: 500;
     padding-bottom: 4px;
+    letter-spacing: 3px;
 }
 
 h1 {
     padding: 4px 0;
     font-size: 36px;
     font-weight: 500;
+    color: rgb(81, 111, 163);
 }
 
 /*устаканивание всех элементов в окнах*/
@@ -306,7 +339,7 @@ h1 {
 }
 
 .form-group:last-child {
-    margin: 0;
+    margin: 10px;
 }
 
 /*названия полей*/
@@ -407,6 +440,10 @@ h1 {
     left: 3%;
 }
 
+.form-panel.visible {
+    opacity: 1;
+}
+
 /*где и как находится окно регистрации, когда появилось уже*/
 .form-panel.two.active {
     left: 65%;
@@ -472,4 +509,25 @@ h1 {
     background-color:rgb(81, 111, 163);
     color: black;
     margin: 0 auto;
+}
+
+
+.glyphicon-nav {
+    width: 18px;
+    padding: 4px 0;
+    display: inline-block;
+    position: absolute;
+    top: -72px;
+    left: -110px;
+}
+
+.glyphicon-nav:before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    border-top: 2px solid rgb(255, 255, 255);
+    border-bottom: 2px solid rgb(255, 255, 255);
+    top: 0px;
 }
