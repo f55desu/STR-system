@@ -7,51 +7,57 @@
 {% block content %}
 <h1>Оценивание</h1>
 <br>
-<div id="half-stars-example">
-    <div class="form_item">
-        <h1>Качество подаваемого материала преподавателем: </h1>
-        <div class="rating rating_set">
-            <div class="rating__body">
-                <div class="rating__active"></div>
-                <div class="rating__items">
-                    <input type="radio" class="rating__item" value="1" name="rating">
-                    <input type="radio" class="rating__item" value="2" name="rating">
-                    <input type="radio" class="rating__item" value="3" name="rating">
-                    <input type="radio" class="rating__item" value="4" name="rating">
-                    <input type="radio" class="rating__item" value="5" name="rating">
+<form method="get">
+    {% csrf_token %}
+    <div id="half-stars-example">
+        <div class="form_item">
+            <h1>Качество подаваемого материала преподавателем: </h1>
+            <div class="rating rating_set">
+                <div class="rating__body">
+                    <div class="rating__active"></div>
+                    <div class="rating__items">
+                        <input type="radio" class="rating__item" value="1" name="rating1">
+                        <input type="radio" class="rating__item" value="2" name="rating1">
+                        <input type="radio" class="rating__item" value="3" name="rating1">
+                        <input type="radio" class="rating__item" value="4" name="rating1">
+                        <input type="radio" class="rating__item" value="5" name="rating1">
+                    </div>
                 </div>
+                <div type="text" class="rating__value" id="rating_value-1">0</div>
             </div>
-            <div class="rating__value">0</div>
+            <h1>Качество методического материала: </h1>
+            <div class="rating rating_set">
+                <div class="rating__body">
+                    <div class="rating__active"></div>
+                    <div class="rating__items">
+                        <input type="radio" class="rating__item" value="1" name="rating2">
+                        <input type="radio" class="rating__item" value="2" name="rating2">
+                        <input type="radio" class="rating__item" value="3" name="rating2">
+                        <input type="radio" class="rating__item" value="4" name="rating2">
+                        <input type="radio" class="rating__item" value="5" name="rating2">
+                    </div>
+                </div>
+                <div type="text" class="rating__value" id="rating_value-2">0</div>
+            </div>
+            <h1>Общая оценка: </h1>
+            <div class="rating rating_set">
+                <div class="rating__body">
+                    <div class="rating__active"></div>
+                    <div class="rating__items">
+                        <input type="radio" class="rating__item" value="1" name="rating3">
+                        <input type="radio" class="rating__item" value="2" name="rating3">
+                        <input type="radio" class="rating__item" value="3" name="rating3">
+                        <input type="radio" class="rating__item" value="4" name="rating3">
+                        <input type="radio" class="rating__item" value="5" name="rating3">
+                    </div>
+                </div>
+                <div type="text" class="rating__value" id="rating_value-3">0</div>
+                <!-- <input type="text" class="rating__value" name="rating_value-Overal" value="0" style="border: none; background: rgba(0,0,0,0);" disabled></input> -->
+            </div>
         </div>
-        <h1>Качество методического материала: </h1>
-        <div class="rating rating_set">
-            <div class="rating__body">
-                <div class="rating__active"></div>
-                <div class="rating__items">
-                    <input type="radio" class="rating__item" value="1" name="rating">
-                    <input type="radio" class="rating__item" value="2" name="rating">
-                    <input type="radio" class="rating__item" value="3" name="rating">
-                    <input type="radio" class="rating__item" value="4" name="rating">
-                    <input type="radio" class="rating__item" value="5" name="rating">
-                </div>
-            </div>
-            <div class="rating__value">0</div>
-        </div>
-        <h1>Общая оценка: </h1>
-        <div class="rating rating_set">
-            <div class="rating__body">
-                <div class="rating__active"></div>
-                <div class="rating__items">
-                    <input type="radio" class="rating__item" value="1" name="rating">
-                    <input type="radio" class="rating__item" value="2" name="rating">
-                    <input type="radio" class="rating__item" value="3" name="rating">
-                    <input type="radio" class="rating__item" value="4" name="rating">
-                    <input type="radio" class="rating__item" value="5" name="rating">
-                </div>
-            </div>
-            <div class="rating__value">0</div>
+        <div class="form-save">           
+            <button type="submit" class="form_btn btn" name="save_button">Сохранить</button>
         </div>
     </div>
-    <button type="submit" class="form_btn btn">Сохранить</button>
-</div>
+</form>
 {% endblock %}

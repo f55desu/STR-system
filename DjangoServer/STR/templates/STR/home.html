@@ -8,12 +8,14 @@
     <h1>Преподаватели</h1>
     {% if teachers %}
         {% for el in teachers %}
+        <a href="{% url 'rating' %}" style="text-decoration: none;">
             <div class="alert alert-warning mt-2">
                 <h3>{{ el.surname }} {{ el.name }} {{ el.lastname }}</h3>
                 <p>Средняя оценка: {{ el.mark_avg }} </p>
                 <!-- <p>Предмет: {{ el.name }} </p> -->
                 <p>Почта: {{ el.email }} </p>
             </div>
+        </a>
         {% endfor %}
     {% else %}
         <p>У нас нет записей</p>    
