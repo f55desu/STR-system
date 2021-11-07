@@ -21,22 +21,22 @@
                     <div class="carousel">
                         <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                             <div class="carousel-inner">
-                              <div class="carousel-item active">
-                                <img  src="{% static 'STR/media/slide1.png' %}" alt="First slide">
-                              </div>
-                              <div class="carousel-item">
-                                <img  src="{% static 'STR/media/slide2.png' %}" alt="Second slide">
-                              </div>
-                              <div class="carousel-item">
-                                <img  src="{% static 'STR/media/slide3.png' %}" alt="Third slide">
-                              </div>
+                                <div class="carousel-item active">
+                                    <img  src="{% static 'STR/media/slide1.png' %}" alt="First slide">
+                                </div>
+                                <div class="carousel-item">
+                                    <img  src="{% static 'STR/media/slide2.png' %}" alt="Second slide">
+                                </div>
+                                <div class="carousel-item">
+                                    <img  src="{% static 'STR/media/slide3.png' %}" alt="Third slide">
+                                </div>
+                                <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                </a>
+                                <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                </a>
                             </div>
-                            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            </a>
-                            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            </a>
                           </div>
                     </div>
                 </div>
@@ -94,15 +94,17 @@
 
     <div class="footer">
     </div>
-    <!-- <h1>Регистрация</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.name }}<br>
-        {{ form.surname }}<br>
-        {{ form.lastname }}<br>
-        {{ form.login }}<br>
-        {{ form.password }}<br>
-        <button type="submit" class="btn btn-success">Зарегистрироваться</button>
-        <span>{{ error }}</span>
-    </form> -->
 {% endblock %}
+
+
+<!-- <h1>Регистрация</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.name }}<br>
+    {{ form.surname }}<br>
+    {{ form.lastname }}<br>
+    {{ form.login }}<br>
+    {{ form.password }}<br>
+    <button type="submit" class="btn btn-success">Зарегистрироваться</button>
+    <span>{{ error }}</span>
+</form> -->

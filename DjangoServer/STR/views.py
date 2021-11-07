@@ -1,11 +1,14 @@
 from django.shortcuts import redirect, render
 # from STR.forms import RegistrationForm, LoginForm
 from django.contrib.auth.forms import UserCreationForm
+import json
 
 # from django.http import HttpResponse
 # import sqlite3
 from django.contrib import auth
 from .models import Teacher
+
+from . import AvgRatingFunc
 
 # con = sqlite3.connect("db.sqlite3")  # подключение к базе данных
 # curs = con.cursor()
@@ -24,11 +27,13 @@ def home(request):
     # return HttpResponse("<h4>Hello</h4>")
 
 def rating(request):
-    # if request.user.is_authenticated():
+    if request.method == 'GET' and 'save_button' in request.GET:
+        print(request.GET)
+        rating1 = int(request.GET.get('rating1'))
+        rating2 = int(request.GET.get('rating2'))
+        overall = AvgRatingFunc.avg(list([rating1, rating2]))
+        print(f'Rating overall: {overall}')
     return render(request, 'STR/rating.html')
-    # else:
-    #     pass
-    # return render("<h4>About</h4>")
 
 def registration(request):
     if request.user.is_authenticated:
@@ -65,6 +70,8 @@ def registration(request):
             # new_user = form_reg.save(commit=False)
             # new_user.set_password(form_reg.cleaned_data['password'])
             # new_user.save()
+            if form._meta.model.USERNAME_FIELD in form.fields:
+                form.fields[form._meta.model.USERNAME_FIELD].widget.attrs['autofocus'] = False
 
             form.save()
             return redirect('registration')
