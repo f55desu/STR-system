@@ -44,10 +44,13 @@ def home(request):
 
 def rating(request):
     if request.method == 'GET' and 'save_button' in request.GET:
-        print(request.GET)
-        rating1 = int(request.GET.get('rating1'))
-        rating2 = int(request.GET.get('rating2'))
-        overall = AvgRatingFunc.avg(list([rating1, rating2]))
+        rating1 = request.GET.get('rating1')
+        if rating1 == None:
+            rating1 = 0.0
+        rating2 = request.GET.get('rating2')
+        if rating2 == None:
+            rating2 = 0.0
+        overall = AvgRatingFunc.avg(list([float(rating1), float(rating2)]))
         print(f'Rating overall: {overall}')
     return render(request, 'STR/rating.html')
 

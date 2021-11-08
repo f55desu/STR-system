@@ -34,9 +34,7 @@
         </div>
         <div class="righteltop">
             {% if user.is_authenticated %}
-            <label>{{ user.surname }}</label>
-            <label>{{ user.name }}</label>
-            <label>{{ user.lastname }}</label>
+            <label>{{ user.surname }} {{ user.name }} {{ user.lastname }}</label>
         {% else %}
             <label>Вы не вошли в систему</label>
         {% endif %}
