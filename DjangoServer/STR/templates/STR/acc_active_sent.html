@@ -1,5 +1,10 @@
-{% extends 'base.html' %}
+{% extends 'STR/base.html' %}
 
 {% block content %}
-  <p>Please confirm your email address to complete the registration. </p>
+    <div class="centerContent">
+      {% csrf_token %}
+      <h4>Регистрация завершена!</h4>
+      <p>Пожалуйста, перейдите по ссылке в полученном письме, для того, чтобы подтвердить адрес электронной почты.</p>
+      <p> После этого вы сможете войти в систему. </p>
+    </div>
 {% endblock %}

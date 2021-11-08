@@ -25,6 +25,7 @@ from .forms import RegistrationForm
 from .models import Teacher
 
 from . import AvgRatingFunc
+# from DjangoServer import STR
 
 # con = sqlite3.connect("db.sqlite3")  # подключение к базе данных
 # curs = con.cursor()
@@ -53,6 +54,9 @@ def rating(request):
         overall = AvgRatingFunc.avg(list([float(rating1), float(rating2)]))
         print(f'Rating overall: {overall}')
     return render(request, 'STR/rating.html')
+
+def acc_active_sent(request):
+    return render(request, 'STR/acc_active_sent.html')
 
 def registration(request):
 
@@ -106,8 +110,8 @@ def registration(request):
             # new_user.save()
             # if form._meta.model.USERNAME_FIELD in form.fields:
             #     form.fields[form._meta.model.USERNAME_FIELD].widget.attrs['autofocus'] = False
-            return HttpResponse('Please confirm your email address to complete the registration.')
-            # return redirect('registration')
+            # return HttpResponse('Please confirm your email address to complete the registration.')
+            return redirect('acc_active_sent')
     elif request.method == 'POST' and 'button_logout' in request.POST:
         auth.logout(request)
         return redirect('registration')
@@ -124,7 +128,10 @@ def registration(request):
 
     return render(request, 'STR/registration.html', context)
 
-
+def acc_active_confirmed(request):
+    if request.method == 'POST' and 'back_button' in request.POST:
+        return redirect('registration')
+    return render(request, 'STR/acc_active_confirmed.html')
 
 def activate(request, uidb64, token):
     try:
@@ -138,6 +145,6 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.save()
         # login(request, user)  логин в систему
-        return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+        return redirect('acc_active_confirmed')
     else:
         return HttpResponse('Activation link is invalid!')

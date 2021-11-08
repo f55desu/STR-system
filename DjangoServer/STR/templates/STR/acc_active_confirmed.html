@@ -1,0 +1,14 @@
+{% extends 'STR/base.html' %}
+
+{% block content %}
+    <div class="centerContent">
+      {% csrf_token %}
+        <h4>Ваша почта подтверждена!</h4>
+        <p> Войдите в систему, используя свою почту и пароль.</p>
+        <p> Welcome to the club, buddy ∠( ᐛ 」∠)_ </p>
+    </div>
+    <form method="post">
+        {% csrf_token %}
+        <button class="back_button" name="back_button"><p>Вернуться на страницу входа</p></button>
+    </form>
+{% endblock %}
