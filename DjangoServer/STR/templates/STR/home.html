@@ -5,19 +5,69 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Преподаватели</h1>
-    {% if teachers %}
-        {% for el in teachers %}
-        <a href="{% url 'rating' %}" style="text-decoration: none;">
-            <div class="alert alert-warning mt-2">
-                <h3>{{ el.surname }} {{ el.name }} {{ el.lastname }}</h3>
-                <p>Средняя оценка: {{ el.mark_avg }} </p>
-                <!-- <p>Предмет: {{ el.name }} </p> -->
-                <p>Почта: {{ el.email }} </p>
+    <div class="container body-teacher">
+        <h1>Преподаватели</h1>
+        <div class="row info">
+            <div class="col-md-12">
+                <div class="infovote">
+                    <p>Информация о голосовании</p>
+                </div>
             </div>
-        </a>
-        {% endfor %}
-    {% else %}
-        <p>У нас нет записей</p>    
-    {% endif %}
+        </div>
+        <div id="row" class="row teacher">
+        {% if teachers %}
+            {% for el in teachers %}
+            <div class="col-md-4">
+                <a href="{% url 'rating' %}" style = "text-decoration: none; color: black">
+                    <div class="card">
+                        <h6>{{ el.surname }} {{ el.name }} {{ el.lastname }}</h6>
+                        {% load static %}
+                        <img src="{% static 'STR/media/userava.png' %}" alt="User avatar"/>
+                        
+                        <div class="markANDsubject">
+                        <p>Почта: {{ el.email }} </p>
+                        <!-- <p>Предмет: {{ el.name }} </p> -->
+                            <!-- <div class="markstars"> -->
+                                <div class="markavg" type="text" id="markavg{{ el.id }}">{{ el.mark_avg }}</div>
+
+                                <div class="starratingavg">
+                                    <div class="stars__body">
+                                        <div class="stars__active" id="stars__active{{ el.id }}"></div>
+                                        <div class="stars__items">
+                                            <input type="radio" class="stars__item" value="1" name="rating3">
+                                            <input type="radio" class="stars__item" value="2" name="rating3">
+                                            <input type="radio" class="stars__item" value="3" name="rating3">
+                                            <input type="radio" class="stars__item" value="4" name="rating3">
+                                            <input type="radio" class="stars__item" value="5" name="rating3">
+                                        </div>
+                                    </div>
+                                </div>
+                            <!-- </div> -->
+                        </div>
+                    </div>
+                </a>
+            <br>
+            </div>
+            {% endfor %}
+            <script>
+                let divTeachers = document.getElementById("row");
+                let numberOfChildren = divTeachers.getElementsByClassName('col-md-4').length;
+
+                for (let i = 0; i < numberOfChildren; i++)
+                {
+                    let markavg = document.getElementById('markavg' + (i+1)).textContent;
+                    markavg = markavg.replace(/,/, '.');
+
+                    console.log(markavg);
+                    console.log(parseFloat(markavg));
+                    let stars = document.getElementById('stars__active' + (i+1));
+                    let new_Width = (parseFloat(markavg) / 5.0 * 100.0) + "%";
+                    stars.style.width = new_Width;
+                }
+            </script>
+        {% else %}
+            <p>У нас нет записей</p>    
+        {% endif %}
+        </div>
+    </div>
 {% endblock %}

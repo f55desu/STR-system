@@ -1,0 +1,163 @@
+.body-teacher {
+    display: flex;
+    flex-direction: column;
+}
+
+.body-teacher h1{
+    text-align: center;
+}
+
+@font-face{
+    font-family: 'Montserrat-Bold';
+    src: url('../fonts/Montserrat-Medium.ttf');
+}
+
+@font-face{
+    font-family: 'Montserrat-Medium';
+    src: url('../fonts/Montserrat-Medium.ttf');
+}
+.info {
+    border-bottom: black solid;
+}
+.infovote {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Montserrat-Medium";
+    font-size: 18px;    
+}
+
+.card {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    width: 365px;
+    height: 365px;
+    padding: 13px 35px 13px 35px; 
+    border-radius: 10px;
+    font-family: "Montserrat-Medium";
+    font-size: 18px;
+    background-color: rgb(253, 180, 153);
+}
+
+.card img {
+    position: absolute;
+    top: 80px;
+    width: 150px;
+    height: 150px;
+}
+
+.card h6{
+    font-size: 18px;
+}
+
+.a {
+    color: black; 
+}
+
+.teacher {
+    margin: 20px 0;
+}
+
+.markANDsubject {
+    position: absolute;
+    top: 70%;
+    width:100%;
+    line-height: 2em;
+}
+
+/* .markstars{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+} */
+
+.markavg {
+    position: absolute;
+    left: 69px;
+    width: 45px;
+    height: 33px;
+    font-size: 24px;
+    border: #698DCC 1px solid;
+    border-radius: 10px;
+}
+
+.starratingavg {
+    margin-left: 126px;
+    width: 170px;
+    height: 33px;
+    border: #698DCC 1px solid;
+    border-radius: 10px;
+}
+
+.stars{
+    display: flex;
+    align-items: flex-end;
+    font-size: 40px;
+    line-height: 0.75;
+    transition: opacity 0.3s ease 0s;
+}
+
+.stars__body{
+    position: relative;
+}
+
+.stars__body::before{
+    font-size: 23pt;
+    line-height: 23pt;
+    content: "★★★★★";
+    display: block;
+    opacity: 0.2;
+}
+
+.stars__active {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    color: rgb(255, 208, 0);
+    height: 100%;
+}
+
+.stars__active::before {
+    font-size: 23pt;
+    line-height: 23pt;
+    text-align: center;
+    content: "★★★★★";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    overflow: hidden;
+}
+    
+
+/*настройка символов звезд*/
+.stars__items{
+    display: flex;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+/*настройка кругов radiobutton*/
+.stars__item{
+    flex: 0 0 20%;
+    height: 100%;
+    opacity: 0;
+}
+
+.rating__item input {
+    display: none;
+}
+
+.stars__item--active {
+    content: "★";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    color: #ffd300;
+}
