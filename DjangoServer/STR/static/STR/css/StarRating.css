@@ -22,6 +22,7 @@
 
 .rating__active {
     position: absolute;
+    overflow: hidden;
     top: 0px;
     left: 0px;
     color: rgb(255, 208, 0);
