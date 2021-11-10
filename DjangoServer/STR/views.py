@@ -35,7 +35,21 @@ def home(request):
     if request.method == 'POST' and 'button_logout' in request.POST:
         auth.logout(request)
         return redirect('registration')
-
+    if request.method == 'GET' and 'save_button' in request.GET:
+        rating1 = request.GET.get('rating1')
+        if rating1 == None:
+            rating1 = 0.0
+        rating2 = request.GET.get('rating2')
+        if rating2 == None:
+            rating2 = 0.0
+        rating3 = request.GET.get('rating3')
+        if rating3 == None:
+            rating3 = 0.0
+        rating4 = request.GET.get('rating4')
+        if rating4 == None:
+            rating4 = 0.0
+        overall = AvgRatingFunc.avg(list([float(rating1), float(rating2), float(rating3), float(rating4)]))
+        print(f'Rating overall: {overall}')
     # if request.user.is_authenticated():
     teachers = Teacher.objects.order_by('-id')
     return render(request, 'STR/home.html', {'title': 'Главная страница сайта', 'teachers': teachers})

@@ -7,6 +7,13 @@
     text-align: center;
 }
 
+.body-teacher h2{
+    text-align: left;
+    font-family: "Montserrat-Medium";
+    font-size: 24px;
+    color: rgb(81, 111, 163);
+}
+
 @font-face{
     font-family: 'Montserrat-Bold';
     src: url('../fonts/Montserrat-Medium.ttf');
@@ -68,12 +75,6 @@
     line-height: 2em;
 }
 
-/* .markstars{
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-} */
-
 .markavg {
     position: absolute;
     left: 69px;
@@ -85,6 +86,9 @@
 }
 
 .starratingavg {
+    position: relative;
+    display: flex;
+    justify-content: center;
     margin-left: 126px;
     width: 170px;
     height: 33px;
@@ -93,8 +97,7 @@
 }
 
 .stars{
-    display: flex;
-    align-items: flex-end;
+    
     font-size: 40px;
     line-height: 0.75;
     transition: opacity 0.3s ease 0s;
@@ -102,11 +105,11 @@
 
 .stars__body{
     position: relative;
+    font-size: 32px;
+    line-height: 1;
 }
 
 .stars__body::before{
-    font-size: 23pt;
-    line-height: 23pt;
     content: "★★★★★";
     display: block;
     opacity: 0.2;
@@ -118,22 +121,19 @@
     left: 0px;
     color: rgb(255, 208, 0);
     height: 100%;
+    overflow: hidden;
 }
 
 .stars__active::before {
-    font-size: 23pt;
-    line-height: 23pt;
-    text-align: center;
     content: "★★★★★";
     position: absolute;
-    width: 100%;
+    display: block;
     height: 100%;
     top: 0px;
     left: 0px;
     overflow: hidden;
 }
     
-
 /*настройка символов звезд*/
 .stars__items{
     display: flex;
@@ -162,4 +162,61 @@
     top: 0;
     left: 0;
     color: #ffd300;
+}
+
+.popup{
+    border-radius: 10px;
+    border: solid;
+    width: 40%;
+    top: 20%; /* отступ сверху */
+    right: 0;
+    left: 0;
+    margin: 0 auto;
+    z-index:2; /* поверх всех */
+    display: none;  /* сначала невидим */
+    position: fixed; /* фиксированное позиционирование, окно стабильно при прокрутке */
+    padding: 15px;
+    background-color: #FFFFFF;        
+}
+
+#shadow { 
+    position: fixed;
+    width:100%;
+    height:100%;
+    z-index:1; /* поверх всех  кроме окна*/
+    background:#000;
+    opacity: 0.5; /*прозрачность*/
+    left:0;
+    top:0;
+}
+
+.form_item{
+    width: 60%;
+    margin: auto;
+    line-height: 50px;  
+}
+
+.form_btn {
+    width: 171px;
+    height: 36px;
+    margin-left: 33%;
+    margin-top: 20px;
+    background-color: rgb(81, 111, 163);
+}
+
+.form_btn p{
+    color: white;
+    font-family: 'Montserrat-Medium';
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.form_btn:hover {
+    background-color: rgb(106, 141, 201);
+    color: white;
+}
+
+.form_btn:active {
+    background-color: rgb(43, 59, 85);
+    color: white;
 }

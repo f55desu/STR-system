@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const lastRating = ratings[ratings.length - 1];
             const avg = values.reduce((a, b) => a + b, 0) / values.length;
-
+            console.log(lastRating)
             lastRating.querySelector(".rating__value").innerHTML = avg;
             lastRating.querySelector(".rating__value").value = avg;
             lastRating.querySelector(".rating__active").style.width = `${avg / MAX_VALUE * 100}%`;

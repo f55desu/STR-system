@@ -23,8 +23,7 @@
         {% if teachers %}
             {% for el in teachers %}
             <div class="col-md-4">
-                <a href="{% url 'rating' %}" style = "text-decoration: none; color: black">
-                    <div class="card">
+                    <div type="button" class="card" onclick="showModalWin()">
                         <h6>{{ el.surname }} {{ el.name }} {{ el.lastname }}</h6>
                         {% load static %}
                         <img src="{% static 'STR/media/userava.png' %}" alt="User avatar"/>
@@ -39,21 +38,120 @@
                                     <div class="stars__body">
                                         <div class="stars__active" id="stars__active{{ el.id }}"></div>
                                         <div class="stars__items">
-                                            <input type="radio" class="stars__item" value="1" name="rating3">
-                                            <input type="radio" class="stars__item" value="2" name="rating3">
-                                            <input type="radio" class="stars__item" value="3" name="rating3">
-                                            <input type="radio" class="stars__item" value="4" name="rating3">
-                                            <input type="radio" class="stars__item" value="5" name="rating3">
+                                            <input type="radio" class="stars__item" value="1" name="star3">
+                                            <input type="radio" class="stars__item" value="2" name="star3">
+                                            <input type="radio" class="stars__item" value="3" name="star3">
+                                            <input type="radio" class="stars__item" value="4" name="star3">
+                                            <input type="radio" class="stars__item" value="5" name="star3">
                                         </div>
                                     </div>
                                 </div>
                             <!-- </div> -->
                         </div>
                     </div>
-                </a>
             <br>
             </div>
+            <div class="popup" id= "popup">
+                <form method="get">
+                    {% csrf_token %}
+                    <div id="half-stars-example">
+                        <div class="form_item">
+                            <h2>Качество подаваемого материала преподавателем: </h2>
+                            <div class="rating rating_set">
+                                <div class="rating__body">
+                                    <div class="rating__active"></div>
+                                    <div class="rating__items">
+                                        <input type="radio" class="rating__item" value="1" name="rating1">
+                                        <input type="radio" class="rating__item" value="2" name="rating1">
+                                        <input type="radio" class="rating__item" value="3" name="rating1">
+                                        <input type="radio" class="rating__item" value="4" name="rating1">
+                                        <input type="radio" class="rating__item" value="5" name="rating1">
+                                    </div>
+                                </div>
+                                <div type="text" class="rating__value" id="rating_value-1">0</div>
+                            </div>
+                            <h2>Качество методического материала: </h2>
+                            <div class="rating rating_set">
+                                <div class="rating__body">
+                                    <div class="rating__active"></div>
+                                    <div class="rating__items">
+                                        <input type="radio" class="rating__item" value="1" name="rating2">
+                                        <input type="radio" class="rating__item" value="2" name="rating2">
+                                        <input type="radio" class="rating__item" value="3" name="rating2">
+                                        <input type="radio" class="rating__item" value="4" name="rating2">
+                                        <input type="radio" class="rating__item" value="5" name="rating2">
+                                    </div>
+                                </div>
+                                <div type="text" class="rating__value" id="rating_value-2">0</div>
+                            </div>
+                            <h2>Халявность: </h2>
+                            <div class="rating rating_set">
+                                <div class="rating__body">
+                                    <div class="rating__active"></div>
+                                    <div class="rating__items">
+                                        <input type="radio" class="rating__item" value="1" name="rating3">
+                                        <input type="radio" class="rating__item" value="2" name="rating3">
+                                        <input type="radio" class="rating__item" value="3" name="rating3">
+                                        <input type="radio" class="rating__item" value="4" name="rating3">
+                                        <input type="radio" class="rating__item" value="5" name="rating3">
+                                    </div>
+                                </div>
+                                <div type="text" class="rating__value" id="rating_value-3">0</div>
+                            </div>
+                            <h2>Объективность в оценке знаний: </h2>
+                            <div class="rating rating_set">
+                                <div class="rating__body">
+                                    <div class="rating__active"></div>
+                                    <div class="rating__items">
+                                        <input type="radio" class="rating__item" value="1" name="rating4">
+                                        <input type="radio" class="rating__item" value="2" name="rating4">
+                                        <input type="radio" class="rating__item" value="3" name="rating4">
+                                        <input type="radio" class="rating__item" value="4" name="rating4">
+                                        <input type="radio" class="rating__item" value="5" name="rating4">
+                                    </div>
+                                </div>
+                                <div type="text" class="rating__value" id="rating_value-4">0</div>
+                            </div>
+                            <h2>Общая оценка: </h2>
+                            <div class="rating rating_set">
+                                <div class="rating__body">
+                                    <div class="rating__active"></div>
+                                    <div class="rating__items">
+                                        <input type="radio" class="rating__item" value="1" name="rating5">
+                                        <input type="radio" class="rating__item" value="2" name="rating5">
+                                        <input type="radio" class="rating__item" value="3" name="rating5">
+                                        <input type="radio" class="rating__item" value="4" name="rating5">
+                                        <input type="radio" class="rating__item" value="5" name="rating5">
+                                    </div>
+                                </div>
+                                <div type="text" class="rating__value" id="rating_value-5">0</div>
+                                <!-- <input type="text" class="rating__value" name="rating_value-Overal" value="0" style="border: none; background: rgba(0,0,0,0);" disabled></input> -->
+                            </div>
+                        </div>
+                        <div class="form-save">           
+                            <button type="submit" class="form_btn btn" name="save_button">Сохранить</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
             {% endfor %}
+            <script>
+                function showModalWin() {
+     
+                    var darkLayer = document.createElement('div'); // слой затемнения
+                    darkLayer.id = 'shadow'; // id чтобы подхватить стиль
+                    document.body.appendChild(darkLayer); // включаем затемнение
+     
+                    var modalWin = document.getElementById('popup'); // находим наше "окно"
+                    modalWin.style.display = 'unset'; // "включаем" его
+     
+                    darkLayer.onclick = function () {  // при клике на слой затемнения все исчезнет
+                        darkLayer.parentNode.removeChild(darkLayer); // удаляем затемнение
+                        modalWin.style.display = 'none'; // делаем окно невидимым
+                        return false;
+                    };
+                }
+            </script>
             <script>
                 let divTeachers = document.getElementById("row");
                 let numberOfChildren = divTeachers.getElementsByClassName('col-md-4').length;
