@@ -10,7 +10,12 @@
         <div class="row info">
             <div class="col-md-12">
                 <div class="infovote">
-                    <p>Информация о голосовании</p>
+                    <div class="semester">
+                        Семестр
+                    </div>
+                    <div class="timer">
+                        Таймер
+                    </div>
                 </div>
             </div>
         </div>
@@ -60,9 +65,7 @@
 
                     console.log(markavg);
                     console.log(parseFloat(markavg));
-                    let stars = document.getElementById('stars__active' + (i+1));
-                    let new_Width = (parseFloat(markavg) / 5.0 * 100.0) + "%";
-                    stars.style.width = new_Width;
+                    document.getElementById('stars__active' + (i+1)).style.width = (parseFloat(markavg) / 5.0 * 100.0) + "%";
                 }
             </script>
         {% else %}
