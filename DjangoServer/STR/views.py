@@ -36,6 +36,9 @@ def home(request):
         auth.logout(request)
         return redirect('registration')
     if request.method == 'GET' and 'save_button' in request.GET:
+        id_Teacher = request.GET.get('id_input')
+        print(f'ID_TEACHER:{id_Teacher}')
+        print(request.GET)
         rating1 = request.GET.get('rating1')
         if rating1 == None:
             rating1 = 0.0

@@ -25,7 +25,7 @@
         {% if teachers %}
             {% for el in teachers %}
             <div class="col-md-4">
-                    <div type="button" class="card" onclick="showModalWin()">
+                    <div type="button" class="card" onclick="showModalWin('{{ el.id }}')">
                         <h6>{{ el.surname }} {{ el.name }} {{ el.lastname }}</h6>
                         {% load static %}
                         <img src="{% static 'STR/media/userava.png' %}" alt="User avatar"/>
@@ -53,9 +53,11 @@
                     </div>
             <br>
             </div>
+            {% endfor %}
             <div class="popup" id="popup{{ el.id }}">
                 <form method="get">
                     {% csrf_token %}
+                    <input id="id_input" name="id_input" value="0" style="visibility: collapse;">
                     <div id="half-stars-example">
                         <div class="form_item">
                             <h2>Качество подаваемого материала преподавателем: </h2>
@@ -137,7 +139,10 @@
                 </form>
             </div>
             <script>
-                function showModalWin() {
+                function showModalWin(variable) {
+                    let id_input = document.getElementById('id_input');
+                    id_input.setAttribute('value', variable-1);
+                    
                     var darkLayer = document.createElement('div'); // слой затемнения
                     darkLayer.id = 'shadow'; // id чтобы подхватить стиль
                     document.body.appendChild(darkLayer); // включаем затемнение
@@ -153,7 +158,6 @@
                     };
                 }
             </script>
-            {% endfor %}
             <script>
                 let divTeachers = document.getElementById("row");
                 let numberOfChildren = divTeachers.getElementsByClassName('col-md-4').length;
@@ -163,8 +167,8 @@
                     let markavg = document.getElementById('markavg' + (i+1)).textContent;
                     markavg = markavg.replace(/,/, '.');
 
-                    console.log(markavg);
-                    console.log(parseFloat(markavg));
+                    // console.log(markavg);
+                    // console.log(parseFloat(markavg));
                     document.getElementById('stars__active' + (i+1)).style.width = (parseFloat(markavg) / 5.0 * 100.0) + "%";
                 }
             </script>
