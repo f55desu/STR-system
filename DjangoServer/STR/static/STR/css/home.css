@@ -1,6 +1,7 @@
 .body-teacher {
     display: flex;
     flex-direction: column;
+    z-index: -1;
 }
 
 .body-teacher h1{

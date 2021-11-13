@@ -556,6 +556,7 @@ h1 {
 
 /*Футер*/
 .footer {
+    z-index: 1;
     height: 44px;
     background-color:rgb(81, 111, 163);
     color: black;
@@ -581,4 +582,139 @@ h1 {
     border-top: 2px solid rgb(255, 255, 255);
     border-bottom: 2px solid rgb(255, 255, 255);
     top: 0px;
+}
+.popupLC {
+    position: absolute;
+    border-radius: 10px;
+    top: 70px;
+    padding-bottom: 20px;
+    z-index: 3;
+    width: 350px;
+    background-color: #FFFFFF;
+    display: none;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.25);
+}
+
+.popupLC form {
+    width: 100%;
+    height: 100%;
+}
+
+.bodyLC {
+    margin-top: calc(-84px / 2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#sunshine { 
+    position: fixed;
+    width:100%;
+    height:100%;
+    z-index: 2; /* поверх всех  кроме окна*/
+    opacity: 1; /*прозрачность*/
+    left:0;
+    top:0;
+}
+
+.headerLC{
+    width: 100%;
+    height: 84px;
+    background-color: #4E6998;
+}
+
+.imageLC {
+    position: relative;
+}
+
+.imageLC img{
+    margin: 0 auto;
+    position: relative;
+    width: 93px;
+    height: 93px;
+}
+
+.round_imageLC {
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    bottom: 0px;
+    right: 0px;
+    background-color: gray ;
+    border-radius: 100px;
+    border: 2px solid #7C7C7C;
+    z-index: 2;
+}
+
+.round_imageLC_small {
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    bottom: 0px;
+    right: 0px;
+    background-color: #000000 ;
+    border-radius: 100px;
+    border: 2px solid #7C7C7C;
+    z-index: 2;
+}
+.round_imageLC_small svg {
+    width: 75%;
+    height: auto;
+}
+
+.titleLC, .subtitleLC {
+    text-align: center;
+}
+
+.titleLC {
+    margin: 10px 0px;
+    font-family: 'Montserrat-Bold';
+    font-weight: 500;
+    font-size: 18px;
+    color: #535A66;
+}
+
+.subtitleLC {
+    font-weight: 400;
+    font-family: 'Montserrat-Medium';
+    font-size: 14px;
+    color: #535A66;
+}
+
+.rowLC {
+    margin-top: 15px;
+    padding: 0px 30px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.propertyLC {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #535A66;
+}
+
+.valueLC {
+    background: #E8F0FE;
+    width: 158px;
+    padding: 5px 10px;
+    border: 1px solid #C4C4C4;
+    border-radius: 5px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #535A66;
+    outline: none;
 }
