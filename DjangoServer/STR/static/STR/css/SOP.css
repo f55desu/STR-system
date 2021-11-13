@@ -584,6 +584,7 @@ h1 {
     top: 0px;
 }
 .popupLC {
+    margin-top: 1%;
     position: absolute;
     border-radius: 10px;
     top: 70px;
