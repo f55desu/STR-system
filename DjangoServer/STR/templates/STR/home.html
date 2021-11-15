@@ -31,8 +31,8 @@
                         <img src="{% static 'STR/media/userava.png' %}" alt="User avatar"/>
                         
                         <div class="markANDsubject">
+                        <p>Предмет: нет </p>
                         <p>Почта: {{ el.email }} </p>
-                        <!-- <p>Предмет: {{ el.name }} </p> -->
                             <!-- <div class="markstars"> -->
                                 <div class="markavg" type="text" id="markavg{{ el.id }}">{{ el.mark_avg }}</div>
 
@@ -60,62 +60,22 @@
                     <input id="id_input" name="id_input" value="0" style="visibility: collapse;">
                     <div id="half-stars-example">
                         <div class="form_item">
-                            <h2>Качество подаваемого материала преподавателем: </h2>
-                            <div class="rating rating_set" value id="rating1{{ el.id }}">
-                                <div class="rating__body">
-                                    <div class="rating__active"></div>
-                                    <div class="rating__items">
-                                        <input type="radio" class="rating__item" value="1" name="rating1">
-                                        <input type="radio" class="rating__item" value="2" name="rating1">
-                                        <input type="radio" class="rating__item" value="3" name="rating1">
-                                        <input type="radio" class="rating__item" value="4" name="rating1">
-                                        <input type="radio" class="rating__item" value="5" name="rating1">
+                            {% for crit in criterions %}
+                                <h2>{{ crit.name }}:</h2>
+                                <div class="rating rating_set" id="rating{{ crit.id }}">
+                                    <div class="rating__body">
+                                        <div class="rating__active"></div>
+                                        <div class="rating__items">
+                                            <input type="radio" class="rating__item" value="1" name="rating{{ crit.id }}">
+                                            <input type="radio" class="rating__item" value="2" name="rating{{ crit.id }}">
+                                            <input type="radio" class="rating__item" value="3" name="rating{{ crit.id }}">
+                                            <input type="radio" class="rating__item" value="4" name="rating{{ crit.id }}">
+                                            <input type="radio" class="rating__item" value="5" name="rating{{ crit.id }}">
+                                        </div>
                                     </div>
+                                    <div type="text" class="rating__value" id="rating_value-1">0</div>
                                 </div>
-                                <div type="text" class="rating__value" id="rating_value-1">0</div>
-                            </div>
-                            <h2>Качество методического материала: </h2>
-                            <div class="rating rating_set" value id="rating2{{ el.id }}"> 
-                                <div class="rating__body">
-                                    <div class="rating__active"></div>
-                                    <div class="rating__items">
-                                        <input type="radio" class="rating__item" value="1" name="rating2">
-                                        <input type="radio" class="rating__item" value="2" name="rating2">
-                                        <input type="radio" class="rating__item" value="3" name="rating2">
-                                        <input type="radio" class="rating__item" value="4" name="rating2">
-                                        <input type="radio" class="rating__item" value="5" name="rating2">
-                                    </div>
-                                </div>
-                                <div type="text" class="rating__value" id="rating_value-2">0</div>
-                            </div>
-                            <h2>Халявность: </h2>
-                            <div class="rating rating_set" value id="rating3{{ el.id }}">
-                                <div class="rating__body">
-                                    <div class="rating__active"></div>
-                                    <div class="rating__items">
-                                        <input type="radio" class="rating__item" value="1" name="rating3">
-                                        <input type="radio" class="rating__item" value="2" name="rating3">
-                                        <input type="radio" class="rating__item" value="3" name="rating3">
-                                        <input type="radio" class="rating__item" value="4" name="rating3">
-                                        <input type="radio" class="rating__item" value="5" name="rating3">
-                                    </div>
-                                </div>
-                                <div type="text" class="rating__value" id="rating_value-3">0</div>
-                            </div>
-                            <h2>Объективность в оценке знаний: </h2>
-                            <div class="rating rating_set" value id="rating4{{ el.id }}">
-                                <div class="rating__body">
-                                    <div class="rating__active"></div>
-                                    <div class="rating__items">
-                                        <input type="radio" class="rating__item" value="1" name="rating4">
-                                        <input type="radio" class="rating__item" value="2" name="rating4">
-                                        <input type="radio" class="rating__item" value="3" name="rating4">
-                                        <input type="radio" class="rating__item" value="4" name="rating4">
-                                        <input type="radio" class="rating__item" value="5" name="rating4">
-                                    </div>
-                                </div>
-                                <div type="text" class="rating__value" id="rating_value-4">0</div>
-                            </div>
+                            {% endfor %}
                             <h2>Общая оценка: </h2>
                             <div class="rating rating_set" id="rating5{{ el.id }}" readonly >
                                 <div class="rating__body">

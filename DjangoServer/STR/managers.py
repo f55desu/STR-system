@@ -1,5 +1,6 @@
 from django.contrib.auth.base_user import BaseUserManager
 from django.utils.translation import ugettext_lazy as _
+from django.db import models
 import re
 
 
@@ -62,3 +63,16 @@ class StudentManager(BaseUserManager):
             raise ValueError(_('Superuser must have is_superuser=True.'))
 
         return self.create_user(email, password, **extra_fields)
+
+
+# class SubjectStudentCriterionMarkManager(models.Manager):
+#     def create_object(self, criterion_id, subject_id, student_id, mark):
+#         obj = self.create(criterion_id, subject_id, student_id, mark)
+#         return obj
+
+
+
+
+
+
+

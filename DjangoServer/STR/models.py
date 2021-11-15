@@ -4,7 +4,7 @@ from django.contrib.auth.models import AbstractUser, PermissionsMixin
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
 
-from .managers import StudentManager
+from .managers import *
 
 from django.utils import timezone
 
@@ -148,7 +148,9 @@ class SubjectStudentCriterionMark(models.Model):
     student_id = models.ForeignKey(Student, on_delete=models.CASCADE)
 
     mark = models.FloatField(_('mark'))
-    
+
+    # objects = SubjectStudentCriterionMarkManager()
+
     class Meta:
         verbose_name = _('Дисциплина-Студент-Критерий-Оценка')
         verbose_name_plural = _('Дисциплины-Студенты-Критерии-Оценки')

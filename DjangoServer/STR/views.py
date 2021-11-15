@@ -22,7 +22,7 @@ from django.contrib.auth.models import User
 from django.contrib import auth
 
 from .forms import RegistrationForm
-from .models import Teacher
+from .models import *
 
 from . import AvgRatingFunc
 # from DjangoServer import STR
@@ -32,33 +32,45 @@ from . import AvgRatingFunc
 
 # Create your views here.
 def home(request):
+    # subjectTeacher = TeacherSubject.objects.order_by('id')
+    subjects = Subject.objects.order_by('id')
+    teachers = Teacher.objects.order_by('surname')
+    criterions = Criterion.objects.order_by('id')
+
     if request.method == 'POST' and 'button_logout' in request.POST:
         auth.logout(request)
         return redirect('registration')
     if request.method == 'GET' and 'save_button' in request.GET:
         id_Teacher = request.GET.get('id_input')
+
         print(f'ID_TEACHER:{id_Teacher}')
         print(request.GET)
-        rating1 = request.GET.get('rating1')
-        if rating1 == None:
-            rating1 = 0.0
-        rating2 = request.GET.get('rating2')
-        if rating2 == None:
-            rating2 = 0.0
-        rating3 = request.GET.get('rating3')
-        if rating3 == None:
-            rating3 = 0.0
-        rating4 = request.GET.get('rating4')
-        if rating4 == None:
-            rating4 = 0.0
-        overall = AvgRatingFunc.avg(list([float(rating1), float(rating2), float(rating3), float(rating4)]))
-        print(f'Rating overall: {overall}')
-    # if request.user.is_authenticated():
-    teachers = Teacher.objects.order_by('-id')
-    return render(request, 'STR/home.html', {'title': 'Главная страница сайта', 'teachers': teachers})
-    # else:
-    #     pass
-    # return HttpResponse("<h4>Hello</h4>")
+
+        # ratingList = []
+        # print('\n\n')
+        for crit in range(len(criterions)):
+            mark = request.GET.get(f'rating{crit + 1}')
+            if mark == None: mark = 0.0
+
+            criterion_id = criterions[crit].id
+            print(criterion_id)
+            subject_id = None
+            student_id = request.user.id
+            # mark = float(request.GET.get(f'rating{crit}'))
+
+            #SubjectStudentCriterionMark.objects.create(criterion_id, subject_id, student_id, mark)
+        
+        # # overall = AvgRatingFunc.avg(ratingList)
+        # print(f'Rating overall: {overall}')
+
+    context = {
+        'title': 'Главная страница сайта',
+        'teachers': teachers,
+        'criterions': criterions,
+        'subjects': subjects,
+    }
+    
+    return render(request, 'STR/home.html', context)
 
 def rating(request):
     if request.method == 'GET' and 'save_button' in request.GET:
