@@ -1,5 +1,4 @@
 from django.contrib.auth import get_user_model
-from .models import Ticket
 # from .models import Student
 # from django.forms import ModelForm, TextInput, Textarea, PasswordInput
 # from django.core.exceptions import ValidationError
@@ -11,23 +10,30 @@ from django import forms
 
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
-from .models import CustomUser
+from .models import *
 
+# Subjects
+class SubjectForm(forms.ModelForm):
+    class Meta:
+        model = Subject
+        widgets = {
+            'type': forms.Select
+        }
+        fields = '__all__'
 
-class CustomUserCreationForm(UserCreationForm):
+# Students
+class StudentCreationForm(UserCreationForm):
 
     class Meta:
-        model = CustomUser
+        model = Student
         fields = ('email', 'surname', 'name', 'lastname')
 
 
-class CustomUserChangeForm(UserChangeForm):
+class StudentChangeForm(UserChangeForm):
 
     class Meta:
-        model = CustomUser
+        model = Student
         fields = ('email', 'surname', 'name', 'lastname')
-
-# import js2py
 
 
 class RegistrationForm(UserCreationForm):
@@ -92,20 +98,20 @@ class RegistrationForm(UserCreationForm):
         return user
 
 
-class TicketForm(forms.ModelForm):
-    class Meta:
-        model = Ticket
-        fields = ["name", "description"]
-        widgets = {
-            "name": forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Введите имя'
-            }),
-            "description": forms.Textarea(attrs={
-                'class': 'form-control',
-                'placeholder': 'Введите описание учебного предмета'
-            }),
-        }
+# class TicketForm(forms.ModelForm):
+#     class Meta:
+#         model = Ticket
+#         fields = ["name", "description"]
+#         widgets = {
+#             "name": forms.TextInput(attrs={
+#                 'class': 'form-control',
+#                 'placeholder': 'Введите имя'
+#             }),
+#             "description": forms.Textarea(attrs={
+#                 'class': 'form-control',
+#                 'placeholder': 'Введите описание учебного предмета'
+#             }),
+#         }
 # <!-- <h1>Регистрация</h1>
 #     <form method="post">
 #         {% csrf_token %}

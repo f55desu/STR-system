@@ -108,7 +108,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ru-ru'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 
@@ -132,8 +132,6 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = '/'
-
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
@@ -141,4 +139,5 @@ EMAIL_HOST_USER = 'joel.mailbot@gmail.com'
 EMAIL_HOST_PASSWORD = 'Admin_SecretKey%31lL_*676_Piko'
 EMAIL_PORT = 587
 
-AUTH_USER_MODEL = 'STR.CustomUser'
+AUTH_USER_MODEL = 'STR.Student'
+LOGIN_REDIRECT_URL = '/'

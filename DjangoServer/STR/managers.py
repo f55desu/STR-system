@@ -3,7 +3,7 @@ from django.utils.translation import ugettext_lazy as _
 import re
 
 
-class CustomUserManager(BaseUserManager):
+class StudentManager(BaseUserManager):
     use_in_migrations = True
 
     """
