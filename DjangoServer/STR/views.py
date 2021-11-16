@@ -31,11 +31,64 @@ from . import AvgRatingFunc
 # curs = con.cursor()
 
 # Create your views here.
+class Home:
+    def __init__(self, teacher, subject, mark_avg) -> None:
+        self.teacher = teacher
+        self.subject = subject
+        self.mark_avg = mark_avg
+
 def home(request):
+    # id авторизованного студента
+    student_id = request.user.id
+    print(f"STUDENT_ID: {student_id}")
+
+    # получение id группы некоего студента
+    group_id = StudentGroup.objects.filter(student_id=student_id)[0].group_id_id
+    print(f"GROUP_ID: {group_id}")
+
+    # получения списка предметов для текущего студента
+    subjects_groups = SubjectGroup.objects.filter(group_id=group_id).all()
+    print(f"SUBJECTS_GROUPS: {subjects_groups}")
+
+    # subjects = []
+    # for itr in subjects_groups:
+    #     subjects.append(Subject.objects.filter(subjectgroup=itr)[0].name)
+    # print(f"SUBJECTS: {subjects}")
+
+    # получение инфы обо всех преподах
+
+    global_data = []
+    # teachers_subjects = {}
+    for itr in subjects_groups:
+        teacher_subject = TeacherSubject.objects.filter(subject_id=itr.subject_id_id).all()
+        print(f"TEACHER_SUBJECT: {teacher_subject}")
+
+        if teacher_subject is None or len(teacher_subject) == 0:
+            continue
+
+        teacher = Teacher.objects.filter(id=teacher_subject[0].teacher_id_id)[0]
+        subject = Subject.objects.filter(id=teacher_subject[0].subject_id_id)[0]
+
+        if subject.type == 'LECTURE':
+            subject.type = 'Лекция'
+        elif subject.type == 'PRACTICE':
+            subject.type = 'Практика'
+
+        global_data.append(Home(teacher, subject, 0))
+        # if teachers_subjects is None or len(teachers_subjects) is 0:
+        #     continue
+
+
+    # teachers = Teacher.objects.order_by('surname')
     # subjectTeacher = TeacherSubject.objects.order_by('id')
-    subjects = Subject.objects.order_by('id')
-    teachers = Teacher.objects.order_by('surname')
     criterions = Criterion.objects.order_by('id')
+    # subjects = Subject.objects.order_by('id')
+
+    # for index in len(teachers):
+    #     teacher = teachers[index]
+
+    #     global_data.append(Home())
+
 
     if request.method == 'POST' and 'button_logout' in request.POST:
         auth.logout(request)
@@ -55,7 +108,7 @@ def home(request):
             criterion_id = criterions[crit].id
             print(criterion_id)
             subject_id = None
-            student_id = request.user.id
+            # student_id = request.user.id
             # mark = float(request.GET.get(f'rating{crit}'))
 
             #SubjectStudentCriterionMark.objects.create(criterion_id, subject_id, student_id, mark)
@@ -65,9 +118,11 @@ def home(request):
 
     context = {
         'title': 'Главная страница сайта',
-        'teachers': teachers,
+        'global_data': global_data,
+        # 'teachers': teachers,
         'criterions': criterions,
-        'subjects': subjects,
+        # 'subjects': subjects,
+        # 'subjectTeacher': subjectTeacher
     }
     
     return render(request, 'STR/home.html', context)

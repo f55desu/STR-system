@@ -22,43 +22,78 @@
         {% load static %}
         <script src='{% static "STR/js/StarRating.js" %}'></script>
         <div id="row" class="row teacher">
-        {% if teachers %}
-            {% for el in teachers %}
+        {% if global_data %}
+            {% for obj in global_data %}
             <div class="col-md-4">
-                    <div type="button" class="card" onclick="showModalWin('{{ el.id }}')">
-                        <h6>{{ el.surname }} {{ el.name }} {{ el.lastname }}</h6>
-                        {% load static %}
-                        <img src="{% static 'STR/media/userava.png' %}" alt="User avatar"/>
+                <div type="button" class="card" onclick="showModalWin('{{ obj.id }}')">
+                    <h6>{{ obj.teacher.surname }} {{ obj.teacher.name }} {{ obj.teacher.lastname }}</h6>
+                    {% load static %}
+                    <img src="{% static 'STR/media/userava.png' %}" alt="User avatar"/>
+                    <!-- {% for subjTeach in subjectTeacher %}
+                        {% if subjTeach.teacher_id == el.id %}
+                            {% for subj in subjects%}
+                                {% if subj.id == subjTeach.subject_id %}
+                                <script>
+                                    var viewSubjectName = null;
+                                    var viewSubjectType = null;
+                                    viewSubjectName = '{{ subj.name }}';
+                                    viewSubjectType = '{{ subj.type }}';
+                                    console.log("WORKING")
+                                    console.log("Name: " + viewSubjectName);
+                                    console.log("Type: " + viewSubjectType)
+                                </script>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %} -->
+                    <div class="markANDsubject">
+                    <p id="SubjectName">{{ obj.subject.name }}</p>
+                    <p id="SubjectType">{{ obj.subject.type }}</p>
+                    <!-- <script>
+                        var subjname = document.getElementById('SubjectName');
+                        var subjtype = document.getElementById('SubjectType');
                         
-                        <div class="markANDsubject">
-                        <p>Предмет: нет </p>
-                        <p>Почта: {{ el.email }} </p>
-                            <!-- <div class="markstars"> -->
-                                <div class="markavg" type="text" id="markavg{{ el.id }}">{{ el.mark_avg }}</div>
+                        if (subjname != null && subjtype != null)
+                        {
+                            subjname.innerHTML = Window.viewSubjectName;
+                            switch(Window.viewSubjectType)
+                            {
+                                case "1": subjtype.innerHTML = "Лекция";
+                                case "2": subjtype.innerHTML = "Практика";
+                            }
+                        }
+                        else console.log("Ничего нет!")
+                    </script> -->
+                    <p>Почта: {{ obj.teacher.email }}</p>
+                        <!-- <div class="markstars"> -->
+                            <div class="markavg" type="text" id="markavg{{ obj.id }}">{{ obj.mark_avg }}</div>
 
-                                <div class="starratingavg">
-                                    <div class="stars__body">
-                                        <div class="stars__active" id="stars__active{{ el.id }}"></div>
-                                        <div class="stars__items">
-                                            <input type="radio" class="stars__item" value="1" name="star3">
-                                            <input type="radio" class="stars__item" value="2" name="star3">
-                                            <input type="radio" class="stars__item" value="3" name="star3">
-                                            <input type="radio" class="stars__item" value="4" name="star3">
-                                            <input type="radio" class="stars__item" value="5" name="star3">
-                                        </div>
+                            <div class="starratingavg">
+                                <div class="stars__body">
+                                    <div class="stars__active" id="stars__active{{ obj.id }}"></div>
+                                    <div class="stars__items">
+                                        <input type="radio" class="stars__item" value="1" name="star3">
+                                        <input type="radio" class="stars__item" value="2" name="star3">
+                                        <input type="radio" class="stars__item" value="3" name="star3">
+                                        <input type="radio" class="stars__item" value="4" name="star3">
+                                        <input type="radio" class="stars__item" value="5" name="star3">
                                     </div>
                                 </div>
-                            <!-- </div> -->
-                        </div>
+                            </div>
+                        <!-- </div> -->
                     </div>
+                </div>
             <br>
             </div>
             {% endfor %}
-            <div class="popup" id="popup{{ el.id }}">
+            <div class="popup" id="popup">
+                <div class="headerpopup">Оценивание</div>
                 <form method="get">
                     {% csrf_token %}
+                    
                     <input id="id_input" name="id_input" value="0" style="visibility: collapse;">
                     <div id="half-stars-example">
+                        
                         <div class="form_item">
                             {% for crit in criterions %}
                                 <h2>{{ crit.name }}:</h2>
@@ -77,7 +112,7 @@
                                 </div>
                             {% endfor %}
                             <h2>Общая оценка: </h2>
-                            <div class="rating rating_set" id="rating5{{ el.id }}" readonly >
+                            <div class="rating rating_set" id="rating5" readonly >
                                 <div class="rating__body">
                                     <div class="rating__active"></div>
                                     <div class="rating__items">
