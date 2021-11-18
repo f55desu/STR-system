@@ -38,17 +38,20 @@ class Home:
         self.mark_avg = mark_avg
 
 def home(request):
+    sg = StudentGroup.objects.filter(student_id=request.user)[0]
+    group = Group.objects.filter(studentgroup=sg)[0].name
+
     # id авторизованного студента
     student_id = request.user.id
-    print(f"STUDENT_ID: {student_id}")
+    # print(f"STUDENT_ID: {student_id}")
 
     # получение id группы некоего студента
     group_id = StudentGroup.objects.filter(student_id=student_id)[0].group_id_id
-    print(f"GROUP_ID: {group_id}")
+    # print(f"GROUP_ID: {group_id}")
 
     # получения списка предметов для текущего студента
     subjects_groups = SubjectGroup.objects.filter(group_id=group_id).all()
-    print(f"SUBJECTS_GROUPS: {subjects_groups}")
+    # print(f"SUBJECTS_GROUPS: {subjects_groups}")
 
     # subjects = []
     # for itr in subjects_groups:
@@ -61,7 +64,7 @@ def home(request):
     # teachers_subjects = {}
     for itr in subjects_groups:
         teacher_subject = TeacherSubject.objects.filter(subject_id=itr.subject_id_id).all()
-        print(f"TEACHER_SUBJECT: {teacher_subject}")
+        # print(f"TEACHER_SUBJECT: {teacher_subject}")
 
         if teacher_subject is None or len(teacher_subject) == 0:
             continue
@@ -116,7 +119,10 @@ def home(request):
         # # overall = AvgRatingFunc.avg(ratingList)
         # print(f'Rating overall: {overall}')
 
+    # group = Group.objects.filter()
+
     context = {
+        'group_name': group,
         'title': 'Главная страница сайта',
         'global_data': global_data,
         # 'teachers': teachers,
@@ -176,6 +182,16 @@ def registration(request):
         form = RegistrationForm(request.POST)
         if form.is_valid():
             user = form.save()
+
+            # print(user.id)
+            # print(request.POST.get('group'))
+            # student_id = user.id
+            group_id = request.POST.get('group')
+            sg = StudentGroup(student_id=user, group_id=Group.objects.filter(id=group_id)[0])
+            # print(sg)
+            sg.save()
+
+
             current_site = get_current_site(request)
             message = render_to_string('STR/acc_active_email.html', {
                 'user': user, 'domain': current_site.domain,

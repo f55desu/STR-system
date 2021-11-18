@@ -37,11 +37,21 @@ class StudentChangeForm(UserChangeForm):
 
 
 class RegistrationForm(UserCreationForm):
+
+    def getChoices():
+        GROUP_CHOICES = []
+        for gr in Group.objects.all():
+            GROUP_CHOICES.append((gr.id, gr.name))
+        return GROUP_CHOICES
+    
     surname = forms.CharField(required=True, label='Фамилия', max_length=50)
     name = forms.CharField(required=True, label='Имя', max_length=50)
     lastname = forms.CharField(required=False, label='Отчество', max_length=50)
 
     email = forms.EmailField(required=True, label='Email', max_length=30)
+
+    group = forms.ChoiceField(required=True, label='Группа', choices=getChoices())
+    # groupNumber = forms.ChoiceField(required=True, label='Группа', choices=GROUP_NUMBERS)
 
     password1 = forms.CharField(required=True, label='Пароль', max_length=30, widget=forms.PasswordInput)
     password2 = forms.CharField(required=True, label='Повторите пароль', max_length=30, widget=forms.PasswordInput)
