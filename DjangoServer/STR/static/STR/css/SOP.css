@@ -4,6 +4,8 @@
 
 body {
     min-height: 100vh;
+    background: url('../media/paperback.png') no-repeat;
+    background-size: 100% auto;
 }
 
 .container {
@@ -59,6 +61,11 @@ select {
     font-weight: 400;
     margin-left: 20px;
     color:rgb(255, 255, 255);
+}
+
+select option {
+    background: #e5e5e5;
+    color: black;
 }
 
 .lefteltop {
@@ -458,6 +465,22 @@ h1 {
 
 .form-panel {
     box-sizing: border-box;
+}
+
+.form-panel select {
+    width: 235%;
+    background: #e5e5e5;
+    border: none;
+    padding: 4px 0;
+    font-family: 'Montserrat-Regular';
+    font-size: 20px;
+    font-weight: 400;
+    color:rgb(0, 0, 0);
+    margin-left: 0px;
+}
+
+.form-panel select option {
+    background: #e5e5e5;
 }
 
 .form-panel.one:before {

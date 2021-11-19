@@ -1,3 +1,8 @@
+.body {
+    background: url('../media/paperback.png') no-repeat;
+    background-size: 100% auto;
+}
+
 .body-teacher {
     display: flex;
     flex-direction: column;
