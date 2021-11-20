@@ -1,8 +1,12 @@
 class CritData:
-    def __init__(self, crit, user_grade, avg_grade) -> None:
+    def __init__(self, crit, user_grade, avg_grade, id) -> None:
+        self.id = id
         self.crit = crit
         self.user_grade = user_grade
         self.avg_grade = avg_grade
+
+    def set_id(self, id):
+        self.id = id
 
     def set_crit(self, crit):
         self.crit = crit
@@ -44,12 +48,13 @@ def avg(curr_teachers_subjects, all_user_grades, criterions, user):
             criterion_avg = 0.0
             criterion_count = 0
 
-            new_crit_data = CritData(None, 0, 0)
+            new_crit_data = CritData(None, 0, 0, 0)
             for all in all_user_grades:
                 if curr == all.teacher_subject_id and all.criterion_name == crit:
                     # учет голосов только проголосовавших юзеров, если 0 -> узер не проголосовал
                     if all.student_id == user:
                         new_crit_data.set_user_grade(all.grade)
+                        new_crit_data.set_id(all.criterion_name.id)
 
                     if all.grade != 0:
                         # criterion avg

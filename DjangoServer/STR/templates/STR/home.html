@@ -85,7 +85,8 @@
                         <div class="popupget">
                             <div class="formget1">
                                 <div class="headerpopup">Оценивание</div>
-                        <form method="get">
+                                <div class="formget1item">
+                            <form method="get">
                             {% csrf_token %}
                             <input id="id_input" name="id_input" value="{{ item.teacher_subject.id }}" style="visibility: collapse;">
 
@@ -129,29 +130,30 @@
                                 </div>
                             </div>
                         </form>
+                        </div>
                             </div>
                             <div class="formget2">
                                 <div class="headerpopup">Средняя оценка</div>
                         <form method="get">
                             {% csrf_token %}
-
+                            <input id="plug" style="visibility: collapse;">
                             <div id="half-stars-example">
                                 {% if item.crits_data %}
                                     {% for crit_obj in item.crits_data %}
                                         <div class="form_item">
                                             <h2>{{ crit_obj.crit.name }}:</h2>
-                                            <div class="rating rating_set" id="rating{{ crit_obj.crit.id }}">
-                                                <div class="rating__body">
-                                                    <div class="rating__active"></div>
-                                                    <div class="rating__items">
-                                                        <input type="radio" class="rating__item" value="1" name="rating{{ crit_obj.crit.id }}">
-                                                        <input type="radio" class="rating__item" value="2" name="rating{{ crit_obj.crit.id }}">
-                                                        <input type="radio" class="rating__item" value="3" name="rating{{ crit_obj.crit.id }}">
-                                                        <input type="radio" class="rating__item" value="4" name="rating{{ crit_obj.crit.id }}">
-                                                        <input type="radio" class="rating__item" value="5" name="rating{{ crit_obj.crit.id }}">
+                                            <div class="starsCrit starsCrit_set">
+                                                <div class="starsCrit__body">
+                                                    <div class="starsCrit__active" id="starsCrit__active,{{ item.teacher_subject.id }},{{ crit_obj.id }}"></div>
+                                                    <div class="starsCrit__items">
+                                                        <input type="radio" class="starsCrit__item" value="1" name="star3">
+                                                        <input type="radio" class="starsCrit__item" value="2" name="star3">
+                                                        <input type="radio" class="starsCrit__item" value="3" name="star3">
+                                                        <input type="radio" class="starsCrit__item" value="4" name="star3">
+                                                        <input type="radio" class="starsCrit__item" value="5" name="star3">
                                                     </div>
                                                 </div>
-                                                <div type="text" class="rating__value" id="rating_value-1">{{ crit_obj.avg_grade }}</div>
+                                                <div type="text" class="markavgCrit" id="markavgCrit,{{ item.teacher_subject.id }},{{ crit_obj.id }}">{{ crit_obj.avg_grade }}</div>
                                             </div>
                                         </div>
                                     {% endfor %}
@@ -187,6 +189,8 @@
                     let numberOfChildren = divTeachers.getElementsByClassName('col-md-4').length;
                     let markavgArray = document.getElementsByClassName('markavg');
                     let starsActiveArray = document.getElementsByClassName('stars__active');
+                    let markavgCritArray = document.getElementsByClassName('markavgCrit');
+                    let starsActiveCritArray = document.getElementsByClassName('starsCrit__active');
 
                     for (let i = 0; i < numberOfChildren; i++)
                     {
@@ -195,11 +199,23 @@
                             let starsActiveID = starsActiveArray[j].id.split('/');
                             if (starsActiveID[1] == markavgID[1])
                             {
-                                console.log(markavgID[1]);
                                 let markavg = document.getElementById('markavg/' + markavgID[1]).textContent;
                                 console.log('Not null, ID = ' + markavgID[1]);
                                 markavg = markavg.replace(/,/, '.');
                                 document.getElementById('stars__active/' + starsActiveID[1]).style.width = (parseFloat(markavg) / 5.0 * 100.0) + "%";
+                            }
+                        };
+
+                        for (var k = 0; k < markavgCritArray.length; k++) {
+                            let markavgCritID = markavgCritArray[k].id.split(',');
+                            let starsActiveCritID = starsActiveCritArray[k].id.split(',');
+                            if ((starsActiveCritID[1] + ',' + starsActiveCritID[2]) == (markavgCritID[1] + ',' + markavgCritID[2]))
+                            {
+                                console.log(markavgCritID[1] + ',' + markavgCritID[2]);
+                                let markavg = document.getElementById('markavgCrit,' + markavgCritID[1] + ',' + markavgCritID[2]).textContent;
+                                markavg = markavg.replace(/,/, '.');
+                                document.getElementById('starsCrit__active,' + starsActiveCritID[1] + ',' + starsActiveCritID[2]).style.width = (parseFloat(markavg) / 5.0 * 100.0) + "%";
+                                console.log(document.getElementById('starsCrit__active,' + starsActiveCritID[1] + ',' + starsActiveCritID[2]).style.width)
                             }
                         };
                     }
