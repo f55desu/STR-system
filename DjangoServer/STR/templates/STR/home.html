@@ -83,7 +83,7 @@
                         </div>
                         <br>
                     </div>
-                    <div class="popup" id="popup">
+                    <div class="popup" id="popup{{ item.teacher_subject.id }}">
                         <div class="headerpopup">Оценивание</div>
                         <form method="get">
                             {% csrf_token %}
@@ -141,8 +141,8 @@
                     darkLayer.id = 'shadow'; // id чтобы подхватить стиль
                     document.body.appendChild(darkLayer); // включаем затемнение
      
-                    var modalWin = document.getElementById('popup{{ el.id }}'); // находим наше "окно"
-                    initRatings('#popup{{ el.id }}');
+                    var modalWin = document.getElementById('popup' + variable); // находим наше "окно"
+                    initRatings('#popup' + variable);
                     modalWin.style.display = 'unset'; // "включаем" его
      
                     darkLayer.onclick = function () {  // при клике на слой затемнения все исчезнет
