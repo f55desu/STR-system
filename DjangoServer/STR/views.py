@@ -34,28 +34,23 @@ def home(request):
         auth.logout(request)
         return redirect('registration')
     if request.method == 'GET' and 'save_button' in request.GET:
-        id_Teacher = request.GET.get('id_input')
+        teacher_subject_id = request.GET.get('id_input')
 
-        print(f'ID_TEACHER:{id_Teacher}')
+        print(f'\nID_TEACHER = {teacher_subject_id}')
         print(request.GET)
 
-        # ratingList = []
-        # print('\n\n')
-        criterions = Criterion.objects.order_by('id')
-        for crit in range(len(criterions)):
-            mark = request.GET.get(f'rating{crit + 1}')
-            if mark == None: mark = 0.0
+        for crit in Criterion.objects.order_by('id'):
+            gradeObj = Grade.objects.filter(student_id=request.user, criterion_name=crit, teacher_subject_id=teacher_subject_id)
+            print(f'GRADE_OBJ = {gradeObj}')
 
-            criterion_id = criterions[crit].id
-            print(criterion_id)
-            subject_id = None
-            # student_id = request.user.id
-            # mark = float(request.GET.get(f'rating{crit}'))
+            if gradeObj:
+                print(f'CRIT_ID = {crit.id}')
+                my_grade = request.GET.get(f'rating{crit.id}')
 
-            #SubjectStudentCriterionMark.objects.create(criterion_id, subject_id, student_id, mark)
-        
-        # # overall = AvgRatingFunc.avg(ratingList)
-        # print(f'Rating overall: {overall}')
+                if my_grade:
+                    print(f'MY_GRADE = {my_grade}')
+                    gradeObj.update(grade=my_grade)
+
 
     subjects_groups = Subject_Group.objects.filter(group_id=request.user.group_name).all()
     teachers_subjects = Teacher_Subject.objects.order_by('id')
@@ -81,7 +76,7 @@ def home(request):
     #     print(f"\nGRADE: {grade}")
 
     data = AvgRatingFunc.avg(curr_teacher_subjects, Grade.objects.all(), criterions, request.user)
-    print(f"\n\n\n {data}")
+    # print(f"\n\n\n {data}")
 
     context = {
         'title': 'Главная страница сайта',

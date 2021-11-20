@@ -130,7 +130,7 @@ class Grade(models.Model):
     student_id = models.ForeignKey('Student', on_delete=models.PROTECT)
     criterion_name = models.ForeignKey('Criterion', to_field='name', db_column='criterion_name', on_delete=models.PROTECT)    
 
-    grade = models.PositiveSmallIntegerField(_('Оценка'))
+    grade = models.PositiveSmallIntegerField(_('Оценка'), null=True, default=0)
 
     # objects = SubjectStudentCriterionMarkManager()
     def __str__(self) -> str:

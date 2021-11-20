@@ -14,7 +14,7 @@
 }
 
 .body-teacher h2{
-    text-align: left;
+    text-align: center;
     font-family: "Montserrat-Medium";
     font-size: 24px;
     color: rgb(81, 111, 163);
@@ -174,7 +174,7 @@
 .popup{
     border-radius: 10px;
     border: solid;
-    width: 40%;
+    width: 80%;
     top: 20%; /* отступ сверху */
     right: 0;
     left: 0;
@@ -206,9 +206,13 @@
 .form_btn {
     width: 171px;
     height: 36px;
-    margin-left: 33%;
     margin-top: 20px;
     background-color: rgb(81, 111, 163);
+}
+
+.form-save{
+    display: flex;
+    justify-content: center;
 }
 
 .form_btn p{
@@ -235,5 +239,22 @@
     color: white;
     font-family: 'Montserrat-Medium';
     font-size: 24px;
-    text-align: center;
+    text-align: center; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
+.popupget{
+    display: flex;
+}
+
+.formget1{
+    width: 50%;
+    border-right: solid;
+} 
+
+.formget2{
+    justify-content: center;
+    width: 50%;
+} 
