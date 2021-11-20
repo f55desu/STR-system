@@ -1,10 +1,5 @@
+# from typing import List, Tuple
 from django.contrib.auth import get_user_model
-# from .models import Student
-# from django.forms import ModelForm, TextInput, Textarea, PasswordInput
-# from django.core.exceptions import ValidationError
-# from django.forms.fields import CharField
-
-from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 
@@ -12,7 +7,7 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
 from .models import *
 
-# Subjects
+
 class SubjectForm(forms.ModelForm):
     class Meta:
         model = Subject
@@ -21,28 +16,32 @@ class SubjectForm(forms.ModelForm):
         }
         fields = '__all__'
 
-# Students
+
 class StudentCreationForm(UserCreationForm):
 
     class Meta:
         model = Student
-        fields = ('email', 'surname', 'name', 'lastname')
+        fields = ('email', 'surname', 'name', 'lastname', 'password', 'group_name')
 
 
 class StudentChangeForm(UserChangeForm):
 
     class Meta:
         model = Student
-        fields = ('email', 'surname', 'name', 'lastname')
+        fields = ('email', 'surname', 'name', 'lastname', 'password', 'group_name')
+
+# def _all_groups() -> List[Tuple[str, str]]:
+#     from django.db import connection
+#     with connection.cursor() as cursor:
+#         cursor.execute("SELECT name id FROM STR_group order by id")
+#         return [(row[0], row[0]) for row in cursor.fetchall()]
 
 
 class RegistrationForm(UserCreationForm):
 
-    def getChoices():
-        GROUP_CHOICES = []
-        for gr in Group.objects.all():
-            GROUP_CHOICES.append((gr.id, gr.name))
-        return GROUP_CHOICES
+    # def __init__(self, *args, **kwargs) -> None:
+    #     super().__init__(*args, **kwargs)
+    #     self.fields['group'].choices = _all_groups()
     
     surname = forms.CharField(required=True, label='Фамилия', max_length=50)
     name = forms.CharField(required=True, label='Имя', max_length=50)
@@ -50,7 +49,9 @@ class RegistrationForm(UserCreationForm):
 
     email = forms.EmailField(required=True, label='Email', max_length=30)
 
-    group = forms.ChoiceField(required=True, label='Группа', choices=getChoices())
+    # group = forms.ChoiceField(required=True, label='Группа', choices=[])
+    group = forms.ModelChoiceField(required=True, label='Группа', queryset=Group.objects.all(), initial=0)
+
     # groupNumber = forms.ChoiceField(required=True, label='Группа', choices=GROUP_NUMBERS)
 
     password1 = forms.CharField(required=True, label='Пароль', max_length=30, widget=forms.PasswordInput)
@@ -69,6 +70,7 @@ class RegistrationForm(UserCreationForm):
             'name',
             'lastname',
             'email',
+            'group',
             'password1',
             'password2',
        )
@@ -99,6 +101,8 @@ class RegistrationForm(UserCreationForm):
         user.lastname = self.cleaned_data['lastname']
 
         user.email = self.cleaned_data['email']
+
+        user.group_name = self.cleaned_data['group']
         
         user.password1 = self.cleaned_data['password1']
         user.password2 = self.cleaned_data['password2']
@@ -106,93 +110,3 @@ class RegistrationForm(UserCreationForm):
         if commit:
             user.save()
         return user
-
-
-# class TicketForm(forms.ModelForm):
-#     class Meta:
-#         model = Ticket
-#         fields = ["name", "description"]
-#         widgets = {
-#             "name": forms.TextInput(attrs={
-#                 'class': 'form-control',
-#                 'placeholder': 'Введите имя'
-#             }),
-#             "description": forms.Textarea(attrs={
-#                 'class': 'form-control',
-#                 'placeholder': 'Введите описание учебного предмета'
-#             }),
-#         }
-# <!-- <h1>Регистрация</h1>
-#     <form method="post">
-#         {% csrf_token %}
-#         {{ form.name }}<br>
-#         {{ form.surname }}<br>
-#         {{ form.lastname }}<br>
-#         {{ form.login }}<br>
-#         {{ form.password }}<br>
-#         <button type="submit" class="btn btn-success">Зарегистрироваться</button>
-#         <span>{{ error }}</span>
-#     </form> -->
-
-# class LoginForm(ModelForm):
-#     login = CharField()
-#     password = CharField(widget=PasswordInput)
-
-#     class Meta:
-#         model = Student
-#         fields = ["login", "password"]
-#         widgets = {
-#             "login": TextInput(attrs={
-#                 'class': 'form-control',
-#                 'placeholder': 'Логин'
-#             }),
-#             "password": TextInput(attrs={
-#                 'class': 'form-control',
-#                 'placeholder': 'Пароль'
-#             }),
-#         }
-
-# class RegistrationForm(ModelForm):
-#     password = CharField(label='Пароль', widget=PasswordInput)
-#     password2 = CharField(label='Повторите пароль', widget=PasswordInput)
-
-#     class Meta:
-#         model = Student
-#         fields = ["surname", "name", "lastname", "login", "password"]
-#         # widgets = {
-#         #     "surname": TextInput(attrs={
-#         #         'class': 'form-control',
-#         #         'placeholder': 'Введите фамилию'
-#         #     }),
-#         #     "name": TextInput(attrs={
-#         #         'class': 'form-control',
-#         #         'placeholder': 'Введите имя'
-#         #     }),
-#         #     "lastname": TextInput(attrs={
-#         #         'class': 'form-control',
-#         #         'placeholder': 'Введите отчество'
-#         #     }),
-#         #     "login": TextInput(attrs={
-#         #         'class': 'form-control',
-#         #         'placeholder': 'Введите логин'
-#         #     }),
-#         #     "password": TextInput(attrs={
-#         #         'class': 'form-control',
-#         #         'placeholder': 'Введите пароль'
-#         #     }),
-#         #     "password2": TextInput(attrs={
-#         #         'class': 'form-control',
-#         #         'placeholder': 'Повторите пароль'
-#         #     }),
-#         # }
-
-#     def clean_password2(self):
-#         cd = self.cleaned_data
-#         if cd['password'] != cd['password2']:
-#             wrongPass = "console.log('Пароли не совпадают!')"
-#             js2py.eval_js(wrongPass)
-#         return cd['password2']        
-
-#         # вывод ошибки при повторном вводе пароля
-#         #if widgets[5] != widgets[4]:
-#            # pass   

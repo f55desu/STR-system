@@ -15,6 +15,7 @@ from django.shortcuts import redirect, render
 # from STR.forms import RegistrationForm, LoginForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from itertools import chain 
 # import json
 
 # from django.http import HttpResponse
@@ -25,10 +26,6 @@ from .forms import RegistrationForm
 from .models import *
 
 from . import AvgRatingFunc
-# from DjangoServer import STR
-
-# con = sqlite3.connect("db.sqlite3")  # подключение к базе данных
-# curs = con.cursor()
 
 # Create your views here.
 class Home:
@@ -38,53 +35,83 @@ class Home:
         self.mark_avg = mark_avg
 
 def home(request):
-    sg = StudentGroup.objects.filter(student_id=request.user)[0]
-    group = Group.objects.filter(studentgroup=sg)[0].name
+    if not request.user.is_authenticated:
+        return redirect('registration')
 
-    # id авторизованного студента
-    student_id = request.user.id
-    # print(f"STUDENT_ID: {student_id}")
+    # current_student = request.user
+    # subjects_groups = Subject_Group.objects.filter(group_id=current_student.group_name).all()
+    # teachers_subjects = Teacher_Subject.objects.all()
+    criterions = Criterion.objects.order_by('id')
+    grades = Grade.objects.filter(student_id=request.user.id)
 
-    # получение id группы некоего студента
-    group_id = StudentGroup.objects.filter(student_id=student_id)[0].group_id_id
-    # print(f"GROUP_ID: {group_id}")
+    if not grades:
+        subjects_groups = Subject_Group.objects.filter(group_id=request.user.group_name).all()
+        teachers_subjects = Teacher_Subject.objects.all()
 
-    # получения списка предметов для текущего студента
-    subjects_groups = SubjectGroup.objects.filter(group_id=group_id).all()
-    # print(f"SUBJECTS_GROUPS: {subjects_groups}")
+        for subject_group in subjects_groups:
+            for teacher_subject in teachers_subjects:
+                if teacher_subject.subject_id == subject_group.subject_id:
+                    for crit in criterions:
+                        newGrade = Grade(teacher_subject_id=teacher_subject, student_id=request.user, criterion_name=crit, grade=0)
+                        newGrade.save()
 
-    # subjects = []
-    # for itr in subjects_groups:
-    #     subjects.append(Subject.objects.filter(subjectgroup=itr)[0].name)
-    # print(f"SUBJECTS: {subjects}")
 
-    # получение инфы обо всех преподах
 
-    global_data = []
+        # combined_list = teachers_subjects.difference(subjects_groups)
+        
+    for grade in grades:
+        print(f"\nGRADE: {grade}")
+
+        # Grade.objects.create()
+        # print(f"GRADES: {len(grades)}")
+    # my_data = zip(subjects_groups, teachers_subjects)
+
+    # sg = StudentGroup.objects.filter(student_id=request.user)[0]
+    # group = Group.objects.filter(studentgroup=sg)[0].name
+
+    # # id авторизованного студента
+    # student_id = request.user.id
+    # # print(f"STUDENT_ID: {student_id}")
+
+    # # получение id группы некоего студента
+    # group_id = StudentGroup.objects.filter(student_id=student_id)[0].group_id_id
+    # # print(f"GROUP_ID: {group_id}")
+
+    # # получения списка предметов для текущего студента
+    # subjects_groups = Subject_Group.objects.filter(group_id=group_id).all()
+    # # print(f"SUBJECTS_GROUPS: {subjects_groups}")
+
+    # # subjects = []
+    # # for itr in subjects_groups:
+    # #     subjects.append(Subject.objects.filter(subjectgroup=itr)[0].name)
+    # # print(f"SUBJECTS: {subjects}")
+
+    # # получение инфы обо всех преподах
+
+    # global_data = []
     # teachers_subjects = {}
-    for itr in subjects_groups:
-        teacher_subject = TeacherSubject.objects.filter(subject_id=itr.subject_id_id).all()
-        # print(f"TEACHER_SUBJECT: {teacher_subject}")
+    # for itr in subjects_groups:
+    #     teacher_subject = Teacher_Subject.objects.filter(subject_id=itr.subject_id_id).all()
+    #     # print(f"TEACHER_SUBJECT: {teacher_subject}")
 
-        if teacher_subject is None or len(teacher_subject) == 0:
-            continue
+    #     if teacher_subject is None or len(teacher_subject) == 0:
+    #         continue
 
-        teacher = Teacher.objects.filter(id=teacher_subject[0].teacher_id_id)[0]
-        subject = Subject.objects.filter(id=teacher_subject[0].subject_id_id)[0]
+    #     teacher = Teacher.objects.filter(id=teacher_subject[0].teacher_id_id)[0]
+    #     subject = Subject.objects.filter(id=teacher_subject[0].subject_id_id)[0]
 
-        if subject.type == 'LECTURE':
-            subject.type = 'Лекция'
-        elif subject.type == 'PRACTICE':
-            subject.type = 'Практика'
+    #     if subject.type == 'LECTURE':
+    #         subject.type = 'Лекция'
+    #     elif subject.type == 'PRACTICE':
+    #         subject.type = 'Практика'
 
-        global_data.append(Home(teacher, subject, 0))
-        # if teachers_subjects is None or len(teachers_subjects) is 0:
-        #     continue
+    #     global_data.append(Home(teacher, subject, 0))
+    #     # if teachers_subjects is None or len(teachers_subjects) is 0:
+    #     #     continue
 
 
     # teachers = Teacher.objects.order_by('surname')
     # subjectTeacher = TeacherSubject.objects.order_by('id')
-    criterions = Criterion.objects.order_by('id')
     # subjects = Subject.objects.order_by('id')
 
     # for index in len(teachers):
@@ -122,9 +149,10 @@ def home(request):
     # group = Group.objects.filter()
 
     context = {
-        'group_name': group,
         'title': 'Главная страница сайта',
-        'global_data': global_data,
+        # 'global_data': global_data,
+        'grades': grades,
+        # 'my_data': my_data,
         # 'teachers': teachers,
         'criterions': criterions,
         # 'subjects': subjects,
@@ -134,6 +162,9 @@ def home(request):
     return render(request, 'STR/home.html', context)
 
 def rating(request):
+    if not request.user.is_authenticated:
+        return redirect('registration')
+
     if request.method == 'GET' and 'save_button' in request.GET:
         rating1 = request.GET.get('rating1')
         if rating1 == None:
@@ -145,11 +176,7 @@ def rating(request):
         print(f'Rating overall: {overall}')
     return render(request, 'STR/rating.html')
 
-def acc_active_sent(request):
-    return render(request, 'STR/acc_active_sent.html')
-
 def registration(request):
-
     if request.user.is_authenticated:
         return redirect('home')
 
@@ -182,41 +209,25 @@ def registration(request):
         form = RegistrationForm(request.POST)
         if form.is_valid():
             user = form.save()
-
-            # print(user.id)
-            # print(request.POST.get('group'))
-            # student_id = user.id
-            group_id = request.POST.get('group')
-            sg = StudentGroup(student_id=user, group_id=Group.objects.filter(id=group_id)[0])
-            # print(sg)
-            sg.save()
-
-
             current_site = get_current_site(request)
             message = render_to_string('STR/acc_active_email.html', {
                 'user': user, 'domain': current_site.domain,
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                 'token': account_activation_token.make_token(user),
             })
+
             # Sending activation link in terminal
-            # user.email_user(subject, message)
             mail_subject = 'Activate your SOP account.'
             to_email = form.cleaned_data.get('email')
             email = EmailMessage(mail_subject, message, to=[to_email])
             email.send()
 
-            # new_user = form_reg.save(commit=False)
-            # new_user.set_password(form_reg.cleaned_data['password'])
-            # new_user.save()
-            # if form._meta.model.USERNAME_FIELD in form.fields:
-            #     form.fields[form._meta.model.USERNAME_FIELD].widget.attrs['autofocus'] = False
-            # return HttpResponse('Please confirm your email address to complete the registration.')
             return redirect('acc_active_sent')
     elif request.method == 'POST' and 'button_logout' in request.POST:
         auth.logout(request)
         return redirect('registration')
-    # else:
-    #     error = 'Форма была неверной'
+    else:
+        pass
 
     form = RegistrationForm()
     # form_login = None
@@ -227,6 +238,10 @@ def registration(request):
     }
 
     return render(request, 'STR/registration.html', context)
+
+# активация акков
+def acc_active_sent(request):
+    return render(request, 'STR/acc_active_sent.html')
 
 def acc_active_confirmed(request):
     if request.method == 'POST' and 'back_button' in request.POST:

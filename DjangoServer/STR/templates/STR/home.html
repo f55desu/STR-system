@@ -22,11 +22,11 @@
         {% load static %}
         <script src='{% static "STR/js/StarRating.js" %}'></script>
         <div id="row" class="row teacher">
-        {% if global_data %}
-            {% for obj in global_data %}
+        {% if grades %}
+            {% for obj in grades %}
             <div class="col-md-4">
                 <div type="button" class="card" onclick="showModalWin('{{ obj.id }}')">
-                    <h6>{{ obj.teacher.surname }} {{ obj.teacher.name }} {{ obj.teacher.lastname }}</h6>
+                    <h6>{{ obj.teacher_subject_id.teacher_id.surname }} {{ obj.teacher_subject_id.teacher_id.name }} {{ obj.teacher_subject_id.teacher_id.lastname }}</h6>
                     {% load static %}
                     <img src="{% static 'STR/media/userava.png' %}" alt="User avatar"/>
                     <!-- {% for subjTeach in subjectTeacher %}
@@ -47,8 +47,8 @@
                         {% endif %}
                     {% endfor %} -->
                     <div class="markANDsubject">
-                    <p id="SubjectName">{{ obj.subject.name }}</p>
-                    <p id="SubjectType">{{ obj.subject.type }}</p>
+                    <p id="SubjectName">{{ obj.teacher_subject_id.subject_id.name }}</p>
+                    <p id="SubjectType">{{ obj.teacher_subject_id.subject_id.type }}</p>
                     <!-- <script>
                         var subjname = document.getElementById('SubjectName');
                         var subjtype = document.getElementById('SubjectType');
@@ -64,9 +64,9 @@
                         }
                         else console.log("Ничего нет!")
                     </script> -->
-                    <p>Почта: {{ obj.teacher.email }}</p>
+                    <p>Почта: {{ obj.teacher_subject_id.teacher_id.email }}</p>
                         <!-- <div class="markstars"> -->
-                            <div class="markavg" type="text" id="markavg{{ obj.id }}">{{ obj.mark_avg }}</div>
+                            <div class="markavg" type="text" id="markavg{{ obj.id }}">0</div>
 
                             <div class="starratingavg">
                                 <div class="stars__body">
@@ -85,7 +85,6 @@
                 </div>
             <br>
             </div>
-            {% endfor %}
             <div class="popup" id="popup">
                 <div class="headerpopup">Оценивание</div>
                 <form method="get">
@@ -95,23 +94,21 @@
                     <div id="half-stars-example">
                         
                         <div class="form_item">
-                            {% for crit in criterions %}
-                                <h2>{{ crit.name }}:</h2>
-                                <div class="rating rating_set" id="rating{{ crit.id }}">
+                                <h2>{{ obj.criterion_name }}:</h2>
+                                <div class="rating rating_set" id="rating{{ obj.criterion_name.criterion_id }}">
                                     <div class="rating__body">
                                         <div class="rating__active"></div>
                                         <div class="rating__items">
-                                            <input type="radio" class="rating__item" value="1" name="rating{{ crit.id }}">
-                                            <input type="radio" class="rating__item" value="2" name="rating{{ crit.id }}">
-                                            <input type="radio" class="rating__item" value="3" name="rating{{ crit.id }}">
-                                            <input type="radio" class="rating__item" value="4" name="rating{{ crit.id }}">
-                                            <input type="radio" class="rating__item" value="5" name="rating{{ crit.id }}">
+                                            <input type="radio" class="rating__item" value="1" name="rating{{ obj.criterion_name.criterion_id }}">
+                                            <input type="radio" class="rating__item" value="2" name="rating{{ obj.criterion_name.criterion_id }}">
+                                            <input type="radio" class="rating__item" value="3" name="rating{{ obj.criterion_name.criterion_id }}">
+                                            <input type="radio" class="rating__item" value="4" name="rating{{ obj.criterion_name.criterion_id }}">
+                                            <input type="radio" class="rating__item" value="5" name="rating{{ obj.criterion_name.criterion_id }}">
                                         </div>
                                     </div>
-                                    <div type="text" class="rating__value" id="rating_value-1">0</div>
+                                    <div type="text" class="rating__value" id="rating_value-1">{{ obj.grade }}</div>
                                 </div>
-                            {% endfor %}
-                            <h2>Общая оценка: </h2>
+                            <!-- <h2>Общая оценка: </h2>
                             <div class="rating rating_set" id="rating5" readonly >
                                 <div class="rating__body">
                                     <div class="rating__active"></div>
@@ -124,8 +121,7 @@
                                     </div>
                                 </div>
                                 <div type="text" class="rating__value" id="rating_value-5">0</div>
-                                <!-- <input type="text" class="rating__value" name="rating_value-Overal" value="0" style="border: none; background: rgba(0,0,0,0);" disabled></input> -->
-                            </div>
+                            </div> -->
                         </div>
                         <div class="form-save">           
                             <button type="submit" class="form_btn btn" name="save_button">Сохранить</button>
@@ -133,6 +129,7 @@
                     </div>
                 </form>
             </div>
+            {% endfor %}
             <script>
                 function showModalWin(variable) {
                     let id_input = document.getElementById('id_input');
@@ -152,8 +149,7 @@
                         return false;
                     };
                 }
-            </script>
-            <script>
+         
                 let divTeachers = document.getElementById("row");
                 let numberOfChildren = divTeachers.getElementsByClassName('col-md-4').length;
 

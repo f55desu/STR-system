@@ -6,101 +6,98 @@ from django.forms import *
 from .forms import *
 from .models import *
 
+import django.contrib.auth.models as mod
 
-class StudentAdmin(UserAdmin):
+class Student_Admin(UserAdmin):
     add_form = StudentCreationForm
     form = StudentChangeForm
     model = Student
 
     # список юзеров в админке
-    list_display = ('id', 'email', 'surname', 'name', 'lastname', 'is_staff', 'is_active', 'is_superuser', )
+    list_display = ('email', 'surname', 'name', 'lastname', 'group_name', 'is_staff', 'is_active', 'is_superuser', )
 
     # фильтр в админке
-    list_filter = ('is_staff', 'is_active', 'is_superuser',)
+    list_filter = ('is_staff', 'is_active', 'is_superuser', )
 
     # просмотр и изменение полей
     fieldsets = (
-        (None, {'fields': ('email', 'surname', 'name', 'lastname', 'password', 'date_joined', 'date_registration', )}),
-        ('Permissions', {'fields': ('is_staff', 'is_active', 'is_superuser',)}),
+        (None, {'fields': ('email', 'surname', 'name', 'lastname', 'group_name', 'password', 'date_joined', 'date_registration', )}),
+        ('Permissions', {'fields': ('is_staff', 'is_active', 'is_superuser', )}),
     )
 
     # поля при добавлении в админке
     add_fieldsets = (
         (None, {
-            'classes': ('wide',),
-            'fields': ('email', 'surname', 'name', 'lastname', 'password1', 'password2', 'is_staff', 'is_active', 'is_superuser')}
+            'classes': ('wide', ),
+            'fields': ('email', 'surname', 'name', 'lastname', 'group_name', 'password1', 'password2', 'is_staff', 'is_active', 'is_superuser', )}
         ),
     )
 
     # поиск по полям
-    search_fields = ('email', 'surname', 'name', 'lastname')
+    search_fields = ('email', 'surname', 'name', 'lastname', 'group_name__name', )
 
     # сортировка списка по полям
-    ordering = ('id',)
+    ordering = ('email', 'surname', 'name', 'lastname', 'group_name', )
 
 
-class TeacherAdmin(admin.ModelAdmin):
+class Teacher_Admin(admin.ModelAdmin):
     model = Teacher
-    list_display = ('id', 'surname', 'name', 'lastname', 'email', )
-    search_fields = ('id', 'surname', 'name', 'lastname', 'email',)
-    ordering = ('id', )
+    list_display = ('email', 'surname', 'name', 'lastname', )
+    search_fields = ('email', 'surname', 'name', 'lastname', )
+    ordering = ('email', 'surname', 'name', 'lastname', )
 
 
-class CriterionAdmin(admin.ModelAdmin):
+class Criterion_Admin(admin.ModelAdmin):
     model = Criterion
-    list_display = ('id', 'name', )
-    search_fields = ('id', 'name', )
-    ordering = ('id', )
+    list_display = ('name', )
+    search_fields = ('name', )
+    ordering = ('name', )
 
 
-class GroupAdmin(admin.ModelAdmin):
+class Group_Admin(admin.ModelAdmin):
     model = Group
-    list_display = ('id', 'name', )
-    search_fields = ('id', 'name', )
-    ordering = ('id', )
+    list_display = ('name', )
+    search_fields = ('name', )
+    ordering = ('name', )
 
 
-class SubjectAdmin(admin.ModelAdmin):
+class Subject_Admin(admin.ModelAdmin):
     model = Subject
     form = SubjectForm
-    list_display = ('id', 'name', 'type', )
-    search_fields = ('id', 'name', 'type', )
-    ordering = ('id', )
-
-    # def save_model(self, request, obj, form, change):
-    #     obj.user = request.user
-    #     super(temp_mainAdmin, self).save_model(request, obj, form, change)
-
-    # def changeform_view(self, request, obj_id, form_url, extra_context=None):
-
-    #     l_mod = temp_main.objects.latest('id')
-
-    #     extra_context = {
-    #         'lmod': l_mod,
-    #     }
-    #     return super(temp_mainAdmin, self).changeform_view(request, obj_id, form_url, extra_context=extra_context)
-
-    # def get_form(self, request, obj=None, **kwargs):
-    #     form = super(SubjectAdmin, self).get_form(request, obj, **kwargs)
-    #     # ) SelectMultiple(choices=(
-    #     #     (1, 'Лекция'),
-    #     #     (2, 'Практика'),
-    #     # ))
-    #     form.base_fields['type'].widget = Select(
-    #         'Лекция',
-    #         'Практика',
-    #         )
-
-    #     return form
-
-admin.site.register(Student, StudentAdmin)
-admin.site.register(Teacher, TeacherAdmin)
-admin.site.register(Criterion, CriterionAdmin)
-admin.site.register(Group, GroupAdmin)
-admin.site.register(Subject, SubjectAdmin)
+    list_display = ('name', 'type', )
+    search_fields = ('name', 'type', )
+    ordering = ('name', 'type', )
 
 
-admin.site.register(StudentGroup)
-admin.site.register(SubjectGroup)
-admin.site.register(TeacherSubject)
-admin.site.register(SubjectStudentCriterionMark)
+class Subject_Group_Admin(admin.ModelAdmin):
+    model = Subject_Group
+    list_display = ('id', 'group_id', 'semester', 'subject_id', )
+    search_fields = ('semester', 'group_id__name', 'subject_id__type', 'subject_id__name', 'id', )
+    ordering = ('id', 'group_id', 'semester', 'subject_id', )
+
+
+class Teacher_Subject_Admin(admin.ModelAdmin):
+    model = Teacher_Subject
+    list_display = ('id', 'teacher_id', 'subject_id', )
+    search_fields = ('teacher_id__email', 'teacher_id__surname', 'teacher_id__name', 'teacher_id__lastname', 'subject_id__type', 'subject_id__name', 'id', )
+    ordering = ('id', 'teacher_id', 'subject_id', )
+
+
+class Grade_Admin(admin.ModelAdmin):
+    model = Grade
+    list_display = ('id', 'student_id', 'teacher_subject_id', 'criterion_name', 'grade', )
+    search_fields = ('student_id__email', 'student_id__surname', 'student_id__name', 'student_id__lastname', 'criterion_name__name', 'teacher_subject_id__subject_id__type', 'teacher_subject_id__subject_id__name', 'teacher_subject_id__teacher_id__email', 'teacher_subject_id__teacher_id__surname', 'teacher_subject_id__teacher_id__name', 'teacher_subject_id__teacher_id__lastname', 'grade', 'id', )
+    ordering = ('id', 'student_id', 'teacher_subject_id', 'criterion_name', 'grade', )
+
+
+admin.site.unregister(mod.Group)
+
+admin.site.register(Student, Student_Admin)
+admin.site.register(Teacher, Teacher_Admin)
+admin.site.register(Criterion, Criterion_Admin)
+admin.site.register(Group, Group_Admin)
+admin.site.register(Subject, Subject_Admin)
+
+admin.site.register(Subject_Group, Subject_Group_Admin)
+admin.site.register(Teacher_Subject, Teacher_Subject_Admin)
+admin.site.register(Grade, Grade_Admin)
