@@ -27,99 +27,9 @@ from .models import *
 
 from . import AvgRatingFunc
 
-# Create your views here.
-class Home:
-    def __init__(self, teacher, subject, mark_avg) -> None:
-        self.teacher = teacher
-        self.subject = subject
-        self.mark_avg = mark_avg
-
 def home(request):
     if not request.user.is_authenticated:
         return redirect('registration')
-
-    # current_student = request.user
-    # subjects_groups = Subject_Group.objects.filter(group_id=current_student.group_name).all()
-    # teachers_subjects = Teacher_Subject.objects.all()
-    criterions = Criterion.objects.order_by('id')
-    grades = Grade.objects.filter(student_id=request.user.id)
-
-    if not grades:
-        subjects_groups = Subject_Group.objects.filter(group_id=request.user.group_name).all()
-        teachers_subjects = Teacher_Subject.objects.all()
-
-        for subject_group in subjects_groups:
-            for teacher_subject in teachers_subjects:
-                if teacher_subject.subject_id == subject_group.subject_id:
-                    for crit in criterions:
-                        newGrade = Grade(teacher_subject_id=teacher_subject, student_id=request.user, criterion_name=crit, grade=0)
-                        newGrade.save()
-
-
-
-        # combined_list = teachers_subjects.difference(subjects_groups)
-        
-    for grade in grades:
-        print(f"\nGRADE: {grade}")
-
-        # Grade.objects.create()
-        # print(f"GRADES: {len(grades)}")
-    # my_data = zip(subjects_groups, teachers_subjects)
-
-    # sg = StudentGroup.objects.filter(student_id=request.user)[0]
-    # group = Group.objects.filter(studentgroup=sg)[0].name
-
-    # # id авторизованного студента
-    # student_id = request.user.id
-    # # print(f"STUDENT_ID: {student_id}")
-
-    # # получение id группы некоего студента
-    # group_id = StudentGroup.objects.filter(student_id=student_id)[0].group_id_id
-    # # print(f"GROUP_ID: {group_id}")
-
-    # # получения списка предметов для текущего студента
-    # subjects_groups = Subject_Group.objects.filter(group_id=group_id).all()
-    # # print(f"SUBJECTS_GROUPS: {subjects_groups}")
-
-    # # subjects = []
-    # # for itr in subjects_groups:
-    # #     subjects.append(Subject.objects.filter(subjectgroup=itr)[0].name)
-    # # print(f"SUBJECTS: {subjects}")
-
-    # # получение инфы обо всех преподах
-
-    # global_data = []
-    # teachers_subjects = {}
-    # for itr in subjects_groups:
-    #     teacher_subject = Teacher_Subject.objects.filter(subject_id=itr.subject_id_id).all()
-    #     # print(f"TEACHER_SUBJECT: {teacher_subject}")
-
-    #     if teacher_subject is None or len(teacher_subject) == 0:
-    #         continue
-
-    #     teacher = Teacher.objects.filter(id=teacher_subject[0].teacher_id_id)[0]
-    #     subject = Subject.objects.filter(id=teacher_subject[0].subject_id_id)[0]
-
-    #     if subject.type == 'LECTURE':
-    #         subject.type = 'Лекция'
-    #     elif subject.type == 'PRACTICE':
-    #         subject.type = 'Практика'
-
-    #     global_data.append(Home(teacher, subject, 0))
-    #     # if teachers_subjects is None or len(teachers_subjects) is 0:
-    #     #     continue
-
-
-    # teachers = Teacher.objects.order_by('surname')
-    # subjectTeacher = TeacherSubject.objects.order_by('id')
-    # subjects = Subject.objects.order_by('id')
-
-    # for index in len(teachers):
-    #     teacher = teachers[index]
-
-    #     global_data.append(Home())
-
-
     if request.method == 'POST' and 'button_logout' in request.POST:
         auth.logout(request)
         return redirect('registration')
@@ -131,6 +41,7 @@ def home(request):
 
         # ratingList = []
         # print('\n\n')
+        criterions = Criterion.objects.order_by('id')
         for crit in range(len(criterions)):
             mark = request.GET.get(f'rating{crit + 1}')
             if mark == None: mark = 0.0
@@ -146,17 +57,36 @@ def home(request):
         # # overall = AvgRatingFunc.avg(ratingList)
         # print(f'Rating overall: {overall}')
 
-    # group = Group.objects.filter()
+    subjects_groups = Subject_Group.objects.filter(group_id=request.user.group_name).all()
+    teachers_subjects = Teacher_Subject.objects.all()
+    criterions = Criterion.objects.order_by('id')
+    grades = Grade.objects.filter(student_id=request.user.id)
+
+    curr_teacher_subjects = []
+    for subject_group in subjects_groups:
+        for teacher_subject in teachers_subjects:
+            if teacher_subject.subject_id == subject_group.subject_id:
+                curr_teacher_subjects.append(teacher_subject)
+
+    if not grades or len(curr_teacher_subjects) != len(grades) / len(criterions):
+        for subject_group in subjects_groups:
+            for teacher_subject in teachers_subjects:
+                if teacher_subject.subject_id == subject_group.subject_id:
+                    for crit in criterions:
+                        if not Grade.objects.filter(teacher_subject_id=teacher_subject, student_id=request.user, criterion_name=crit).exists():
+                            newGrade = Grade(teacher_subject_id=teacher_subject, student_id=request.user, criterion_name=crit, grade=0)
+                            newGrade.save()
+        
+    # for grade in grades:
+    #     print(f"\nGRADE: {grade}")
+
+    data = AvgRatingFunc.avg(curr_teacher_subjects, Grade.objects.all(), criterions, request.user)
+    print(f"\n\n\n {data}")
 
     context = {
         'title': 'Главная страница сайта',
-        # 'global_data': global_data,
-        'grades': grades,
-        # 'my_data': my_data,
-        # 'teachers': teachers,
         'criterions': criterions,
-        # 'subjects': subjects,
-        # 'subjectTeacher': subjectTeacher
+        'data': data,
     }
     
     return render(request, 'STR/home.html', context)
@@ -263,3 +193,62 @@ def activate(request, uidb64, token):
         return redirect('acc_active_confirmed')
     else:
         return HttpResponse('Activation link is invalid!')
+
+
+
+        # Grade.objects.create()
+        # print(f"GRADES: {len(grades)}")
+    # my_data = zip(subjects_groups, teachers_subjects)
+
+    # sg = StudentGroup.objects.filter(student_id=request.user)[0]
+    # group = Group.objects.filter(studentgroup=sg)[0].name
+
+    # # id авторизованного студента
+    # student_id = request.user.id
+    # # print(f"STUDENT_ID: {student_id}")
+
+    # # получение id группы некоего студента
+    # group_id = StudentGroup.objects.filter(student_id=student_id)[0].group_id_id
+    # # print(f"GROUP_ID: {group_id}")
+
+    # # получения списка предметов для текущего студента
+    # subjects_groups = Subject_Group.objects.filter(group_id=group_id).all()
+    # # print(f"SUBJECTS_GROUPS: {subjects_groups}")
+
+    # # subjects = []
+    # # for itr in subjects_groups:
+    # #     subjects.append(Subject.objects.filter(subjectgroup=itr)[0].name)
+    # # print(f"SUBJECTS: {subjects}")
+
+    # # получение инфы обо всех преподах
+
+    # global_data = []
+    # teachers_subjects = {}
+    # for itr in subjects_groups:
+    #     teacher_subject = Teacher_Subject.objects.filter(subject_id=itr.subject_id_id).all()
+    #     # print(f"TEACHER_SUBJECT: {teacher_subject}")
+
+    #     if teacher_subject is None or len(teacher_subject) == 0:
+    #         continue
+
+    #     teacher = Teacher.objects.filter(id=teacher_subject[0].teacher_id_id)[0]
+    #     subject = Subject.objects.filter(id=teacher_subject[0].subject_id_id)[0]
+
+    #     if subject.type == 'LECTURE':
+    #         subject.type = 'Лекция'
+    #     elif subject.type == 'PRACTICE':
+    #         subject.type = 'Практика'
+
+    #     global_data.append(Home(teacher, subject, 0))
+    #     # if teachers_subjects is None or len(teachers_subjects) is 0:
+    #     #     continue
+
+
+    # teachers = Teacher.objects.order_by('surname')
+    # subjectTeacher = TeacherSubject.objects.order_by('id')
+    # subjects = Subject.objects.order_by('id')
+
+    # for index in len(teachers):
+    #     teacher = teachers[index]
+
+    #     global_data.append(Home())
