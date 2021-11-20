@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    {% load static %}
+    <link rel="stylesheet" type='text/css' href='{% static "STR/css/SOP.css" %}'>
+    <link rel="stylesheet" type='text/css' href='{% static "STR/css/StarRating.css" %}'>
+    <link rel="stylesheet" type='text/css' href='{% static "STR/css/activation_email.css" %}'>
+    <link rel="stylesheet" type='text/css' href='{% static "STR/css/home.css" %}'>
+
+    <script type="text/javascript" src='{% static "STR/js/index.js" %}'></script>
+    <!-- <script src='{% static "STR/js/script.js" %}'></script> -->
+    <!-- <script src='{% static "STR/js/StarRating.js" %}'></script> -->
+</head>
+
+<body>
+    <header>
+        <div class="lefteltop">
+            <h2>СОП</h2>
+        <select name="language">
+            <option value="1">Русский (RU)</option>
+            <option value="2">Английский (EN)</option>
+            <option value="3">Немецкий (DE)</option>
+        </select>
+        </div>
+        <div class="righteltop">
+            {% if user.is_authenticated %}
+            <label>{{ user.surname }} {{ user.name }} {{ user.lastname }}</label>
+        {% else %}
+            <label>Вы не вошли в систему</label>
+        {% endif %}
+        {% if user.is_authenticated %}
+        <div class="popupLC" id="popupLC">
+            <form method="get">
+                {% csrf_token %}
+                <div class="headerLC"></div>
+                <div class="bodyLC">
+                    <div class="imageLC">
+                        <img src="{% static 'STR/media/userava.png' %}" class="round_imageLC"/>
+                        <div type="button" class="round_imageLC_small" name="butt_image">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" fill="currentColor" class="bi bi-card-image" viewBox="0 0 16 16">
+                                <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                                <path d="M1.5 2A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13zm13 1a.5.5 0 0 1 .5.5v6l-3.775-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12v.54A.505.505 0 0 1 1 12.5v-9a.5.5 0 0 1 .5-.5h13z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <span class="titleLC">{{ user.surname }} {{ user.name }} {{ user.lastname }}</span>
+                    <span class="subtitleLC">{{ user.email }}</span>
+                    <div class="rowLC">
+                        <span class="propertyLC">Группа</span>
+                        <span class="valueLC" id="group" name="group">{{ user.group_name }}</span>
+                    </div>
+                    <div class="rowLC">
+                        <span class="propertyLC">Город</span>
+                        <span class="valueLC">Воронеж</span>
+                    </div>
+                    <div class="rowLC">
+                        <span class="propertyLC">Страна</span>
+                        <span class="valueLC">Россия</span>
+                    </div>
+                </div>
+            </form>
+        </div>
+        {% endif %}
+        <form method="post">
+            {% csrf_token %}
+                <button type="button" name="button_person" class="button_header" onclick="showLC()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                    <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                </svg>
+                </button>
+                <button type="submit" name="button_settings" class="button_header">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
+                        <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"/>
+                        <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"/>
+                    </svg>
+                </button>
+                <button type="submit" name="button_logout" class="button_header">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
+                        <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+                    </svg>
+                </button>
+        </form>
+        </div>
+                <script>
+                    function showLC() {
+                        var whiteLayer = document.createElement('div'); // слой затемнения
+                        whiteLayer.id = 'sunshine'; // id чтобы подхватить стиль
+                        document.body.appendChild(whiteLayer); // включаем затемнение
+         
+                        var modalWin = document.getElementById('popupLC'); // находим наше "окно"
+                        modalWin.style.display = 'flex'; // "включаем" его
+         
+                        whiteLayer.onclick = function () {  // при клике на слой затемнения все исчезнет
+                            whiteLayer.parentNode.removeChild(whiteLayer); // удаляем затемнение
+                            modalWin.style.display = 'none'; // делаем окно невидимым
+                            return false;
+                        };
+                    }
+                </script>
+    </header>
+    {% block content %}{% endblock %}
+</body>
+</html>
+
+
+<!-- <div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
+        <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="32" class="me-2" viewBox="0 0 118 94" role="img">
+                <title>Bootstrap</title>
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                    d="M24.509 0c-6.733 0-11.715 5.893-11.492 12.284.214 6.14-.064 14.092-2.066 20.577C8.943 39.365 5.547 43.485 0 44.014v5.972c5.547.529 8.943 4.649 10.951 11.153 2.002 6.485 2.28 14.437 2.066 20.577C12.794 88.106 17.776 94 24.51 94H93.5c6.733 0 11.714-5.893 11.491-12.284-.214-6.14.064-14.092 2.066-20.577 2.009-6.504 5.396-10.624 10.943-11.153v-5.972c-5.547-.529-8.934-4.649-10.943-11.153-2.002-6.484-2.28-14.437-2.066-20.577C105.214 5.894 100.233 0 93.5 0H24.508zM80 57.863C80 66.663 73.436 72 62.543 72H44a2 2 0 01-2-2V24a2 2 0 012-2h18.437c9.083 0 15.044 4.92 15.044 12.474 0 5.302-4.01 10.049-9.119 10.88v.277C75.317 46.394 80 51.21 80 57.863zM60.521 28.34H49.948v14.934h8.905c6.884 0 10.68-2.772 10.68-7.727 0-4.643-3.264-7.207-9.012-7.207zM49.948 49.2v16.458H60.91c7.167 0 10.964-2.876 10.964-8.281 0-5.406-3.903-8.178-11.425-8.178H49.948z"
+                    fill="currentColor"></path>
+            </svg>
+            <span class="fs-4">СОП</span>
+        </a>
+
+        <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
+            <a class="me-3 py-2 text-dark text-decoration-none" href="{% url 'home' %}">Главная</a>
+            <a class="me-3 py-2 text-dark text-decoration-none" href="{% url 'rating' %}">Оценивание</a>
+            <a class="me-3 py-2 text-dark text-decoration-none" href="{% url 'registration' %}">Регистрация</a>
+        </nav>
+    </div> -->
