@@ -65,10 +65,10 @@
                     </script> -->
                                 <p>Почта: {{ item.teacher_subject.teacher_id.email }}</p>
                                 <!-- <div class="markstars"> -->
-                                <div class="markavg" type="text" id="markavg{{ item.teacher_subject.id }}">{{ item.grade_avg }}</div>
+                                <div class="markavg" type="text" id="markavg/{{ item.teacher_subject.id }}">{{ item.grade_avg }}</div>
                                 <div class="starratingavg">
                                     <div class="stars__body">
-                                        <div class="stars__active" id="stars__active{{ item.teacher_subject.id }}"></div>
+                                        <div class="stars__active" id="stars__active/{{ item.teacher_subject.id }}"></div>
                                         <div class="stars__items">
                                             <input type="radio" class="stars__item" value="1" name="star3">
                                             <input type="radio" class="stars__item" value="2" name="star3">
@@ -105,7 +105,7 @@
                                                         <input type="radio" class="rating__item" value="5" name="rating{{ crit_obj.crit.id }}">
                                                     </div>
                                                 </div>
-                                                <div type="text" class="rating__value" id="rating_value-1">{{ crit_obj.user_grad }}</div>
+                                                <div type="text" class="rating__value" id="rating_value-1">{{ crit_obj.user_grade }}</div>
                                             </div>
                                             <!-- <h2>Общая оценка: </h2>
                                                     <div class="rating rating_set" id="rating5" readonly >
@@ -154,16 +154,23 @@
          
                     let divTeachers = document.getElementById("row");
                     let numberOfChildren = divTeachers.getElementsByClassName('col-md-4').length;
+                    let markavgArray = document.getElementsByClassName('markavg');
+                    let starsActiveArray = document.getElementsByClassName('stars__active');
 
                     for (let i = 0; i < numberOfChildren; i++)
                     {
-                        let markavg = document.getElementById('markavg' + (i+1)).textContent;
-                        console.log(element.id);
-                        markavg = markavg.replace(/,/, '.');
-
-                        // console.log(markavg);
-                        // console.log(parseFloat(markavg));
-                        document.getElementById('stars__active' + (i+1)).style.width = (parseFloat(markavg) / 5.0 * 100.0) + "%";
+                        for (var j = 0; j < markavgArray.length; j++) {
+                            let markavgID = markavgArray[j].id.split('/');
+                            let starsActiveID = starsActiveArray[j].id.split('/');
+                            if (starsActiveID[1] == markavgID[1])
+                            {
+                                console.log(markavgID[1]);
+                                let markavg = document.getElementById('markavg/' + markavgID[1]).textContent;
+                                console.log('Not null, ID = ' + markavgID[1]);
+                                markavg = markavg.replace(/,/, '.');
+                                document.getElementById('stars__active/' + starsActiveID[1]).style.width = (parseFloat(markavg) / 5.0 * 100.0) + "%";
+                            }
+                        };
                     }
                 </script>
             {% else %}

@@ -58,7 +58,7 @@ def home(request):
         # print(f'Rating overall: {overall}')
 
     subjects_groups = Subject_Group.objects.filter(group_id=request.user.group_name).all()
-    teachers_subjects = Teacher_Subject.objects.all()
+    teachers_subjects = Teacher_Subject.objects.order_by('id')
     criterions = Criterion.objects.order_by('id')
     grades = Grade.objects.filter(student_id=request.user.id)
 
