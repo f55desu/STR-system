@@ -27,6 +27,7 @@ class Subject(models.Model):
     class Meta:
         verbose_name = _('Дисциплина')
         verbose_name_plural = _('Дисциплины')
+        unique_together = ('name', 'type', )
 
 # 2
 class Group(models.Model):
@@ -76,7 +77,7 @@ class Student(AbstractBaseUser, PermissionsMixin):
     name = models.CharField(_('Имя'), default="Jesus", max_length=50)
     lastname = models.CharField(_('Отчество'), blank=True, max_length=50)
 
-    group_name = models.ForeignKey('Group', to_field='name', db_column='group_name', null=True, default=None, blank=True, on_delete=models.PROTECT)
+    group = models.ForeignKey('Group', verbose_name=_('Группа'), null=True, default=None, on_delete=models.PROTECT)
 
     # permissions
     is_staff = models.BooleanField(_('Права администратора'), default=False)
@@ -92,7 +93,7 @@ class Student(AbstractBaseUser, PermissionsMixin):
     objects = StudentManager()
 
     def __str__(self) -> str:
-        return f"{self.surname} {self.name} {self.lastname} ({self.group_name})"
+        return f"{self.surname} {self.name} {self.lastname} ({self.group})"
     
     class Meta:
         verbose_name = _('Студент')
@@ -100,45 +101,48 @@ class Student(AbstractBaseUser, PermissionsMixin):
 
 # 6
 class Subject_Group(models.Model):
-    subject_id = models.ForeignKey('Subject', on_delete=models.PROTECT)
-    group_id = models.ForeignKey('Group', to_field='name', on_delete=models.PROTECT)
+    subject = models.ForeignKey('Subject', verbose_name=_('Дисциплина'), on_delete=models.PROTECT)
+    group = models.ForeignKey('Group', verbose_name=_('Группа'), on_delete=models.PROTECT)
 
     semester = models.PositiveSmallIntegerField(_('Семестр'), default=1)
 
     def __str__(self) -> str:
-        return f"Семестр {self.semester}: {self.group_id} / {self.subject_id}"
+        return f"Семестр {self.semester}: {self.group} / {self.subject}"
 
     class Meta:
         verbose_name = _('Дисциплина_Группа')
         verbose_name_plural = _('Дисциплины_Группы')
+        unique_together = ('subject', 'group', 'semester', )
 
 # 7
 class Teacher_Subject(models.Model):
-    teacher_id = models.ForeignKey('Teacher', on_delete=models.PROTECT)
-    subject_id = models.ForeignKey('Subject', on_delete=models.PROTECT)
+    teacher = models.ForeignKey('Teacher', verbose_name=_('Преподаватель'), on_delete=models.PROTECT)
+    subject = models.ForeignKey('Subject', verbose_name=_('Дисциплина'), on_delete=models.PROTECT)
 
     def __str__(self) -> str:
-        return f"{self.teacher_id} / {self.subject_id}"
+        return f"{self.teacher} / {self.subject}"
 
     class Meta:
         verbose_name = _('Преподаватель_Дисциплина')
         verbose_name_plural = _('Преподаватели_Дисциплины')
+        unique_together = ('teacher', 'subject', )
 
 # 8
 class Grade(models.Model):
-    teacher_subject_id = models.ForeignKey('Teacher_Subject', on_delete=models.PROTECT)
-    student_id = models.ForeignKey('Student', on_delete=models.PROTECT)
-    criterion_name = models.ForeignKey('Criterion', to_field='name', db_column='criterion_name', on_delete=models.PROTECT)    
+    teacher_subject = models.ForeignKey('Teacher_Subject', verbose_name=_('Преподаватель_Дисциплина'), on_delete=models.PROTECT)
+    student = models.ForeignKey('Student', verbose_name=_('Студент'), on_delete=models.PROTECT)
+    criterion = models.ForeignKey('Criterion', verbose_name=_('Критерий'), on_delete=models.PROTECT)    
 
-    grade = models.PositiveSmallIntegerField(_('Оценка'), null=True, default=0)
+    grade = models.PositiveSmallIntegerField(_('Оценка'), default=0)
 
     # objects = SubjectStudentCriterionMarkManager()
     def __str__(self) -> str:
-        return f"Студент: {self.student_id} / Преподаватель: {self.teacher_subject_id} / Критерий: {self.criterion_name} / Оценка: ({self.grade})"
+        return f"Студент: {self.student} / Преподаватель: {self.teacher_subject} / Критерий: {self.criterion} / Оценка: ({self.grade})"
 
     class Meta:
         verbose_name = _('Оценка')
         verbose_name_plural = _('Оценки')
+        unique_together = ('teacher_subject', 'student', 'criterion', 'grade', )
 
 
 

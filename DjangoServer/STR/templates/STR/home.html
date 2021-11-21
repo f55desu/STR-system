@@ -26,7 +26,7 @@
                 {% for item in data %}
                     <div class="col-md-4">
                         <div type="button" class="card" onclick="showModalWin('{{ item.teacher_subject.id }}')">
-                            <h6>{{ item.teacher_subject.teacher_id.surname }} {{ item.teacher_subject.teacher_id.name }} {{ item.teacher_subject.teacher_id.lastname }}</h6>
+                            <h6>{{ item.teacher_subject.teacher.surname }} {{ item.teacher_subject.teacher.name }} {{ item.teacher_subject.teacher.lastname }}</h6>
                             <img src="{% static 'STR/media/userava.png' %}" alt="User avatar"/>
                             <!-- {% for subjTeach in subjectTeacher %}
                         {% if subjTeach.teacher_id == el.id %}
@@ -46,8 +46,8 @@
                         {% endif %}
                     {% endfor %} -->
                             <div class="markANDsubject">
-                                <p id="SubjectName">{{ item.teacher_subject.subject_id.name }}</p>
-                                <p id="SubjectType">{{ item.teacher_subject.subject_id.type }}</p>
+                                <p id="SubjectName">{{ item.teacher_subject.subject.name }}</p>
+                                <p id="SubjectType">{{ item.teacher_subject.subject.type }}</p>
                             <!-- <script>
                         var subjname = document.getElementById('SubjectName');
                         var subjtype = document.getElementById('SubjectType');
@@ -63,7 +63,7 @@
                         }
                         else console.log("Ничего нет!")
                     </script> -->
-                                <p>Почта: {{ item.teacher_subject.teacher_id.email }}</p>
+                                <p>Почта: {{ item.teacher_subject.teacher.email }}</p>
                                 <div class="markavg" type="text" id="markavg/{{ item.teacher_subject.id }}">{{ item.grade_avg }}</div>
                                     <div class="starratingavg">
                                         <div class="stars__body">

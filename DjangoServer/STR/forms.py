@@ -21,14 +21,14 @@ class StudentCreationForm(UserCreationForm):
 
     class Meta:
         model = Student
-        fields = ('email', 'surname', 'name', 'lastname', 'password', 'group_name')
+        fields = ('email', 'surname', 'name', 'lastname', 'password', 'group')
 
 
 class StudentChangeForm(UserChangeForm):
 
     class Meta:
         model = Student
-        fields = ('email', 'surname', 'name', 'lastname', 'password', 'group_name')
+        fields = ('email', 'surname', 'name', 'lastname', 'password', 'group')
 
 # def _all_groups() -> List[Tuple[str, str]]:
 #     from django.db import connection
@@ -102,7 +102,7 @@ class RegistrationForm(UserCreationForm):
 
         user.email = self.cleaned_data['email']
 
-        user.group_name = self.cleaned_data['group']
+        user.group = self.cleaned_data['group']
         
         user.password1 = self.cleaned_data['password1']
         user.password2 = self.cleaned_data['password2']

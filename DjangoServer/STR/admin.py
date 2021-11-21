@@ -14,14 +14,14 @@ class Student_Admin(UserAdmin):
     model = Student
 
     # список юзеров в админке
-    list_display = ('email', 'surname', 'name', 'lastname', 'group_name', 'is_staff', 'is_active', 'is_superuser', )
+    list_display = ('email', 'surname', 'name', 'lastname', 'group', 'is_staff', 'is_active', 'is_superuser', )
 
     # фильтр в админке
     list_filter = ('is_staff', 'is_active', 'is_superuser', )
 
     # просмотр и изменение полей
     fieldsets = (
-        (None, {'fields': ('email', 'surname', 'name', 'lastname', 'group_name', 'password', 'date_joined', 'date_registration', )}),
+        (None, {'fields': ('email', 'surname', 'name', 'lastname', 'group', 'password', 'date_joined', 'date_registration', )}),
         ('Permissions', {'fields': ('is_staff', 'is_active', 'is_superuser', )}),
     )
 
@@ -29,15 +29,15 @@ class Student_Admin(UserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide', ),
-            'fields': ('email', 'surname', 'name', 'lastname', 'group_name', 'password1', 'password2', 'is_staff', 'is_active', 'is_superuser', )}
+            'fields': ('email', 'surname', 'name', 'lastname', 'group', 'password1', 'password2', 'is_staff', 'is_active', 'is_superuser', )}
         ),
     )
 
     # поиск по полям
-    search_fields = ('email', 'surname', 'name', 'lastname', 'group_name__name', )
+    search_fields = ('email', 'surname', 'name', 'lastname', 'group__name', )
 
     # сортировка списка по полям
-    ordering = ('email', 'surname', 'name', 'lastname', 'group_name', )
+    ordering = ('email', 'surname', 'name', 'lastname', 'group', )
 
 
 class Teacher_Admin(admin.ModelAdmin):
@@ -71,23 +71,23 @@ class Subject_Admin(admin.ModelAdmin):
 
 class Subject_Group_Admin(admin.ModelAdmin):
     model = Subject_Group
-    list_display = ('id', 'group_id', 'semester', 'subject_id', )
-    search_fields = ('semester', 'group_id__name', 'subject_id__type', 'subject_id__name', 'id', )
-    ordering = ('id', 'group_id', 'semester', 'subject_id', )
+    list_display = ('id', 'group', 'semester', 'subject', )
+    search_fields = ('semester', 'group__name', 'subject__type', 'subject__name', 'id', )
+    ordering = ('id', 'group', 'semester', 'subject', )
 
 
 class Teacher_Subject_Admin(admin.ModelAdmin):
     model = Teacher_Subject
-    list_display = ('id', 'teacher_id', 'subject_id', )
-    search_fields = ('teacher_id__email', 'teacher_id__surname', 'teacher_id__name', 'teacher_id__lastname', 'subject_id__type', 'subject_id__name', 'id', )
-    ordering = ('id', 'teacher_id', 'subject_id', )
+    list_display = ('id', 'teacher', 'subject', )
+    search_fields = ('teacher__email', 'teacher__surname', 'teacher__name', 'teacher__lastname', 'subject__type', 'subject__name', 'id', )
+    ordering = ('id', 'teacher', 'subject', )
 
 
 class Grade_Admin(admin.ModelAdmin):
     model = Grade
-    list_display = ('id', 'student_id', 'teacher_subject_id', 'criterion_name', 'grade', )
-    search_fields = ('student_id__email', 'student_id__surname', 'student_id__name', 'student_id__lastname', 'criterion_name__name', 'teacher_subject_id__subject_id__type', 'teacher_subject_id__subject_id__name', 'teacher_subject_id__teacher_id__email', 'teacher_subject_id__teacher_id__surname', 'teacher_subject_id__teacher_id__name', 'teacher_subject_id__teacher_id__lastname', 'grade', 'id', )
-    ordering = ('id', 'student_id', 'teacher_subject_id', 'criterion_name', 'grade', )
+    list_display = ('id', 'student', 'teacher_subject', 'criterion', 'grade', )
+    search_fields = ('student__email', 'student__surname', 'student__name', 'student__lastname', 'criterion__name', 'teacher_subject__subject__type', 'teacher_subject__subject__name', 'teacher_subject__teacher__email', 'teacher_subject__teacher__surname', 'teacher_subject__teacher__name', 'teacher_subject__teacher__lastname', 'grade', 'id', )
+    ordering = ('id', 'student', 'teacher_subject', 'criterion', 'grade', )
 
 
 admin.site.unregister(mod.Group)

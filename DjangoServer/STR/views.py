@@ -34,13 +34,13 @@ def home(request):
         auth.logout(request)
         return redirect('registration')
     if request.method == 'GET' and 'save_button' in request.GET:
-        teacher_subject_id = request.GET.get('id_input')
+        teacher_subject = request.GET.get('id_input')
 
-        print(f'\nID_TEACHER = {teacher_subject_id}')
+        print(f'\nID_TEACHER = {teacher_subject}')
         print(request.GET)
 
         for crit in Criterion.objects.order_by('id'):
-            gradeObj = Grade.objects.filter(student_id=request.user, criterion_name=crit, teacher_subject_id=teacher_subject_id)
+            gradeObj = Grade.objects.filter(student=request.user, criterion=crit, teacher_subject=teacher_subject)
             print(f'GRADE_OBJ = {gradeObj}')
 
             if gradeObj:
@@ -52,31 +52,31 @@ def home(request):
                     gradeObj.update(grade=my_grade)
 
 
-    subjects_groups = Subject_Group.objects.filter(group_id=request.user.group_name).all()
+    subjects_groups = Subject_Group.objects.filter(group=request.user.group).all()
     teachers_subjects = Teacher_Subject.objects.order_by('id')
     criterions = Criterion.objects.order_by('id')
-    grades = Grade.objects.filter(student_id=request.user.id)
+    grades = Grade.objects.filter(student=request.user)
 
     curr_teacher_subjects = []
     for subject_group in subjects_groups:
         for teacher_subject in teachers_subjects:
-            if teacher_subject.subject_id == subject_group.subject_id:
+            if teacher_subject.subject == subject_group.subject:
                 curr_teacher_subjects.append(teacher_subject)
 
     if not grades or len(curr_teacher_subjects) != len(grades) / len(criterions):
         for subject_group in subjects_groups:
             for teacher_subject in teachers_subjects:
-                if teacher_subject.subject_id == subject_group.subject_id:
+                if teacher_subject.subject == subject_group.subject:
                     for crit in criterions:
-                        if not Grade.objects.filter(teacher_subject_id=teacher_subject, student_id=request.user, criterion_name=crit).exists():
-                            newGrade = Grade(teacher_subject_id=teacher_subject, student_id=request.user, criterion_name=crit, grade=0)
+                        if not Grade.objects.filter(teacher_subject=teacher_subject, student=request.user, criterion=crit).exists():
+                            newGrade = Grade(teacher_subject=teacher_subject, student=request.user, criterion=crit)
                             newGrade.save()
         
     # for grade in grades:
     #     print(f"\nGRADE: {grade}")
 
     data = AvgRatingFunc.avg(curr_teacher_subjects, Grade.objects.all(), criterions, request.user)
-    # print(f"\n\n\n {data}")
+    print(f"\n\n\n {data}")
 
     context = {
         'title': 'Главная страница сайта',

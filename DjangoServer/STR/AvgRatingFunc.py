@@ -50,11 +50,11 @@ def avg(curr_teachers_subjects, all_user_grades, criterions, user):
 
             new_crit_data = CritData(None, 0, 0, 0)
             for all in all_user_grades:
-                if curr == all.teacher_subject_id and all.criterion_name == crit:
+                if curr == all.teacher_subject and all.criterion == crit:
                     # учет голосов только проголосовавших юзеров, если 0 -> узер не проголосовал
-                    if all.student_id == user:
+                    if all.student == user:
                         new_crit_data.set_user_grade(all.grade)
-                        new_crit_data.set_id(all.criterion_name.id)
+                        new_crit_data.set_id(all.criterion.id)
 
                     if all.grade != 0:
                         # criterion avg
