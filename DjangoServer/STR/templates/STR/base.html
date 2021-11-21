@@ -43,7 +43,6 @@
         {% if user.is_authenticated %}
         <div class="popupLC" id="popupLC">
             <form method="get">
-                {% csrf_token %}
                 <div class="headerLC"></div>
                 <div class="bodyLC">
                     <div class="imageLC">
@@ -136,7 +135,6 @@
 
         <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
             <a class="me-3 py-2 text-dark text-decoration-none" href="{% url 'home' %}">Главная</a>
-            <a class="me-3 py-2 text-dark text-decoration-none" href="{% url 'rating' %}">Оценивание</a>
             <a class="me-3 py-2 text-dark text-decoration-none" href="{% url 'registration' %}">Регистрация</a>
         </nav>
     </div> -->

@@ -28,41 +28,9 @@
                         <div type="button" class="card" onclick="showModalWin('{{ item.teacher_subject.id }}')">
                             <h6>{{ item.teacher_subject.teacher.surname }} {{ item.teacher_subject.teacher.name }} {{ item.teacher_subject.teacher.lastname }}</h6>
                             <img src="{% static 'STR/media/userava.png' %}" alt="User avatar"/>
-                            <!-- {% for subjTeach in subjectTeacher %}
-                        {% if subjTeach.teacher_id == el.id %}
-                            {% for subj in subjects%}
-                                {% if subj.id == subjTeach.subject_id %}
-                                <script>
-                                    var viewSubjectName = null;
-                                    var viewSubjectType = null;
-                                    viewSubjectName = '{{ subj.name }}';
-                                    viewSubjectType = '{{ subj.type }}';
-                                    console.log("WORKING")
-                                    console.log("Name: " + viewSubjectName);
-                                    console.log("Type: " + viewSubjectType)
-                                </script>
-                                {% endif %}
-                            {% endfor %}
-                        {% endif %}
-                    {% endfor %} -->
                             <div class="markANDsubject">
                                 <p id="SubjectName">{{ item.teacher_subject.subject.name }}</p>
                                 <p id="SubjectType">{{ item.teacher_subject.subject.type }}</p>
-                            <!-- <script>
-                        var subjname = document.getElementById('SubjectName');
-                        var subjtype = document.getElementById('SubjectType');
-                        
-                        if (subjname != null && subjtype != null)
-                        {
-                            subjname.innerHTML = Window.viewSubjectName;
-                            switch(Window.viewSubjectType)
-                            {
-                                case "1": subjtype.innerHTML = "Лекция";
-                                case "2": subjtype.innerHTML = "Практика";
-                            }
-                        }
-                        else console.log("Ничего нет!")
-                    </script> -->
                                 <p>Почта: {{ item.teacher_subject.teacher.email }}</p>
                                 <div class="markavg" type="text" id="markavg/{{ item.teacher_subject.id }}">{{ item.grade_avg }}</div>
                                     <div class="starratingavg">
@@ -86,82 +54,65 @@
                             <div class="formget1">
                                 <div class="headerpopup">Оценивание</div>
                                 <div class="formget1item">
-                            <form method="get">
-                            {% csrf_token %}
-                            <input id="id_input" name="id_input" value="{{ item.teacher_subject.id }}" style="visibility: collapse;">
-
-                            <div id="half-stars-example">
-                                {% if item.crits_data %}
-                                    {% for crit_obj in item.crits_data %}
-                                        <div class="form_item">
-                                            <h2>{{ crit_obj.crit.name }}:</h2>
-                                            <div class="rating rating_set" id="rating{{ crit_obj.crit.id }}">
-                                                <div class="rating__body">
-                                                    <div class="rating__active"></div>
-                                                    <div class="rating__items">
-                                                        <input type="radio" class="rating__item" value="1" name="rating{{ crit_obj.crit.id }}">
-                                                        <input type="radio" class="rating__item" value="2" name="rating{{ crit_obj.crit.id }}">
-                                                        <input type="radio" class="rating__item" value="3" name="rating{{ crit_obj.crit.id }}">
-                                                        <input type="radio" class="rating__item" value="4" name="rating{{ crit_obj.crit.id }}">
-                                                        <input type="radio" class="rating__item" value="5" name="rating{{ crit_obj.crit.id }}">
-                                                    </div>
-                                                </div>
-                                                <div type="text" class="rating__value" id="rating_value-1">{{ crit_obj.user_grade }}</div>
-                                            </div>
-                                            <!-- <h2>Общая оценка: </h2>
-                                                    <div class="rating rating_set" id="rating5" readonly >
+                                    <form method="post">
+                                    {% csrf_token %}
+                                    <input id="id_input" name="id_input" value="{{ item.teacher_subject.id }}" style="visibility: collapse;">
+                                    <div id="half-stars-example">
+                                        {% if item.crits_data %}
+                                            {% for crit_obj in item.crits_data %}
+                                                <div class="form_item">
+                                                    <h2>{{ crit_obj.crit.name }}:</h2>
+                                                    <div class="rating rating_set" id="rating{{ crit_obj.crit.id }}">
                                                         <div class="rating__body">
                                                             <div class="rating__active"></div>
                                                             <div class="rating__items">
-                                                                <input type="radio" class="rating__item" value="1" name="rating5">
-                                                                <input type="radio" class="rating__item" value="2" name="rating5">
-                                                                <input type="radio" class="rating__item" value="3" name="rating5">
-                                                                <input type="radio" class="rating__item" value="4" name="rating5">
-                                                                <input type="radio" class="rating__item" value="5" name="rating5">
+                                                                <input type="radio" class="rating__item" value="1" name="rating{{ crit_obj.crit.id }}">
+                                                                <input type="radio" class="rating__item" value="2" name="rating{{ crit_obj.crit.id }}">
+                                                                <input type="radio" class="rating__item" value="3" name="rating{{ crit_obj.crit.id }}">
+                                                                <input type="radio" class="rating__item" value="4" name="rating{{ crit_obj.crit.id }}">
+                                                                <input type="radio" class="rating__item" value="5" name="rating{{ crit_obj.crit.id }}">
                                                             </div>
                                                         </div>
-                                                        <div type="text" class="rating__value" id="rating_value-5">0</div>
-                                                    </div> -->
+                                                        <div type="text" class="rating__value" id="rating_value-1">{{ crit_obj.user_grade }}</div>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        {% endif %}
+                                        <div class="form-save">           
+                                            <button type="submit" class="form_btn btn" name="save_button">Сохранить</button>
                                         </div>
-                                    {% endfor %}
-                                {% endif %}
-                                <div class="form-save">           
-                                    <button type="submit" class="form_btn btn" name="save_button">Сохранить</button>
-                                </div>
+                                    </div>
+                                </form>
                             </div>
-                        </form>
-                        </div>
                             </div>
                             <div class="formget2">
                                 <div class="headerpopup">Средняя оценка</div>
-                        <form method="get">
-                            {% csrf_token %}
-                            <input id="plug" style="visibility: collapse;">
-                            <div id="half-stars-example">
-                                {% if item.crits_data %}
-                                    {% for crit_obj in item.crits_data %}
-                                        <div class="form_item">
-                                            <h2>{{ crit_obj.crit.name }}:</h2>
-                                            <div class="starsCrit starsCrit_set">
-                                                <div class="starsCrit__body">
-                                                    <div class="starsCrit__active" id="starsCrit__active,{{ item.teacher_subject.id }},{{ crit_obj.id }}"></div>
-                                                    <div class="starsCrit__items">
-                                                        <input type="radio" class="starsCrit__item" value="1" name="star3">
-                                                        <input type="radio" class="starsCrit__item" value="2" name="star3">
-                                                        <input type="radio" class="starsCrit__item" value="3" name="star3">
-                                                        <input type="radio" class="starsCrit__item" value="4" name="star3">
-                                                        <input type="radio" class="starsCrit__item" value="5" name="star3">
+                                <form method="get">
+                                    <input id="plug" style="visibility: collapse;">
+                                    <div id="half-stars-example">
+                                        {% if item.crits_data %}
+                                            {% for crit_obj in item.crits_data %}
+                                                <div class="form_item">
+                                                    <h2>{{ crit_obj.crit.name }}:</h2>
+                                                    <div class="starsCrit starsCrit_set">
+                                                        <div class="starsCrit__body">
+                                                            <div class="starsCrit__active" id="starsCrit__active,{{ item.teacher_subject.id }},{{ crit_obj.id }}"></div>
+                                                            <div class="starsCrit__items">
+                                                                <input type="radio" class="starsCrit__item" value="1" name="star3">
+                                                                <input type="radio" class="starsCrit__item" value="2" name="star3">
+                                                                <input type="radio" class="starsCrit__item" value="3" name="star3">
+                                                                <input type="radio" class="starsCrit__item" value="4" name="star3">
+                                                                <input type="radio" class="starsCrit__item" value="5" name="star3">
+                                                            </div>
+                                                        </div>
+                                                        <div type="text" class="markavgCrit" id="markavgCrit,{{ item.teacher_subject.id }},{{ crit_obj.id }}">{{ crit_obj.avg_grade }}</div>
                                                     </div>
                                                 </div>
-                                                <div type="text" class="markavgCrit" id="markavgCrit,{{ item.teacher_subject.id }},{{ crit_obj.id }}">{{ crit_obj.avg_grade }}</div>
-                                            </div>
-                                        </div>
-                                    {% endfor %}
-                                {% endif %}
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </form>
                             </div>
-                        </form>
-                            </div>
-                            
                         </div>
                     </div>
                 {% endfor %}
