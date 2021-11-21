@@ -141,3 +141,9 @@ EMAIL_PORT = 587
 
 AUTH_USER_MODEL = 'STR.Student'
 LOGIN_REDIRECT_URL = '/'
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+    }
+}

@@ -36,7 +36,7 @@
         </div>
         <div class="righteltop">
             {% if user.is_authenticated %}
-            <label>{{ user.surname }} {{ user.name }} {{ user.lastname }}</label>
+            <label>{{ user.get_full_name }}</label>
         {% else %}
             <label>Вы не вошли в систему</label>
         {% endif %}
@@ -55,11 +55,17 @@
                             </svg>
                         </div>
                     </div>
-                    <span class="titleLC">{{ user.surname }} {{ user.name }} {{ user.lastname }}</span>
+                    <span class="titleLC">{{ user.get_full_name }}</span>
                     <span class="subtitleLC">{{ user.email }}</span>
                     <div class="rowLC">
                         <span class="propertyLC">Группа</span>
-                        <span class="valueLC" id="group" name="group">{{ user.group }}</span>
+                        <span class="valueLC" id="group" name="group">
+                            {% if user.group %}
+                                {{ user.group }}
+                            {% else %}
+                                -
+                            {% endif %}    
+                        </span>
                     </div>
                     <div class="rowLC">
                         <span class="propertyLC">Город</span>

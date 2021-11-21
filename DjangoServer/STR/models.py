@@ -44,7 +44,7 @@ class Group(models.Model):
 class Teacher(models.Model): 
     surname = models.CharField('Фамилия', max_length=50)
     name = models.CharField('Имя', max_length=50)
-    lastname = models.CharField('Отчество', blank=True, max_length=50)
+    lastname = models.CharField('Отчество', blank=True, null=True, default=None, max_length=50)
 
     email = models.CharField('Почта', unique=True, max_length=30)
     # mark_avg = models.FloatField('Средняя оценка')
@@ -75,9 +75,9 @@ class Student(AbstractBaseUser, PermissionsMixin):
     # personal info
     surname = models.CharField(_('Фамилия'), default="Christ", max_length=50)
     name = models.CharField(_('Имя'), default="Jesus", max_length=50)
-    lastname = models.CharField(_('Отчество'), blank=True, max_length=50)
+    lastname = models.CharField(_('Отчество'), blank=True, null=True, default=None, max_length=50)
 
-    group = models.ForeignKey('Group', verbose_name=_('Группа'), null=True, default=None, on_delete=models.PROTECT)
+    group = models.ForeignKey('Group', verbose_name=_('Группа'), blank=True, null=True, default=None, on_delete=models.PROTECT)
 
     # permissions
     is_staff = models.BooleanField(_('Права администратора'), default=False)
@@ -94,6 +94,11 @@ class Student(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self) -> str:
         return f"{self.surname} {self.name} {self.lastname} ({self.group})"
+
+    def get_full_name(self):
+        if self.lastname:
+            return f"{self.surname} {self.name} {self.lastname}"
+        return f"{self.surname} {self.name}"
     
     class Meta:
         verbose_name = _('Студент')

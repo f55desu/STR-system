@@ -142,7 +142,7 @@ def registration(request):
             })
 
             # Sending activation link in terminal
-            mail_subject = 'Activate your SOP account.'
+            mail_subject = 'СОП. Активация аккаунта.'
             to_email = form.cleaned_data.get('email')
             email = EmailMessage(mail_subject, message, to=[to_email])
             email.send()
