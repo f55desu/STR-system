@@ -374,6 +374,14 @@ h1 {
     color: rgb(81, 111, 163);
 }
 
+.popup h6 {
+    padding: 4px 0;
+    font-family: 'Montserrat-Medium';
+    font-size: 16px;
+    font-weight: 500;
+    color: rgb(81, 111, 163);
+}
+
 /*устаканивание всех элементов в окнах*/
 .form-group {
     display: -webkit-box;
