@@ -42,7 +42,7 @@ class RegistrationForm(UserCreationForm):
     # def __init__(self, *args, **kwargs) -> None:
     #     super().__init__(*args, **kwargs)
     #     self.fields['group'].choices = _all_groups()
-    
+
     surname = forms.CharField(required=True, label='Фамилия', max_length=50)
     name = forms.CharField(required=True, label='Имя', max_length=50)
     lastname = forms.CharField(required=False, label='Отчество', max_length=50)
@@ -50,7 +50,7 @@ class RegistrationForm(UserCreationForm):
     email = forms.EmailField(required=True, label='Email', max_length=30)
 
     # group = forms.ChoiceField(required=True, label='Группа', choices=[])
-    group = forms.ModelChoiceField(required=True, label='Группа', queryset=Group.objects.all(), initial=0)
+    group = forms.ModelChoiceField(required=True, label='Группа', queryset=Group.objects.all().order_by('name'), initial=0)
 
     # groupNumber = forms.ChoiceField(required=True, label='Группа', choices=GROUP_NUMBERS)
 
@@ -103,7 +103,7 @@ class RegistrationForm(UserCreationForm):
         user.email = self.cleaned_data['email']
 
         user.group = self.cleaned_data['group']
-        
+
         user.password1 = self.cleaned_data['password1']
         user.password2 = self.cleaned_data['password2']
 
