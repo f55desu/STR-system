@@ -43,7 +43,7 @@ header {
 }
 
 /*СОП*/
-h2 {
+h3 {
     padding: 4px 0;
     font-family: 'Montserrat-Regular';
     font-size: 24px;
@@ -148,12 +148,13 @@ svg {
 }
 
 /*Наименование*/
-.LogoName p{
+.LogoName h1 {
     padding: 4px 0;
     font-family: 'Montserrat-Bold';
     font-size: 36px;
     font-weight: 700;
     margin-left: 49px;
+    line-height: 49px;
     color: white;
 }
 
@@ -366,7 +367,7 @@ svg {
     background-color: rgb(43, 59, 85);
 }
 
-h1 {
+h1, h2 {
     padding: 4px 0;
     font-family: 'Montserrat-Medium';
     font-size: 36px;
@@ -760,7 +761,7 @@ h1 {
         text-align: center;
     }
 
-    .LogoName p {
+    .LogoName h1 {
         margin-left: 0;
     }
 

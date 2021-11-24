@@ -12,7 +12,7 @@
                 <div class="col-md-12">
                     <div class="LogoName">
                         <img src="{% static 'STR/media/Logo.png' %}"/>
-                        <p>СТУДЕНЧЕСКАЯ <br> ОЦЕНКА ПРЕПОДАВАТЕЛЕЙ</p>
+                        <h1>СТУДЕНЧЕСКАЯ <br> ОЦЕНКА ПРЕПОДАВАТЕЛЕЙ</h1>
                     </div>
                 </div>
             </div>
@@ -43,7 +43,7 @@
                 <div class="col-md-4 col-sm-12">
                     <div class="form-panel one" >
                         <div class="form-panel-body">
-                            <h1>Вход</h1>
+                            <h2>Вход</h2>
                             <div class="form-content">
                                 <form method="post">
                                     {% csrf_token %}
@@ -73,7 +73,7 @@
                         <div class="form-panel two">
                             <div class="form-toggle"></div>
                             <div class="form-panel-body">
-                                <h1>Регистрация</h1>
+                                <h2>Регистрация</h2>
                                 <div>
                                     <form method="post">
                                         {% csrf_token %}
@@ -94,16 +94,3 @@
     <div class="footer">
     </div>
 {% endblock %}
-
-
-<!-- <h1>Регистрация</h1>
-<form method="post">
-    {% csrf_token %}
-    {{ form.name }}<br>
-    {{ form.surname }}<br>
-    {{ form.lastname }}<br>
-    {{ form.login }}<br>
-    {{ form.password }}<br>
-    <button type="submit" class="btn btn-success">Зарегистрироваться</button>
-    <span>{{ error }}</span>
-</form> -->
