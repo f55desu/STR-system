@@ -24,31 +24,32 @@
         <div id="row" class="row teacher">
             {% if data %}
                 {% for item in data %}
-                    <div class="col-md-4">
-                        <div type="button" class="card" onclick="showModalWin('{{ item.teacher_subject.id }}')">
-                            <h6>{{ item.teacher_subject.teacher.surname }} {{ item.teacher_subject.teacher.name }} {{ item.teacher_subject.teacher.lastname }}</h6>
-                            <img src="{% static 'STR/media/userava.png' %}" alt="User avatar"/>
-                            <div class="markANDsubject">
-                                <p id="SubjectName">{{ item.teacher_subject.subject.name }}</p>
-                                <p id="SubjectType">{{ item.teacher_subject.subject.type }}</p>
-                                <p>Почта: {{ item.teacher_subject.teacher.email }}</p>
+                    <div type="button" class="card" onclick="showModalWin('{{ item.teacher_subject.id }}')">
+                        <h6>{{ item.teacher_subject.teacher.surname }} {{ item.teacher_subject.teacher.name }} {{ item.teacher_subject.teacher.lastname }}</h6>
+                        <img src="{% static 'STR/media/userava.png' %}" alt="User avatar"/>
+                        <div class="markANDsubject">
+                            <p id="SubjectName">{{ item.teacher_subject.subject.name }}</p>
+                            <p id="SubjectType">{{ item.teacher_subject.subject.type }}</p>
+                            <p>Почта: {{ item.teacher_subject.teacher.email }}</p>
+                            <div class="avgrow">
                                 <div class="markavg" type="text" id="markavg/{{ item.teacher_subject.id }}">{{ item.grade_avg }}</div>
-                                    <div class="starratingavg">
-                                        <div class="stars__body">
-                                            <div class="stars__active" id="stars__active/{{ item.teacher_subject.id }}"></div>
-                                            <div class="stars__items">
-                                                <input type="radio" class="stars__item" value="1" name="star3">
-                                                <input type="radio" class="stars__item" value="2" name="star3">
-                                                <input type="radio" class="stars__item" value="3" name="star3">
-                                                <input type="radio" class="stars__item" value="4" name="star3">
-                                                <input type="radio" class="stars__item" value="5" name="star3">
-                                            </div>
+                                <div class="starratingavg">
+                                    <div class="stars__body">
+                                        <div class="stars__active" id="stars__active/{{ item.teacher_subject.id }}"></div>
+                                        <div class="stars__items">
+                                            <input type="radio" class="stars__item" value="1" name="star3">
+                                            <input type="radio" class="stars__item" value="2" name="star3">
+                                            <input type="radio" class="stars__item" value="3" name="star3">
+                                            <input type="radio" class="stars__item" value="4" name="star3">
+                                            <input type="radio" class="stars__item" value="5" name="star3">
                                         </div>
                                     </div>
+                                </div>
                             </div>
+                            
                         </div>
-                        <br>
                     </div>
+                    <br>
                     <div class="popup" id="popup{{ item.teacher_subject.id }}">
                         <div class="popupget">
                             <div class="formget1">
@@ -61,7 +62,7 @@
                                         {% if item.crits_data %}
                                             {% for crit_obj in item.crits_data %}
                                                 <div class="form_item">
-                                                    <h2>{{ crit_obj.crit.name }}:</h2>
+                                                    <h6>{{ crit_obj.crit.name }}:</h6>
                                                     <div class="rating rating_set" id="rating{{ crit_obj.crit.id }}">
                                                         <div class="rating__body">
                                                             <div class="rating__active"></div>
@@ -87,13 +88,12 @@
                             </div>
                             <div class="formget2">
                                 <div class="headerpopup">Средняя оценка</div>
-                                <form method="get">
-                                    <input id="plug" style="visibility: collapse;">
+                                <input id="plug" style="visibility: collapse;">
                                     <div id="half-stars-example">
                                         {% if item.crits_data %}
                                             {% for crit_obj in item.crits_data %}
                                                 <div class="form_item">
-                                                    <h2>{{ crit_obj.crit.name }}:</h2>
+                                                    <h6>{{ crit_obj.crit.name }}:</h6>
                                                     <div class="starsCrit starsCrit_set">
                                                         <div class="starsCrit__body">
                                                             <div class="starsCrit__active" id="starsCrit__active,{{ item.teacher_subject.id }},{{ crit_obj.id }}"></div>
@@ -111,7 +111,6 @@
                                             {% endfor %}
                                         {% endif %}
                                     </div>
-                                </form>
                             </div>
                         </div>
                     </div>
@@ -137,7 +136,7 @@
                 }
          
                     let divTeachers = document.getElementById("row");
-                    let numberOfChildren = divTeachers.getElementsByClassName('col-md-4').length;
+                    let numberOfChildren = divTeachers.getElementsByClassName('card').length;
                     let markavgArray = document.getElementsByClassName('markavg');
                     let starsActiveArray = document.getElementsByClassName('stars__active');
                     let markavgCritArray = document.getElementsByClassName('markavgCrit');

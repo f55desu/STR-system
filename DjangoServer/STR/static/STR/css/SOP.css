@@ -5,7 +5,7 @@
 body {
     min-height: 100vh;
     background: url('../media/paperback.png') no-repeat;
-    background-size: 100% auto;
+    background-size: cover;
 }
 
 .container {
@@ -117,10 +117,11 @@ svg {
     position: relative;
     min-height: 140vh;
     background: url('../media/background.png') no-repeat;
-    background-size: 100% 140vh;
+    background-size: cover;
     color: black;
     margin: 0 auto;
     overflow: hidden;
+    padding-bottom: 400px;
 }
 
 .form-body {
@@ -134,7 +135,6 @@ svg {
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 168px;
     background-color: none;
     color: black;
     margin: 0 auto;
@@ -159,8 +159,8 @@ svg {
 
 .carousel {
     position: relative;
+    margin-bottom: 20px;
     width: 100%;
-    height: 574px;
     color: black;
     border-radius: 5px;
 }
@@ -281,8 +281,7 @@ svg {
     position: relative;
     margin-left: auto;
     display: flex;
-    width: 380px;
-    height: 380px;
+    height: 400px;
     background-color: #FFFFFF;
     color: black;
     font-family: 'Montserrat-Medium';
@@ -343,7 +342,7 @@ svg {
     justify-content: center;
     align-items: center;
     width: 28px;
-    height: 380px;
+    height: 100%;
     cursor: pointer;
     border-radius: 0 5px 5px 0;
     border-color: #C4C4C4;
@@ -385,6 +384,7 @@ h1 {
     -webkit-box-pack: justify;
         -ms-flex-pack: justify;
             justify-content: space-between;
+    flex-direction: column;
 }
 
 .form-group:last-child {
@@ -396,8 +396,8 @@ h1 {
     margin: 3px 0;
     display: block;
     color: rgba(0, 0, 0, 0.6);
-    width: 73px;
-    height: 23px;
+    width: 100%;
+    min-height: 23px;
     font-family: 'Montserrat-Medium';
     font-size: 18px;
     font-weight: 500;
@@ -437,7 +437,6 @@ h1 {
     outline: none;
     margin-top: 5px;
     background:  rgb(81, 111, 163);
-    width: 390px;
     height: 51px;
     border: 0;
     border-radius: 4px;
@@ -468,7 +467,7 @@ h1 {
 }
 
 .form-panel select {
-    width: 235%;
+    width: 100%;
     background: #e5e5e5;
     border: none;
     padding: 4px 0;
@@ -743,4 +742,36 @@ h1 {
     line-height: 17px;
     color: #535A66;
     outline: none;
+}
+
+@media (max-width: 576px) {
+    .LogoName {
+        display: flex;
+        flex-direction: column;
+        font-size: 18px;
+        text-align: center;
+    }
+
+    .LogoName p {
+        margin-left: 0;
+    }
+
+    header {
+        padding: 0px 10px
+    }
+
+    header svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    header * {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 768px) {
+    .righteltop label {
+        font-size: 12px;
+    }
 }
