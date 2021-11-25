@@ -112,6 +112,9 @@ def registration(request):
             email.send()
 
             return redirect('acc_active_sent')
+        else:
+            pass
+                #error
     elif request.method == 'POST' and 'button_logout' in request.POST:
         auth.logout(request)
         return redirect('registration')

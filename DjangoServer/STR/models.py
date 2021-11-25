@@ -15,7 +15,7 @@ class Subject(models.Model):
         ("Практика", 'Практика'),
     )
 
-    name = models.CharField(_('Название'), max_length=100)
+    name = models.CharField(_('Название'), max_length=320)
     type = models.CharField(_('Тип'), default="Лекция", choices=SUBJECT_CHOICES, max_length=50)
 
     # def __str__(self) -> str:
@@ -31,7 +31,7 @@ class Subject(models.Model):
 
 # 2
 class Group(models.Model):
-    name = models.CharField('Название', unique=True, max_length=100)
+    name = models.CharField('Название', unique=True, max_length=320)
 
     def __str__(self) -> str:
         return self.name
@@ -42,11 +42,11 @@ class Group(models.Model):
 
 # 3
 class Teacher(models.Model): 
-    surname = models.CharField('Фамилия', max_length=50)
-    name = models.CharField('Имя', max_length=50)
-    lastname = models.CharField('Отчество', blank=True, null=True, default=None, max_length=50)
+    surname = models.CharField('Фамилия', max_length=320)
+    name = models.CharField('Имя', max_length=320)
+    lastname = models.CharField('Отчество', blank=True, null=True, default=None, max_length=320)
 
-    email = models.CharField('Почта', unique=True, max_length=30)
+    email = models.CharField('Почта', unique=True, max_length=320)
     # mark_avg = models.FloatField('Средняя оценка')
 
     def __str__(self) -> str:
@@ -58,7 +58,7 @@ class Teacher(models.Model):
 
 # 4
 class Criterion(models.Model):
-    name = models.CharField('Содержание критерия', unique=True, max_length=999)
+    name = models.CharField('Содержание критерия', unique=True, max_length=320)
 
     def __str__(self):
         return self.name
@@ -73,9 +73,9 @@ class Student(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_('Email'), unique=True)
 
     # personal info
-    surname = models.CharField(_('Фамилия'), default="Christ", max_length=50)
-    name = models.CharField(_('Имя'), default="Jesus", max_length=50)
-    lastname = models.CharField(_('Отчество'), blank=True, null=True, default=None, max_length=50)
+    surname = models.CharField(_('Фамилия'), default="Christ", max_length=320)
+    name = models.CharField(_('Имя'), default="Jesus", max_length=320)
+    lastname = models.CharField(_('Отчество'), blank=True, null=True, default=None, max_length=320)
 
     group = models.ForeignKey('Group', verbose_name=_('Группа'), blank=True, null=True, default=None, on_delete=models.PROTECT)
 

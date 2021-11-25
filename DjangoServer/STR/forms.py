@@ -43,11 +43,11 @@ class RegistrationForm(UserCreationForm):
     #     super().__init__(*args, **kwargs)
     #     self.fields['group'].choices = _all_groups()
 
-    surname = forms.CharField(required=True, label='Фамилия', max_length=50)
-    name = forms.CharField(required=True, label='Имя', max_length=50)
-    lastname = forms.CharField(required=False, label='Отчество', max_length=50)
+    surname = forms.CharField(required=True, label='Фамилия', max_length=320)
+    name = forms.CharField(required=True, label='Имя', max_length=320)
+    lastname = forms.CharField(required=False, label='Отчество', max_length=320)
 
-    email = forms.EmailField(required=True, label='Email', max_length=30)
+    email = forms.EmailField(required=True, label='Email', max_length=320)
 
     # group = forms.ChoiceField(required=True, label='Группа', choices=[])
     group = forms.ModelChoiceField(required=True, label='Группа', queryset=Group.objects.all().order_by('name'), initial=0)
