@@ -11,9 +11,9 @@ from django.core.mail import EmailMessage
 from django.utils.encoding import force_text
 
 from django.shortcuts import redirect, render
-from django.contrib import auth
+from django.contrib.auth import login, logout
 
-from .forms import RegistrationForm
+from .forms import LoginForm, RegistrationForm
 from .models import *
 
 from . import AvgRatingFunc
@@ -22,7 +22,7 @@ def home(request):
     if not request.user.is_authenticated:
         return redirect('registration')
     if request.method == 'POST' and 'button_logout' in request.POST:
-        auth.logout(request)
+        logout(request)
         return redirect('registration')
     if request.method == 'POST' and 'save_button' in request.POST:
         teacher_subject = request.POST.get('id_input')
@@ -81,18 +81,31 @@ def registration(request):
     if request.user.is_authenticated:
         return redirect('home')
 
-    error = ''
+    # error = ''
     if request.method == 'POST' and 'login_button' in request.POST:
-        email = request.POST.get('email', '')
-        password = request.POST.get('password', '')
+        login_form = LoginForm(request.POST)
+        if login_form.is_valid():
+            user = login_form.login(request)
+            if user:
+                login(request, user)
+                return redirect('home')
 
-        user = auth.authenticate(email=email, password=password)
-        if user is not None and user.is_active:
-            auth.login(request, user)
-            return redirect('home')
-        else:
-            # error msg
-            pass
+        form = RegistrationForm()
+        context = {
+            # 'form_login': form_login,
+            'login_form': login_form,
+            'form': form,
+        }
+
+        return render(request, 'STR/registration.html', context)
+        
+            # email = request.POST.get('email', '')
+            # password = request.POST.get('password', '')
+
+            # user = auth.authenticate(email=email, password=password)
+
+            # if user is not None and user.is_active:
+            #     auth.login(request, user)
 
     elif request.method == 'POST' and 'reg_button' in request.POST:    
         form = RegistrationForm(request.POST)
@@ -112,21 +125,27 @@ def registration(request):
             email.send()
 
             return redirect('acc_active_sent')
-        else:
-            pass
-                #error
-    elif request.method == 'POST' and 'button_logout' in request.POST:
-        auth.logout(request)
-        return redirect('registration')
-    else:
-        pass
+        
+        login_form = LoginForm
+        context = {
+            # 'form_login': form_login,
+            'login_form': login_form,
+            'form': form,
+        }
 
+        return render(request, 'STR/registration.html', context)
+
+    elif request.method == 'POST' and 'button_logout' in request.POST:
+        logout(request)
+        return redirect('registration')
+
+    login_form = LoginForm()
     form = RegistrationForm()
     # form_login = None
     context = {
         # 'form_login': form_login,
+        'login_form': login_form,
         'form': form,
-        'error': error
     }
 
     return render(request, 'STR/registration.html', context)

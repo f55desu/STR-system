@@ -4,6 +4,10 @@ from django.contrib.auth.forms import UserCreationForm
 from django import forms
 
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.core.exceptions import ValidationError
+from django.contrib.auth import authenticate
+# from django.core.validators import validate_email
+# from django.contrib.auth.password_validation import validate_password
 
 from .models import *
 
@@ -37,34 +41,74 @@ class StudentChangeForm(UserChangeForm):
 #         return [(row[0], row[0]) for row in cursor.fetchall()]
 
 
+class LoginForm(forms.Form):
+    email = forms.EmailField(required=True, label='Email', max_length=320)
+    password = forms.CharField(required=True, label='Пароль', max_length=320, widget=forms.PasswordInput)
+
+    error_messages = {
+        'not_user': 'Неправильный Email или пароль!',
+        'error': 'Форма не валидна!',
+    }
+
+    class Meta:
+        model = get_user_model()
+        fields = (
+            'email',
+            'password',
+       )
+
+    def clean(self):
+        email = self.cleaned_data.get('email')
+        password = self.cleaned_data.get('password')
+        user = authenticate(email=email, password=password)
+
+        if not user or not user.is_active:
+            raise forms.ValidationError(
+                self.error_messages['not_user'],
+                code='not_user',
+            )
+        return self.cleaned_data
+
+    def login(self, request):
+        email = self.cleaned_data.get('email')
+        password = self.cleaned_data.get('password')
+        user = authenticate(email=email, password=password)
+        return user
+
 class RegistrationForm(UserCreationForm):
 
     # def __init__(self, *args, **kwargs) -> None:
     #     super().__init__(*args, **kwargs)
     #     self.fields['group'].choices = _all_groups()
 
-    surname = forms.CharField(required=True, label='Фамилия', max_length=320)
-    name = forms.CharField(required=True, label='Имя', max_length=320)
-    lastname = forms.CharField(required=False, label='Отчество', max_length=320)
+    surname = forms.CharField(required=True, label='* Фамилия', max_length=320, help_text='Не более 320 символов')
+    name = forms.CharField(required=True, label='* Имя', max_length=320, help_text='Не более 320 символов')
+    lastname = forms.CharField(required=False, label='Отчество', max_length=320, help_text='Не более 320 символов')
 
-    email = forms.EmailField(required=True, label='Email', max_length=320)
+    email = forms.EmailField(required=True, label='* Email', max_length=320, help_text='Не более 320 символов')
 
     # group = forms.ChoiceField(required=True, label='Группа', choices=[])
-    group = forms.ModelChoiceField(required=True, label='Группа', queryset=Group.objects.all().order_by('name'), initial=0)
+    group = forms.ModelChoiceField(required=True, label='* Группа', queryset=Group.objects.all().order_by('name'), initial=0)
 
     # groupNumber = forms.ChoiceField(required=True, label='Группа', choices=GROUP_NUMBERS)
 
-    password1 = forms.CharField(required=True, label='Пароль', max_length=30, widget=forms.PasswordInput)
-    password2 = forms.CharField(required=True, label='Повторите пароль', max_length=30, widget=forms.PasswordInput)
+    password1 = forms.CharField(required=True, label='* Пароль', max_length=320, widget=forms.PasswordInput, help_text='Не менее 8 символов')
+    password2 = forms.CharField(required=True, label='* Повторите пароль', max_length=320, widget=forms.PasswordInput, help_text='Не менее 8 символов')
 
     error_messages = {
         'email_exists': 'Пользователь с таким Email уже существует!',
+        # 'email_not_valid': 'Некорректный Email-адрес!',
+        # 'password_not_valid': 'Некорректный пароль!',
         'password_mismatch': 'Пароли не совпадают!',
         'error': 'Форма не валидна!',
     }
 
     class Meta:
         model = get_user_model()
+        help = {
+           'surname': 'Не более 320 символов',
+           'surname': 'ПЕТУХ',
+        }
         fields = (
             'surname',
             'name',
@@ -85,7 +129,6 @@ class RegistrationForm(UserCreationForm):
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
-
         if get_user_model().objects.filter(email=email).exists():
             raise forms.ValidationError(
                 self.error_messages['email_exists'],

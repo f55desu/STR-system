@@ -141,7 +141,7 @@ EMAIL_HOST_PASSWORD = 'Admin_SecretKey%31lL_*676_Piko'
 EMAIL_PORT = 587
 
 AUTH_USER_MODEL = 'STR.Student'
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = 'home'
 
 CACHES = {
     'default': {

@@ -383,6 +383,10 @@ h1, h2 {
     color: rgb(81, 111, 163);
 }
 
+.without_ul_error ul {
+    display: none;
+}
+
 /*устаканивание всех элементов в окнах*/
 .form-group {
     display: -webkit-box;
