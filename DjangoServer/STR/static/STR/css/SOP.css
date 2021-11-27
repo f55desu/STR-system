@@ -12,10 +12,6 @@ body {
     margin-top: 50px;
 }
 
-.form-content {
-    margin: 20px 0;
-}
-
 @font-face{
     font-family: 'Montserrat-Regular';
     src: url('../fonts/Montserrat-Regular.ttf');
@@ -121,7 +117,7 @@ svg {
     color: black;
     margin: 0 auto;
     overflow: hidden;
-    padding-bottom: 400px;
+    padding-bottom: 1000px;
 }
 
 .form-body {
@@ -137,7 +133,7 @@ svg {
     width: 100%;
     background-color: none;
     color: black;
-    margin: 0 auto;
+    margin: 20px auto;
 }
 
 /*Сам логотип*/
@@ -282,7 +278,6 @@ svg {
     position: relative;
     margin-left: auto;
     display: flex;
-    height: 400px;
     background-color: #FFFFFF;
     color: black;
     font-family: 'Montserrat-Medium';
@@ -338,10 +333,14 @@ svg {
 }
 
 .psevdobtn {
+    position: absolute;
+    right: 0;
+    top: 0;
     background-color: rgb(81, 111, 163);
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     width: 28px;
     height: 100%;
     cursor: pointer;
@@ -350,13 +349,20 @@ svg {
 }
 
 .psevdobtn p{
-    transform: rotate(90deg);
+    margin-top: 10px;
+    width: 100%;
     color: white;
     font-family: 'Montserrat-Medium';
     font-size: 18px;
     font-weight: 500;
     padding-bottom: 0;
     letter-spacing: 3px;
+    writing-mode: vertical-rl;
+}
+
+.helptext {
+    font-size: 12px;
+    line-height: 0.2px;
 }
 
 .psevdobtn:hover {
@@ -367,10 +373,9 @@ svg {
     background-color: rgb(43, 59, 85);
 }
 
-h1, h2 {
+h1, h2, h5 {
     padding: 4px 0;
     font-family: 'Montserrat-Medium';
-    font-size: 36px;
     font-weight: 500;
     color: rgb(81, 111, 163);
 }
@@ -381,6 +386,15 @@ h1, h2 {
     font-size: 16px;
     font-weight: 500;
     color: rgb(81, 111, 163);
+}
+
+.form-panel h5 {
+    font-weight: bold;
+    font-size: 28px;
+}
+
+.without_ul_error {
+    margin-bottom: 20px;
 }
 
 .without_ul_error ul {
@@ -400,8 +414,21 @@ h1, h2 {
     flex-direction: column;
 }
 
-.form-group:last-child {
-    margin: 10px;
+.without_ul_error {
+    width: 100%;
+}
+
+.form-group p {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    display: block;
+    line-height: 1.0;
+}
+
+.form-group p label {
+    margin-top: 15px;
+    margin-bottom: 8px;
 }
 
 /*названия полей*/
@@ -425,7 +452,7 @@ h1, h2 {
     display: block;
     background: rgba(0, 0, 0, 0.1);
     border: 0;
-    padding: 12px 20px;
+    padding: 5px 20px;
     color: rgba(0, 0, 0, 0.6);
     font-family: 'Montserrat-Medium';
     font-size: 18px;
@@ -601,23 +628,21 @@ h1, h2 {
 
 .glyphicon-nav {
     width: 18px;
+    height: 20px;
+    transform: rotate(90deg);
     padding: 4px 0;
-    display: inline-block;
-    position: absolute;
-    top: -82px;
-    left: -110px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
-.glyphicon-nav:before {
-    content: '';
-    position: absolute;
+.glyphicon-nav span {
     width: 100%;
-    height: 100%;
-    left: 0;
-    border-top: 2px solid rgb(255, 255, 255);
-    border-bottom: 2px solid rgb(255, 255, 255);
-    top: 0px;
+    height: 2px;
+    background-color: white;
+    display: block;
 }
+
 .popupLC {
     margin-top: 1%;
     position: absolute;
@@ -786,5 +811,33 @@ h1, h2 {
 @media (max-width: 768px) {
     .righteltop label {
         font-size: 12px;
+    }
+}
+
+.helptext, .alert-danger {
+    font-size: 12px;
+}
+
+
+@media (max-width: 1000px) {
+    .form-content {
+        margin: 0 0;
+    }
+
+    .form-content * {
+        font-size: 14px;
+    }
+
+    .form-group input {
+        padding: 0px;
+    }
+
+    .form-group input {
+        padding: 0;
+    }
+
+    .form-group button {
+        width: 100%;
+        font-size: 14px;
     }
 }

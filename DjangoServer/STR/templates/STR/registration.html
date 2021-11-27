@@ -43,7 +43,7 @@
                 <div class="col-md-4 col-sm-12">
                     <div class="form-panel one" >
                         <div class="form-panel-body">
-                            <h2>Вход</h2>
+                            <h5>Вход</h5>
                             <div class="form-content">
                                 <form method="post">
                                     {% csrf_token %}
@@ -84,13 +84,17 @@
                         </div>
                         
                         <div class="psevdobtn">
-                            <p><span class="glyphicon glyphicon-nav" aria-hidden="true"></span></p>
-                            <p>Регистрация</p></div>
+                            <div class="glyphicon glyphicon-nav" aria-hidden="true">
+                                <span></span>
+                                <span></span>
+                            </div>
+                            <p>Регистрация</p>
+                        </div>
 
                         <div class="form-panel two">
                             <div class="form-toggle"></div>
                             <div class="form-panel-body">
-                                <h2>Регистрация</h2>
+                                <h5>Регистрация</h5>
                                 <div>
                                     <form method="post">
                                         {% csrf_token %}
