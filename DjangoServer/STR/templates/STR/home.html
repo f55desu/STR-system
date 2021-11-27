@@ -81,6 +81,11 @@
                                         {% endif %}
                                         <div class="form-save">           
                                             <button type="submit" class="form_btn btn" name="save_button">Сохранить</button>
+                                            <script>
+                                                $('form').submit(function() {
+                                                    $(this).find("button[name='save_button']").prop('disabled', true);
+                                                });
+                                            </script>
                                         </div>
                                     </div>
                                 </form>

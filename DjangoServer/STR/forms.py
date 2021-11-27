@@ -92,8 +92,8 @@ class RegistrationForm(UserCreationForm):
 
     # groupNumber = forms.ChoiceField(required=True, label='Группа', choices=GROUP_NUMBERS)
 
-    password1 = forms.CharField(required=True, label='* Пароль', max_length=320, widget=forms.PasswordInput, help_text='Не менее 8 символов')
-    password2 = forms.CharField(required=True, label='* Повторите пароль', max_length=320, widget=forms.PasswordInput, help_text='Не менее 8 символов')
+    password1 = forms.CharField(required=True, label='* Пароль', max_length=320, widget=forms.PasswordInput, help_text='Не менее 8 символов, цифры и верхний регистр')
+    password2 = forms.CharField(required=True, label='* Повторите пароль', max_length=320, widget=forms.PasswordInput, help_text='Не менее 8 символов, цифры и верхний регистр')
 
     error_messages = {
         'email_exists': 'Пользователь с таким Email уже существует!',
