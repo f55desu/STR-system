@@ -1,14 +1,25 @@
 {% extends 'STR/base.html' %}
 
 {% block content %}
-    <div class="centerContent">
-      {% csrf_token %}
-        <h4>Ваша почта подтверждена!</h4>
-        <p> Войдите в систему, используя свою почту и пароль.</p>
-        <p> Welcome to the club, buddy ∠( ᐛ 」∠)_ </p>
+<div class="container">
+    <div class="row confirmed">
+        <div class="col-md-12">
+            <div class="centerContent">
+                {% csrf_token %}
+                  <h4>Ваша почта подтверждена!</h4>
+                  <p> Войдите в систему, используя свою почту и пароль.</p>
+                  <p> Welcome to the club, buddy ∠( ᐛ 」∠)_ </p>
+              </div>
+        </div>
     </div>
-    <form method="post">
-        {% csrf_token %}
-        <button class="back_button" name="back_button"><p>Вернуться на страницу входа</p></button>
-    </form>
+    <div class="row button">
+        <div class="col-md-6 button_back_confirmed">
+            
+                <form method="post">
+                    {% csrf_token %}
+                    <button class="back_button" name="back_button"><p>Вернуться на страницу входа</p></button>
+                </form>
+        </div>
+    </div>
+</div>
 {% endblock %}
