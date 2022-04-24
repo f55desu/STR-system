@@ -1,13 +1,19 @@
+from calendar import weekday
+from tkinter import CASCADE
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
+from django.forms import CharField, IntegerField
 
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
+from matplotlib.pyplot import cla
 
 from .managers import *
 
 from django.utils import timezone
 
+
+# STR-module models:
 # 1
 class Subject(models.Model):
     SUBJECT_CHOICES = (
@@ -32,7 +38,7 @@ class Subject(models.Model):
 # 2
 class Group(models.Model):
     name = models.CharField('Название', unique=True, max_length=320)
-
+    education_form = models.CharField('Форма обучения', max_length=170)
     def __str__(self) -> str:
         return self.name
 
@@ -51,6 +57,11 @@ class Teacher(models.Model):
 
     def __str__(self) -> str:
         return f"{self.surname} {self.name} {self.lastname} ({self.email})"
+
+    def get_FIO(self):
+        if self.lastname:
+            return f"{self.surname} {self.name[0]}. {self.lastname[0]}."
+        return f"{self.surname} {self.name[0]}."
 
     class Meta:
         verbose_name = _('Преподаватель')
@@ -149,5 +160,47 @@ class Grade(models.Model):
         verbose_name_plural = _('Оценки')
         unique_together = ('teacher_subject', 'student', 'criterion', 'grade', )
 
+# Schedule-module models:
+# 9 
+class Campus(models.Model):
+    campus_name = models.CharField('Название корпуса', max_length=75, unique=True)
+    address = models.CharField('Адресс корпуса', max_length=175)
 
+    def __str__(self) -> str:
+        return self.name
 
+    class Meta:
+        verbose_name = _('Корпус')
+        verbose_name_plural = _('Корпуса')
+
+# 10
+class Audience(models.Model):
+    audience_number = models.IntegerField('Номер аудитории', unique=True)
+    campus = models.ForeignKey(Campus, on_delete=models.CASCADE)
+    audience_type = models.CharField('Тип аудитории', max_length=70)
+    capacity = models.IntegerField('Вместимость')
+
+    def __str__(self) -> str:
+        return self.name
+
+    class Meta:
+        verbose_name = _('Аудитория')
+        verbose_name_plural = _('Аудитории')
+
+#11
+class Schedule(models.Model):
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    audience = models.ForeignKey(Audience, on_delete=models.CASCADE)
+    group = models.ForeignKey(Group, on_delete=models.CASCADE)
+    time = models.CharField('Время', max_length=40)
+    weekday = models.CharField('День недели', max_length=20)
+    even_week = models.CharField('Четность', max_length=20)
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+    semester_year = models.CharField('Семестр', max_length=70)
+
+    def __str__(self) -> str:
+        return self.name
+
+    class Meta:
+        verbose_name = _('Расписание')
+        verbose_name_plural = _('Расписания')
