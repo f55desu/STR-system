@@ -20,6 +20,24 @@ class SubjectForm(forms.ModelForm):
         }
         fields = '__all__'
 
+class AudienceForm(forms.ModelForm):
+    class Meta:
+        model = Audience
+        widgets = {
+            'audience_type': forms.Select
+        }
+        fields = '__all__'
+
+class ScheduleForm(forms.ModelForm):
+    class Meta:
+        model = Schedule
+        widgets = {
+            'time': forms.Select,
+            'weekday': forms.Select,
+            'even_week': forms.Select,
+            'subgroup_number': forms.Select
+        }
+        fields = '__all__'
 
 class StudentCreationForm(UserCreationForm):
 

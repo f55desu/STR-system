@@ -40,7 +40,7 @@ class Group(models.Model):
     name = models.CharField('Название', unique=True, max_length=320)
     education_form = models.CharField('Форма обучения', max_length=170)
     def __str__(self) -> str:
-        return self.name
+        return f"{self.name} ({self.education_form})"
 
     class Meta:
         verbose_name = _('Группа')
@@ -164,10 +164,10 @@ class Grade(models.Model):
 # 9 
 class Campus(models.Model):
     campus_name = models.CharField('Название корпуса', max_length=75, unique=True)
-    address = models.CharField('Адресс корпуса', max_length=175)
+    address = models.CharField('Адрес корпуса', max_length=175)
 
     def __str__(self) -> str:
-        return self.name
+        return f"{self.address}, {self.campus_name}"
 
     class Meta:
         verbose_name = _('Корпус')
@@ -175,13 +175,21 @@ class Campus(models.Model):
 
 # 10
 class Audience(models.Model):
+    AUDIENCE_CHOISES = (
+        ("Лекционная", 'Лекционная'),
+        ("Лабораторная", 'Лабораторная')
+    )
     audience_number = models.IntegerField('Номер аудитории', unique=True)
-    campus = models.ForeignKey(Campus, on_delete=models.CASCADE)
-    audience_type = models.CharField('Тип аудитории', max_length=70)
+    campus = models.ForeignKey(Campus, verbose_name = 'Корпус', on_delete=models.CASCADE)
+    audience_type = models.CharField('Тип аудитории', default="", choices=AUDIENCE_CHOISES, max_length=70)
     capacity = models.IntegerField('Вместимость')
 
     def __str__(self) -> str:
-        return self.name
+        if self.capacity > 0:
+            if self.capacity == 1:
+                return f"{self.audience_type}, {self.campus}/{self.audience_number} на {self.capacity} человека"
+            else:
+                return f"{self.audience_type}, {self.campus}/{self.audience_number} на {self.capacity} человек"
 
     class Meta:
         verbose_name = _('Аудитория')
@@ -189,17 +197,42 @@ class Audience(models.Model):
 
 #11
 class Schedule(models.Model):
-    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
-    audience = models.ForeignKey(Audience, on_delete=models.CASCADE)
-    group = models.ForeignKey(Group, on_delete=models.CASCADE)
-    time = models.CharField('Время', max_length=40)
-    weekday = models.CharField('День недели', max_length=20)
-    even_week = models.CharField('Четность', max_length=20)
-    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+    TIME_CHOISES = (
+        ("C 8:00 до 9:30", 'C 8:00 до 9:30'),
+        ("С 9:45 до 11:15", 'С 9:45 до 11:15'),
+        ("С 11:30 до 13:15", 'С 11:30 до 13:15'),
+        ("С 13:30 до 15:00", 'С 13:30 до 15:00'),
+        ("С 15:15 до 16:45", 'С 15:15 до 16:45'),
+        ("С 17:00 до 18:30", 'С 17:00 до 18:30'),
+    )
+    WEEKDAY_CHOISES = (
+        ("Понедельник", 'Понедельник'),
+        ("Вторник", 'Вторник'),
+        ("Среда", 'Среда'),
+        ("Четверг", 'Четверг'),
+        ("Пятница", 'Пятница'),
+        ("Суббота", 'Суббота'),
+    )
+    EVEN_CHOISES = (
+        ("Числитель", 'Числитель'),
+        ("Знаменатель", 'Знаменатель'),
+    )
+    SUBGROUP_CHOISES = (
+        ("Подгруппа №1", 'Подгруппа №1'),
+        ("Подгруппа №2", 'Подгруппа №2'),
+    )
+    subject = models.ForeignKey(Subject, verbose_name = 'Дисциплина',on_delete=models.CASCADE)
+    audience = models.ForeignKey(Audience, verbose_name = 'Аудитория', on_delete=models.CASCADE)
+    group = models.ForeignKey(Group, verbose_name = 'Группа', on_delete=models.CASCADE)
+    time = models.CharField('Время', default="", choices=TIME_CHOISES, max_length=40)
+    weekday = models.CharField('День недели', default="", choices=WEEKDAY_CHOISES, max_length=20)
+    even_week = models.CharField('Четность', default="", choices=EVEN_CHOISES, max_length=20)
+    subgroup_number = models.CharField('Подгруппа', default="", choices=SUBGROUP_CHOISES, max_length=20)
+    teacher = models.ForeignKey(Teacher, verbose_name = 'Преподаватель', on_delete=models.CASCADE)
     semester_year = models.CharField('Семестр', max_length=70)
 
     def __str__(self) -> str:
-        return self.name
+        return f"[{self.subject}], [{self.audience}], [{self.group}], [{self.time}], [{self.weekday}], [{self.even_week}], [{self.subgroup_number}], [{self.teacher}], [{self.semester_year}]"
 
     class Meta:
         verbose_name = _('Расписание')

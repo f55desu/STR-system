@@ -39,7 +39,7 @@ class Student_Admin(UserAdmin):
     # сортировка списка по полям
     ordering = ('email', 'surname', 'name', 'lastname', 'group', )
 
-
+# STR-module admin:
 class Teacher_Admin(admin.ModelAdmin):
     model = Teacher
     list_display = ('email', 'surname', 'name', 'lastname', )
@@ -56,9 +56,9 @@ class Criterion_Admin(admin.ModelAdmin):
 
 class Group_Admin(admin.ModelAdmin):
     model = Group
-    list_display = ('name', )
-    search_fields = ('name', )
-    ordering = ('name', )
+    list_display = ('name', 'education_form')
+    search_fields = ('name', 'education_form')
+    ordering = ('name', 'education_form')
 
 
 class Subject_Admin(admin.ModelAdmin):
@@ -89,6 +89,24 @@ class Grade_Admin(admin.ModelAdmin):
     search_fields = ('student__email', 'student__surname', 'student__name', 'student__lastname', 'criterion__name', 'teacher_subject__subject__type', 'teacher_subject__subject__name', 'teacher_subject__teacher__email', 'teacher_subject__teacher__surname', 'teacher_subject__teacher__name', 'teacher_subject__teacher__lastname', 'grade', 'id', )
     ordering = ('id', 'student', 'teacher_subject', 'criterion', 'grade', )
 
+# Schedule-module admin:
+class Campus_Admin(admin.ModelAdmin):
+    model = Campus
+    list_display = ('campus_name', 'address')
+    search_fields = ('campus_name', 'address')
+    ordering = ('campus_name', 'address')
+
+class Audience_Admin(admin.ModelAdmin):
+    model = Audience
+    list_display = ('audience_number', 'campus', 'audience_type', 'capacity')
+    search_fields = ('audience_number', 'campus', 'audience_type', 'capacity')
+    ordering = ('audience_number', 'campus', 'audience_type', 'capacity')
+
+class Schedule_Admin(admin.ModelAdmin):
+    model = Schedule
+    list_display = ('subject', 'audience', 'group', 'time', 'weekday', 'even_week', 'subgroup_number', 'teacher', 'semester_year')
+    search_fields = ('subject', 'audience', 'group', 'time', 'weekday', 'even_week', 'subgroup_number', 'teacher', 'semester_year')
+    ordering = ('subject', 'audience', 'group', 'time', 'weekday', 'even_week', 'subgroup_number', 'teacher', 'semester_year')
 
 admin.site.unregister(mod.Group)
 
@@ -101,3 +119,7 @@ admin.site.register(Subject, Subject_Admin)
 admin.site.register(Subject_Group, Subject_Group_Admin)
 admin.site.register(Teacher_Subject, Teacher_Subject_Admin)
 admin.site.register(Grade, Grade_Admin)
+
+admin.site.register(Campus, Campus_Admin)
+admin.site.register(Audience, Audience_Admin)
+admin.site.register(Schedule, Schedule_Admin)
