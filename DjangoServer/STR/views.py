@@ -18,7 +18,7 @@ from .models import *
 
 from . import AvgRatingFunc
 
-def home(request):
+def str(request):
     if not request.user.is_authenticated:
         return redirect('registration')
     if request.method == 'POST' and 'button_logout' in request.POST:
@@ -75,6 +75,14 @@ def home(request):
         'data': data,
     }
     
+    return render(request, 'STR/str.html', context)
+
+def home(request):
+    if request.method == 'POST' and 'to_str' in request.POST:
+        return redirect('str')
+    context = {
+        
+    }
     return render(request, 'STR/home.html', context)
 
 def registration(request):

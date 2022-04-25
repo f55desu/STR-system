@@ -1,0 +1,843 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    background: url('../media/paperback.png') no-repeat;
+    background-size: cover;
+}
+
+.container {
+    margin-top: 50px;
+}
+
+@font-face{
+    font-family: 'Montserrat-Regular';
+    src: url('../fonts/Montserrat-Regular.ttf');
+}
+
+@font-face{
+    font-family: 'Montserrat-Medium';
+    src: url('../fonts/Montserrat-Medium.ttf');
+}
+
+@font-face{
+    font-family: 'Montserrat-Bold';
+    src: url('../fonts/Montserrat-Bold.ttf');
+}
+
+/*Сама шапка*/
+header {
+    height: 70px;
+    background-color: rgb(81, 111, 163);
+    color: rgb(255, 255, 255);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin: 0 auto;
+}
+
+/*СОП*/
+h3 {
+    padding: 4px 0;
+    font-family: 'Montserrat-Regular';
+    font-size: 24px;
+    font-weight: 400;
+    margin-bottom: 0px;
+}
+
+/*языки*/
+select {
+    background: none;
+    border: none;
+    padding: 4px 0;
+    font-family: 'Montserrat-Regular';
+    font-size: 20px;
+    font-weight: 400;
+    margin-left: 20px;
+    color:rgb(255, 255, 255);
+}
+
+select option {
+    background: #e5e5e5;
+    color: black;
+}
+
+.lefteltop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.righteltop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/*Вы не вошли в систему*/
+header label {
+    padding: 4px 0;
+    margin-right: 20px;
+    font-size: 24px;
+    font-weight: 400;
+    font-family: 'Montserrat-Regular';
+}
+
+.button_header svg:hover{
+   fill: rgb(90, 90, 90);
+}
+
+.button_header svg:active{
+    fill: rgb(0, 0, 0);
+ }
+ 
+
+/*Кнопки иконок*/
+button {
+    background: none;
+    border: none;
+}
+
+/*Сами иконки*/
+svg {
+    height: 30px;
+    width: 30px;
+    color: white;
+}
+
+/*Основная часть*/
+.form {
+    z-index: 15;
+    position: relative;
+    min-height: 140vh;
+    background: url('../media/background.png') no-repeat;
+    background-size: cover;
+    color: black;
+    margin: 0 auto;
+    overflow: hidden;
+    padding-bottom: 1000px;
+}
+
+.form-body {
+    display: flex;
+    flex-direction: column;
+}
+
+/*Блок логотипа и наименования*/
+.LogoName {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background-color: none;
+    color: black;
+    margin: 20px auto;
+}
+
+/*Сам логотип*/
+.LogoName img{
+    margin-left: 21px;
+    float: right;
+    clear: right;
+}
+
+/*Наименование*/
+.LogoName h1 {
+    padding: 4px 0;
+    font-family: 'Montserrat-Bold';
+    font-size: 36px;
+    font-weight: 700;
+    margin-left: 49px;
+    line-height: 49px;
+    color: white;
+}
+
+.carousel {
+    position: relative;
+    margin-bottom: 20px;
+    width: 100%;
+    color: black;
+    border-radius: 5px;
+}
+.carousel-inner {
+    position: relative;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    border-radius: 5px;
+}
+.carousel-item {
+    position: relative;
+    display: none;
+    -ms-flex-align: center;
+    align-items: center;
+    width: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-perspective: 1000px;
+    perspective: 1000px;
+    opacity: 0;
+    transition-duration: 0.2s;
+    transition-property: opacity;
+}
+
+.carousel-item img{
+    width: 100%;
+    height: auto;
+}
+
+.carousel-item-next,
+.carousel-item-prev,
+.carousel-item.active {
+    display: block;
+    transition: -webkit-transform 0.2s ease;
+    transition: transform 0.2s ease;
+    transition: transform 0.2s ease, -webkit-transform 0.2s ease;
+}
+
+.carousel-item-next,
+.carousel-item-prev {
+    position: absolute;
+    top: 0;
+}
+  /*ПЛАВНЫЙ ПЕРЕХОД без него как раз та проблема с пустотой перед слайдом*/
+.carousel-item-next.carousel-item-left,
+.carousel-item-prev.carousel-item-right {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+}
+.carousel-item {
+    opacity: 0;
+    transition-duration: 0.7s;
+    transition-property: opacity;
+}
+.carousel-item-next.carousel-item-left,
+.carousel-item-prev.carousel-item-right,
+.carousel-item.active {
+      opacity: 1;
+}
+
+.active.carousel-item-left,
+.active.carousel-item-right {
+      opacity: 0;
+}
+      
+/*Расположение стрелок (серые)*/
+.carousel-control-next,
+.carousel-control-prev {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    width: 5%;
+    opacity: 0.5;
+}
+
+  /*Черная стрелка при наведении*/
+.carousel-control-next:hover,
+.carousel-control-prev:hover {
+    opacity: 1;
+}
+
+  /*Расположение левой стрелки*/
+.carousel-control-prev {
+    left: -10;
+}
+
+   /*Расположение правой стрелки*/
+.carousel-control-next {
+    right: 800;
+}
+
+ /*Иконки стрелок*/
+.carousel-control-next-icon,
+.carousel-control-prev-icon {
+     display: inline-block;
+     width: 20px;
+     height: 20px;
+     background: transparent no-repeat center center;
+     background-size: 100% 100%;
+}
+    /*Сами иконки*/
+.carousel-control-prev-icon {
+     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
+}
+.carousel-control-next-icon {
+     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
+}
+
+/*само окно входа*/
+.form-panel.one {
+    position: relative;
+    margin-left: auto;
+    display: flex;
+    background-color: #FFFFFF;
+    color: black;
+    font-family: 'Montserrat-Medium';
+    font-size: 18px;
+    border-radius: 5px;
+    border-width: 3px;
+    border-color: #C4C4C4;
+}
+
+.form-panel-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: calc(100% - 28px);
+    display: flex;
+    flex-direction: column;
+    padding: 10px 17px 10px 17px;
+}
+
+/*Затемнение формы входа, когда поверх открывается окно регистрации*/
+.overlay, .form-panel.one:before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+    background: rgba(0, 0, 0, 0.8);
+    width: 100%;
+    height: 100%;
+}
+
+/*само окно регистрации*/
+.form-panel.two {
+    width: 100%;
+    z-index: 20;
+    position: absolute;
+    right: -300%;
+    padding: 10px 5px 10px 20px;
+    border-radius: 5px;
+    border-width: 3px;
+    border-color: #C4C4C4;
+    background-color: #FFFFFF;
+    font-family: 'Montserrat-Medium';
+    color: black;
+    font-size: 18px;
+    -webkit-transition: 0.3s ease;
+    transition: 0.3s ease;
+    cursor: pointer;
+    visibility: collapse;
+}
+
+.form-panel.visible {
+    right: 0;
+}
+
+.psevdobtn {
+    position: absolute;
+    right: 0;
+    top: 0;
+    background-color: rgb(81, 111, 163);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 28px;
+    height: 100%;
+    cursor: pointer;
+    border-radius: 0 5px 5px 0;
+    border-color: #C4C4C4;
+}
+
+.psevdobtn p{
+    margin-top: 10px;
+    width: 100%;
+    color: white;
+    font-family: 'Montserrat-Medium';
+    font-size: 18px;
+    font-weight: 500;
+    padding-bottom: 0;
+    letter-spacing: 3px;
+    writing-mode: vertical-rl;
+}
+
+.helptext {
+    font-size: 12px;
+    line-height: 0.2px;
+}
+
+.psevdobtn:hover {
+    background-color: rgb(106, 141, 201);
+}
+
+.psevdobtn:active {
+    background-color: rgb(43, 59, 85);
+}
+
+h1, h2, h5 {
+    padding: 4px 0;
+    font-family: 'Montserrat-Medium';
+    font-weight: 500;
+    color: rgb(81, 111, 163);
+}
+
+.popup h6 {
+    padding: 4px 0;
+    font-family: 'Montserrat-Medium';
+    font-size: 16px;
+    font-weight: 500;
+    color: rgb(81, 111, 163);
+}
+
+.form-panel h5 {
+    font-weight: bold;
+    font-size: 28px;
+}
+
+.without_ul_error {
+    margin-bottom: 20px;
+}
+
+.without_ul_error ul {
+    display: none;
+}
+
+/*устаканивание всех элементов в окнах*/
+.form-group {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    flex-direction: column;
+}
+
+.without_ul_error {
+    width: 100%;
+}
+
+.form-group p {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    display: block;
+    line-height: 1.0;
+}
+
+.form-group p label {
+    margin-top: 15px;
+    margin-bottom: 8px;
+}
+
+/*названия полей*/
+.form-group label {
+    margin: 3px 0;
+    display: block;
+    color: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    min-height: 23px;
+    font-family: 'Montserrat-Medium';
+    font-size: 18px;
+    font-weight: 500;
+    white-space: nowrap;
+    color: #516FA3;
+}
+
+/*поля ввода*/
+.form-group input {
+    outline: none;
+    width: 100%;
+    display: block;
+    background: rgba(0, 0, 0, 0.1);
+    border: 0;
+    padding: 5px 20px;
+    color: rgba(0, 0, 0, 0.6);
+    font-family: 'Montserrat-Medium';
+    font-size: 18px;
+    font-weight: 500;
+    -webkit-transition: 0.3s ease;
+    transition: 0.3s ease;
+}
+
+/*ХЗ шо это значит*/
+.form-group input:focus {
+    color: rgba(0, 0, 0, 0.8);
+}
+.two .form-group input {
+    color: #000000;
+}
+.two .form-group input:focus {
+    color: #000000;
+}
+
+/*кнопки */
+.form-group button {
+    outline: none;
+    margin-top: 5px;
+    background:  rgb(81, 111, 163);
+    height: 51px;
+    border: 0;
+    border-radius: 4px;
+    padding: 12px 20px;
+    color: #FFFFFF;
+    font-family: 'Montserrat-Medium';
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.form-group button:hover {
+    background-color: rgb(106, 141, 201);
+}
+
+.form-group button:active {
+    background-color: rgb(43, 59, 85);
+}
+
+.form-group .form-recovery {
+    color:  rgb(81, 111, 163);
+    font-size: 18px;
+    text-decoration: none;
+}
+
+.form-panel {
+    box-sizing: border-box;
+}
+
+.form-panel select {
+    width: 100%;
+    background: #e5e5e5;
+    border: none;
+    padding: 4px 0;
+    font-family: 'Montserrat-Regular';
+    font-size: 20px;
+    font-weight: 400;
+    color:rgb(0, 0, 0);
+    margin-left: 0px;
+}
+
+.form-panel select option {
+    background: #e5e5e5;
+}
+
+.form-panel.one:before {
+    content: '';
+    display: block;
+    opacity: 0;
+    visibility: hidden;
+    -webkit-transition: 0.3s ease;
+    transition: 0.3s ease;
+}
+
+.form-panel.one.hidden:before {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+}
+
+.form-panel.two:before, .form-panel.two:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 60px;
+    left: 1.5%;
+    background: rgba(255, 255, 255, 0.2);
+    height: 30px;
+    width: 2px;
+    -webkit-transition: 0.3s ease;
+    transition: 0.3s ease;
+}
+.form-panel.two:after {
+    left: 3%;
+}
+
+.form-panel.visible {
+    visibility: unset;
+}
+
+/*где и как находится окно регистрации, когда появилось уже*/
+.form-panel.two.active {
+    left: 65%;
+    cursor: default;
+    opacity: 1;
+}
+
+.form-panel.two.active:before, .form-panel.two.active:after {
+    opacity: 0;
+}
+
+
+/*КРЕЕЕЕЕЕЕЕЕЕЕЕЕЕЕСТИИИИИИИИИИИИИИИК*/
+
+/*Крестик в углу формы регистрации (+фон крестика)*/
+.form-toggle {
+    z-index: 10;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;/*настройка перехода*/
+}
+
+.form-toggle:before, .form-toggle:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 30px;
+    height: 4px;
+    border-radius: 2px; /*концы крестика закруглены*/
+    background:  rgb(81, 111, 163); /*Цвет крестика*/
+    -webkit-transform: translate(-50%, -50%);/*настройка перехода*/
+            transform: translate(-50%, -50%);/*настройка перехода*/
+}
+
+/*настройка появления крестика (аля увеличивается из точки)*/
+.form-toggle:before {
+    -webkit-transform: translate(-50%, -50%) rotate(45deg);/*настройка перехода*/
+            transform: translate(-50%, -50%) rotate(45deg);/*настройка перехода*/
+}
+
+/*настройка исчезания крестика (аля уменьшается в точку)*/
+.form-toggle:after {
+    -webkit-transform: translate(-50%, -50%) rotate(-45deg);/*настройка перехода*/
+            transform: translate(-50%, -50%) rotate(-45deg);/*настройка перехода*/
+}
+
+/*настройка видимости крестика*/
+.form-toggle.visible {
+    -webkit-transform: translate(0, -25%) scale(1); 
+            transform: translate(0, -25%) scale(1);
+    opacity: 1;
+}
+
+/*Футер*/
+.footer {
+    z-index: 1;
+    height: 44px;
+    background-color:rgb(81, 111, 163);
+    color: black;
+    margin: 0 auto;
+}
+
+
+.glyphicon-nav {
+    width: 18px;
+    height: 20px;
+    transform: rotate(90deg);
+    padding: 4px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.glyphicon-nav span {
+    width: 100%;
+    height: 2px;
+    background-color: white;
+    display: block;
+}
+
+.popupLC {
+    margin-top: 1%;
+    position: absolute;
+    border-radius: 10px;
+    top: 70px;
+    padding-bottom: 20px;
+    z-index: 3;
+    width: 350px;
+    background-color: #FFFFFF;
+    display: none;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.25);
+}
+
+.popupLC form {
+    width: 100%;
+    height: 100%;
+}
+
+.bodyLC {
+    margin-top: calc(-84px / 2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#sunshine { 
+    position: fixed;
+    width:100%;
+    height:100%;
+    z-index: 2; /* поверх всех  кроме окна*/
+    opacity: 1; /*прозрачность*/
+    left:0;
+    top:0;
+}
+
+.headerLC{
+    width: 100%;
+    height: 84px;
+    background-color: #4E6998;
+}
+
+.imageLC {
+    position: relative;
+}
+
+.imageLC img{
+    margin-top: -10%;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    width: 93px;
+    height: 93px;
+}
+
+.round_imageLC {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: gray ;
+    border-radius: 100px;
+    border: 2px solid #7C7C7C;
+    z-index: 2;
+}
+
+.round_imageLC_small {
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    bottom: 0px;
+    right: 0px;
+    background-color: #000000 ;
+    border-radius: 100px;
+    border: 2px solid #7C7C7C;
+    z-index: 2;
+}
+.round_imageLC_small svg {
+    width: 75%;
+    height: auto;
+}
+
+.titleLC, .subtitleLC {
+    text-align: center;
+}
+
+.titleLC {
+    margin: 10px 0px;
+    font-family: 'Montserrat-Bold';
+    font-weight: 500;
+    font-size: 18px;
+    color: #535A66;
+}
+
+.subtitleLC {
+    font-weight: 400;
+    font-family: 'Montserrat-Medium';
+    font-size: 14px;
+    color: #535A66;
+}
+
+.rowLC {
+    margin-top: 15px;
+    padding: 0px 30px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.propertyLC {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #535A66;
+}
+
+.valueLC {
+    background: #E8F0FE;
+    width: 158px;
+    padding: 5px 10px;
+    border: 1px solid #C4C4C4;
+    border-radius: 5px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #535A66;
+    outline: none;
+}
+
+@media (max-width: 576px) {
+    .LogoName {
+        display: flex;
+        flex-direction: column;
+        font-size: 18px;
+        text-align: center;
+    }
+
+    .LogoName h1 {
+        margin-left: 0;
+    }
+
+    header {
+        padding: 0px 10px
+    }
+
+    header svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    header * {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 768px) {
+    .righteltop label {
+        font-size: 12px;
+    }
+}
+
+.helptext, .alert-danger {
+    font-size: 12px;
+}
+
+
+@media (max-width: 1000px) {
+    .form-content {
+        margin: 0 0;
+    }
+
+    .form-content * {
+        font-size: 14px;
+    }
+
+    .form-group input {
+        padding: 0px;
+    }
+
+    .form-group input {
+        padding: 0;
+    }
+
+    .form-group button {
+        width: 100%;
+        font-size: 14px;
+    }
+}
