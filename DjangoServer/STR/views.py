@@ -13,7 +13,7 @@ from django.utils.encoding import force_text
 from django.shortcuts import redirect, render
 from django.contrib.auth import login, logout
 
-from .forms import LoginForm, RegistrationForm
+from .forms import GetGroupForm, LoginForm, RegistrationForm
 from .models import *
 
 from . import AvgRatingFunc
@@ -78,9 +78,16 @@ def str(request):
     return render(request, 'STR/str.html', context)
 
 def home(request):
+    print(Group.objects.values_list('name'))
+
+    groupForm = GetGroupForm()
+
     if request.method == 'POST' and 'to_str' in request.POST:
         return redirect('str')
+    if request.method == 'POST' and 'select_group' in request.POST:
+        pass
     context = {
+        'groupForm': groupForm,
         
     }
     return render(request, 'STR/home.html', context)

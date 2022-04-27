@@ -1,4 +1,5 @@
 # from typing import List, Tuple
+from click import group
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
@@ -171,3 +172,12 @@ class RegistrationForm(UserCreationForm):
         if commit:
             user.save()
         return user
+
+class GetGroupForm(forms.Form):
+    # GROUP_LIST = {}
+    # temp_group = Group.objects.all()
+    # for i in range(0, len(temp_group)):
+    #     GROUP_LIST[i] = f'{temp_group[i].name}'
+    group_name = forms.ModelChoiceField(required=True, label='Группа: ', queryset=Group.objects.values_list('name', flat=True))
+
+    # group_name = forms.ChoiceField(required=True, label='Группа: ')

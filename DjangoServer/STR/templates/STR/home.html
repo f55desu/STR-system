@@ -101,7 +101,10 @@
                 </div>
 
                 <div id="Schedule" class="tabcontent" style="display: none;">
-                    
+                    <!-- {{ groupForm.as_p }} -->
+                    <form method="post">
+                        {{ groupForm.group_name.label }} {{ groupForm.group_name }}
+                    </form>
                 </div>
 
             </div>
