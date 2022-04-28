@@ -649,7 +649,7 @@ h1, h2, h5 {
     border-radius: 10px;
     top: 70px;
     padding-bottom: 20px;
-    z-index: 3;
+    z-index: 99;
     width: 350px;
     background-color: #FFFFFF;
     display: none;

@@ -7,6 +7,7 @@
 {% block content %}
 <div class="formhome">
     {% load static %}
+    <script type="text/javascript" src='{% static "STR/js/page_state.js" %}'></script>
     <div class="container form-body">
         <div class="row">
             <div class="col-md-12">
@@ -101,10 +102,16 @@
                 </div>
 
                 <div id="Schedule" class="tabcontent" style="display: none;">
-                    <!-- {{ groupForm.as_p }} -->
                     <form method="post">
+                        {% csrf_token %}
                         {{ groupForm.group_name.label }} {{ groupForm.group_name }}
+                        <button name="select_group">Обновить!</button>
                     </form>
+                    {% if schedule %}
+                        <!-- Таблица расписания -->
+                        {{ schedule }}
+                    {% else %}
+                    {% endif %}
                 </div>
 
             </div>

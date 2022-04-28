@@ -1,3 +1,4 @@
+from tokenize import group
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model
@@ -78,17 +79,28 @@ def str(request):
     return render(request, 'STR/str.html', context)
 
 def home(request):
-    print(Group.objects.values_list('name'))
-
+    #print(Group.objects.values_list('name'))
+    # groups = Group.objects.values_list('name', flat=True)
+    schedules = None
     groupForm = GetGroupForm()
-
+    if request.method == 'POST' and 'button_logout' in request.POST:
+        logout(request)
+        return redirect('registration')
     if request.method == 'POST' and 'to_str' in request.POST:
         return redirect('str')
     if request.method == 'POST' and 'select_group' in request.POST:
-        pass
+        # groupNameToFind = ''
+        # for i in range(0, len(groups)):
+        #     if int(request.POST['group_name']) == i:
+        #         groupNameToFind = groups[i]
+        #         break
+        schedules = Schedule.objects.filter(group__in=Group.objects.filter(name=request.POST['group_name']))
+        if schedules:
+            print(request.POST['group_name'])
+            print(schedules[0].weekday)
     context = {
         'groupForm': groupForm,
-        
+        'schedule': schedules
     }
     return render(request, 'STR/home.html', context)
 
