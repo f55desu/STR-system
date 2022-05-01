@@ -40,7 +40,7 @@ class Group(models.Model):
     name = models.CharField('Название', unique=True, max_length=320)
     education_form = models.CharField('Форма обучения', max_length=170)
     def __str__(self) -> str:
-        return f"{self.name} ({self.education_form})"
+        return f"{self.name}"
 
     class Meta:
         verbose_name = _('Группа')
@@ -167,7 +167,7 @@ class Campus(models.Model):
     address = models.CharField('Адрес корпуса', max_length=175)
 
     def __str__(self) -> str:
-        return f"{self.address}, {self.campus_name}"
+        return f"{self.campus_name[8]}"
 
     class Meta:
         verbose_name = _('Корпус')
@@ -185,11 +185,12 @@ class Audience(models.Model):
     capacity = models.IntegerField('Вместимость')
 
     def __str__(self) -> str:
-        if self.capacity > 0:
-            if self.capacity == 1:
-                return f"{self.audience_type}, {self.campus}/{self.audience_number} на {self.capacity} человека"
-            else:
-                return f"{self.audience_type}, {self.campus}/{self.audience_number} на {self.capacity} человек"
+         return f"{self.audience_number}/{self.campus}"
+        # if self.capacity > 0:
+        #     if self.capacity == 1:
+        #         return f"{self.audience_type}, {self.campus}/{self.audience_number} на {self.capacity} человека"
+        #     else:
+        #         return f"{self.audience_type}, {self.campus}/{self.audience_number} на {self.capacity} человек"
 
     class Meta:
         verbose_name = _('Аудитория')
