@@ -102,16 +102,97 @@
                 </div>
 
                 <div id="Schedule" class="tabcontent" style="display: none;">
-                    <form method="post">
-                        {% csrf_token %}
-                        {{ groupForm.group_name.label }} {{ groupForm.group_name }}
-                        <button name="select_group">Обновить!</button>
-                    </form>
-                    {% if schedule %}
-                        <!-- Таблица расписания -->
-                        {{ schedule }}
-                    {% else %}
-                    {% endif %}
+                    <div class="Scheduleblock">
+                        <div class="Schedule">
+                            <form method="post">
+                                {% csrf_token %}
+                                {{ groupForm.group_name.label }} {{ groupForm.group_name }}
+                                <button name="select_group">Обновить!</button>
+                            </form>
+                            {% if schedule %}
+                                <!-- Таблица расписания -->
+                                <table class="table numerator">
+                                    <caption>Расписание занятий для группы бПО-191 на весенний семестр 2021-2022 учебный год</caption>
+                                    <!-- Числитель -->
+                                    <thead>
+                                      <tr>
+                                        <th scope="col">Числитель</th>
+                                        <th scope="col">1 пара 8:00-9:30</th>
+                                        <th scope="col">2 пара 9:45-11:15</th>
+                                        <th scope="col">3 пара 11:30-13:00</th>
+                                        <th scope="col">4 пара 13:30-15:00</th>
+                                        <th scope="col">5 пара 15:15-16:45</th>
+                                        <th scope="col">6 пара 17:00-18:30</th>
+                                        <th scope="col">7 пара 18:45-20:15</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr>
+                                        <th scope="row">Понедельник</th>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row">Вторник</th>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row">Среда</th>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row">Четверг</th>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>бПО-191/2 <br>
+                                            Проект. деят. (пр)</td>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row">Пятница</th>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row">Суббота</th>
+                                      </tr>
+                                    </tbody>
+                                </table>
+                                <table class="table denumerator">
+                                    <!-- Знаменатель -->
+                                    <thead>
+                                      <tr>
+                                        <th scope="col">Знаменатель</th>
+                                        <th scope="col">1 пара 8:00-9:30</th>
+                                        <th scope="col">2 пара 9:45-11:15</th>
+                                        <th scope="col">3 пара 11:30-13:00</th>
+                                        <th scope="col">4 пара 13:30-15:00</th>
+                                        <th scope="col">5 пара 15:15-16:45</th>
+                                        <th scope="col">6 пара 17:00-18:30</th>
+                                        <th scope="col">7 пара 18:45-20:15</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr>
+                                        <th scope="row">Понедельник</th>
+                                        <td></td>
+                                    </tr>
+                                      <tr>
+                                        <th scope="row">Вторник</th>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row">Среда</th>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row">Четверг</th>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row">Пятница</th>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row">Суббота</th>
+                                      </tr>
+                                    </tbody>
+                                </table>
+                                {{ schedule }}
+                            {% else %}
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
 
             </div>

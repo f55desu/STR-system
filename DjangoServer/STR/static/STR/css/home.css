@@ -10,7 +10,7 @@ body {
 .formhome {
     z-index: 15;
     position: relative;
-    min-height: 110vh;
+    min-height: 130vh;
     background: url('../media/paperback.png') no-repeat;
     background-size: cover;
     color: black;
@@ -131,8 +131,78 @@ svg {
     animation: fadeEffect 1s; /* Fading effect takes 1 second */
 }
 
+.Schedule select {
+    background: none;
+    border: none;
+    padding: 4px 0;
+    font-family: 'Montserrat-Regular';
+    font-size: 20px;
+    font-weight: 400;
+    margin-left: 20px;
+    color: black;
+}
+
+.Scheduleblock {
+    animation: fadeEffect 1s;
+    width: 945px;
+    height: 806px;
+    background: rgba(81, 111, 163, 0.2);
+    border: 5px solid #516FA3;
+    border-radius: 12px;
+    margin-left: 45px;
+    font-family: 'Montserrat-Medium';
+    font-size: 18px;
+}
+
+.Scheduleblock button{
+    width: 150px;
+    height: 35px;
+    background: #516FA3;
+    border-radius: 5px;
+    color: white;
+    margin-left: 5px;
+}
+
+.Scheduleblock button:hover {
+    background-color: rgb(106, 141, 201);
+}
+
+.Scheduleblock button:active {
+    background-color: rgb(43, 59, 85);
+}
+
+.Schedule {
+    margin-top: 22px;
+    margin-left: 13px;
+}
+
+
 /* Go from zero to full opacity */
 @keyframes fadeEffect {
     from {opacity: 0;}
     to {opacity: 1;}
+}
+
+caption {
+    caption-side: top;
+    color: black;
+    font-family: 'Montserrat-Medium';
+    font-size: 18px;
+    text-align: center;
+}
+
+.table {
+    width: 100%;
+    font-family: 'Montserrat-Regular';
+    font-size: 11px;
+    border-collapse: separate;
+    border-spacing: 5px 12px; /*1 горизонталь, 2 вертикаль*/
+}
+
+.table tr{
+    background-color: #F5F5F5;
+}
+
+.table th, td{
+    border-radius: 3px;
 }
