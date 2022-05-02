@@ -100,7 +100,7 @@ def home(request):
             print(schedules[0].weekday)
     context = {
         'groupForm': groupForm,
-        'schedule': schedules
+        'schedules': schedules
     }
     return render(request, 'STR/home.html', context)
 

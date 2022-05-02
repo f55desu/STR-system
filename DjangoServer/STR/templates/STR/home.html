@@ -109,7 +109,7 @@
                                 {{ groupForm.group_name.label }} {{ groupForm.group_name }}
                                 <button name="select_group">Обновить!</button>
                             </form>
-                            {% if schedule %}
+                            {% if schedules %}
                                 <!-- Таблица расписания -->
                                 <table class="table numerator">
                                     <caption>Расписание занятий для группы бПО-191 на весенний семестр 2021-2022 учебный год</caption>
@@ -129,26 +129,62 @@
                                     <tbody>
                                       <tr>
                                         <th scope="row">Понедельник</th>
+                                        {% for sched in schedules %}
+                                            {% if sched.weekday == "Понедельник" and sched.even_week == "Числитель" %}
+                                                <td>{{ sched.group }}/{{ subgroup_number }}<br>
+                                                    {{ sched.subject }}</td>
+                                            {% endif %}
+                                        {% endfor %}
                                       </tr>
                                       <tr>
                                         <th scope="row">Вторник</th>
+                                        {% for sched in schedules %}
+                                            {% if sched.weekday == "Вторник" and sched.even_week == "Числитель" %}
+                                                <td>{{ sched.group }}/{{ subgroup_number }}<br>
+                                                    {{ sched.subject }}</td>
+                                            {% endif %}
+                                        {% endfor %}
                                       </tr>
                                       <tr>
                                         <th scope="row">Среда</th>
+                                        {% for sched in schedules %}
+                                            {% if sched.weekday == "Среда" and sched.even_week == "Числитель" %}
+                                                <td>{{ sched.group }}/{{ subgroup_number }}<br>
+                                                    {{ sched.subject }}</td>
+                                            {% endif %}
+                                        {% endfor %}
                                       </tr>
                                       <tr>
                                         <th scope="row">Четверг</th>
-                                        <td></td>
+                                        {% for sched in schedules %}
+                                            {% if sched.weekday == "Четверг" and sched.even_week == "Числитель" %}
+                                                <td>{{ sched.group }}/{{ subgroup_number }}<br>
+                                                    {{ sched.subject }}</td>
+                                            {% endif %}
+                                        {% endfor %}
+                                        <!-- <td></td>
                                         <td></td>
                                         <td></td>
                                         <td>бПО-191/2 <br>
-                                            Проект. деят. (пр)</td>
+                                            Проект. деят. (пр)</td> -->
                                       </tr>
                                       <tr>
                                         <th scope="row">Пятница</th>
+                                        {% for sched in schedules %}
+                                            {% if sched.weekday == "Пятница" and sched.even_week == "Числитель" %}
+                                                <td>{{ sched.group }}/{{ subgroup_number }}<br>
+                                                    {{ sched.subject }}</td>
+                                            {% endif %}
+                                        {% endfor %}
                                       </tr>
                                       <tr>
                                         <th scope="row">Суббота</th>
+                                        {% for sched in schedules %}
+                                            {% if sched.weekday == "Суббота" and sched.even_week == "Числитель" %}
+                                                <td>{{ sched.group }}/{{ subgroup_number }}<br>
+                                                    {{ sched.subject }}</td>
+                                            {% endif %}
+                                        {% endfor %}
                                       </tr>
                                     </tbody>
                                 </table>
@@ -188,7 +224,6 @@
                                       </tr>
                                     </tbody>
                                 </table>
-                                {{ schedule }}
                             {% else %}
                             {% endif %}
                         </div>
