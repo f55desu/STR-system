@@ -1,3 +1,4 @@
+from time import time
 from tokenize import group
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -14,7 +15,7 @@ from django.utils.encoding import force_text
 from django.shortcuts import redirect, render
 from django.contrib.auth import login, logout
 
-from .forms import GetGroupForm, LoginForm, RegistrationForm
+from .forms import GetTeacherForm, GetGroupForm, LoginForm, RegistrationForm
 from .models import *
 
 from . import AvgRatingFunc
@@ -82,7 +83,19 @@ def home(request):
     #print(Group.objects.values_list('name'))
     # groups = Group.objects.values_list('name', flat=True)
     schedules = None
+    # Отчаяние
+    # schedulesMonday800 = None
+    # schedulesMonday945 = None
+    # schedulesMonday1130 = None
+    # schedulesTuesday = None
+    # schedulesWednesday = None
+    # schedulesThursday = None
+    # schedulesFriday = None
+    # schedulesSaturday = None
+    currGroup = None
+    currTeacher = None
     groupForm = GetGroupForm()
+    teacherForm = GetTeacherForm()
     if request.method == 'POST' and 'button_logout' in request.POST:
         logout(request)
         return redirect('registration')
@@ -94,14 +107,54 @@ def home(request):
         #     if int(request.POST['group_name']) == i:
         #         groupNameToFind = groups[i]
         #         break
-        schedules = Schedule.objects.filter(group__in=Group.objects.filter(name=request.POST['group_name']))
-        if schedules:
-            print(request.POST['group_name'])
-            print(schedules[0].weekday)
+        # Если выбрана группа
+        if request.POST['group_name'] != '':
+            currGroup = request.POST['group_name']
+            schedules = Schedule.objects.filter(group__in=Group.objects.filter(name=request.POST['group_name']))
+            # Отчаяние
+            # schedulesMonday800 = Schedule.objects.filter(group__in=Group.objects.filter(name=request.POST['group_name']), weekday='Понедельник', time='C 8:00 до 9:30')
+            # schedulesMonday945 = Schedule.objects.filter(group__in=Group.objects.filter(name=request.POST['group_name']), weekday='Понедельник', time='С 9:45 до 11:15')
+            # schedulesMonday1130 = Schedule.objects.filter(group__in=Group.objects.filter(name=request.POST['group_name']), weekday='Понедельник', time='С 11:30 до 13:15')
+            # schedulesTuesday = Schedule.objects.filter(group__in=Group.objects.filter(name=request.POST['group_name']), weekday='Вторник')
+            # schedulesWednesday= Schedule.objects.filter(group__in=Group.objects.filter(name=request.POST['group_name']), weekday='Среда')
+            # schedulesThursday = Schedule.objects.filter(group__in=Group.objects.filter(name=request.POST['group_name']), weekday='Четверг')
+            # schedulesFriday = Schedule.objects.filter(group__in=Group.objects.filter(name=request.POST['group_name']), weekday='Пятница')
+            # schedulesSaturday = Schedule.objects.filter(group__in=Group.objects.filter(name=request.POST['group_name']), weekday='Суббота')
+        # Если выбран препод
+        if request.POST['teacherName'] != '':
+            currTeacher = f"{request.POST['teacherName'][:-1]}ва"
+            schedules = Schedule.objects.filter(teacher__in=Teacher.objects.filter(surname=request.POST['teacherName']))
+        # Если выбран препод и группа
+        if request.POST['teacherName'] != '' and request.POST['group_name'] != '':
+            currGroup = request.POST['group_name']
+            currTeacher = f"{request.POST['teacherName'][:-1]}ва"
+            schedules = Schedule.objects.filter(teacher__in=Teacher.objects.filter(surname=request.POST['teacherName']), group__in=Group.objects.filter(name=request.POST['group_name']))
+        # if schedules:
+        #     currGroup = request.POST['group_name']
+        #     currTeacher = f"{request.POST['teacherName'][:-1]}ва"
+        #     print(currGroup)
+        #     print(currTeacher)
+        # else:
+        #     currGroup = request.POST['group_name']
+        #     currTeacher = request.POST['teacherName']
     context = {
         'groupForm': groupForm,
-        'schedules': schedules
+        'teacherForm': teacherForm,
+        'schedules': schedules,
+        # Отчаяние
+        # 'schedulesMonday800': schedulesMonday800,
+        # 'schedulesMonday945': schedulesMonday945,
+        # 'schedulesMonday1130': schedulesMonday1130,
+        # 'schedulesTuesday': schedulesTuesday,
+        # 'schedulesWednesday': schedulesWednesday,
+        # 'schedulesThursday': schedulesThursday,
+        # 'schedulesFriday': schedulesFriday,
+        # 'schedulesSaturday': schedulesSaturday,
+        'currGroupName': currGroup,
+        'currTeacher': currTeacher
     }
+    currGroup = None
+    currTeacher = None
     return render(request, 'STR/home.html', context)
 
 def registration(request):

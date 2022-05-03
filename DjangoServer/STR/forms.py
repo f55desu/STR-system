@@ -177,6 +177,13 @@ class GetGroupForm(forms.Form):
     # temp_group = Group.objects.all()
     # for i in range(0, len(temp_group)):
     #     GROUP_LIST[i] = f'{temp_group[i].name}'
-    group_name = forms.ModelChoiceField(required=True, label='Группа: ', queryset=Group.objects.values_list('name', flat=True))
+    group_name = forms.ModelChoiceField(required=False, label='Группа: ', queryset=Group.objects.values_list('name', flat=True))
 
     # group_name = forms.ChoiceField(required=True, label='Группа: ')
+
+class GetTeacherForm(forms.Form):
+    # GROUP_LIST = {}
+    # temp_group = Group.objects.all()
+    # for i in range(0, len(temp_group)):
+    #     GROUP_LIST[i] = f'{temp_group[i].name}'
+    teacherName = forms.ModelChoiceField(required=False, label='Преподаватель: ', queryset=Teacher.objects.values_list('surname', flat=True))
