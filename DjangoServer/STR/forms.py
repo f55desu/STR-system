@@ -1,4 +1,5 @@
 # from typing import List, Tuple
+from random import choices
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
@@ -94,7 +95,10 @@ class LoginForm(forms.Form):
         return user
 
 class RegistrationForm(UserCreationForm):
-
+    SUBGROUP_CHOICES = (
+        (1, 1),
+        (2, 2),
+    )
     # def __init__(self, *args, **kwargs) -> None:
     #     super().__init__(*args, **kwargs)
     #     self.fields['group'].choices = _all_groups()
@@ -107,6 +111,7 @@ class RegistrationForm(UserCreationForm):
 
     # group = forms.ChoiceField(required=True, label='Группа', choices=[])
     group = forms.ModelChoiceField(required=True, label='* Группа', queryset=Group.objects.all().order_by('name'), initial=0)
+    subgroup_number = forms.ChoiceField(required=True, label='* Подгруппа', choices=SUBGROUP_CHOICES, initial=0)
 
     # groupNumber = forms.ChoiceField(required=True, label='Группа', choices=GROUP_NUMBERS)
 
@@ -133,6 +138,7 @@ class RegistrationForm(UserCreationForm):
             'lastname',
             'email',
             'group',
+            'subgroup_number',
             'password1',
             'password2',
        )
@@ -164,6 +170,7 @@ class RegistrationForm(UserCreationForm):
         user.email = self.cleaned_data['email']
 
         user.group = self.cleaned_data['group']
+        user.subgroup_number = self.cleaned_data['subgroup_number']
 
         user.password1 = self.cleaned_data['password1']
         user.password2 = self.cleaned_data['password2']
