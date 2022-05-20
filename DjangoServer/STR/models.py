@@ -4,9 +4,8 @@ from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.forms import CharField, IntegerField
 
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.db import models
-from matplotlib.pyplot import cla
 
 from .managers import *
 
@@ -238,3 +237,13 @@ class Schedule(models.Model):
     class Meta:
         verbose_name = _('Расписание')
         verbose_name_plural = _('Расписания')
+
+
+class Attendance(models.Model):
+    attended = models.BooleanField()
+
+    schedule = models.ForeignKey(Schedule, on_delete=models.PROTECT)
+    student = models.ForeignKey(Student, on_delete=models.PROTECT)
+
+    def __str__(self) -> str:
+        return self.student.surname

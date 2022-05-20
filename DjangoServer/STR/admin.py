@@ -123,3 +123,5 @@ admin.site.register(Grade, Grade_Admin)
 admin.site.register(Campus, Campus_Admin)
 admin.site.register(Audience, Audience_Admin)
 admin.site.register(Schedule, Schedule_Admin)
+
+admin.site.register(Attendance)
