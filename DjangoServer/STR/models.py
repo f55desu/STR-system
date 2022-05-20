@@ -1,4 +1,5 @@
 from calendar import weekday
+from tabnanny import verbose
 from tkinter import CASCADE
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
@@ -37,7 +38,9 @@ class Subject(models.Model):
 # 2
 class Group(models.Model):
     name = models.CharField('Название', unique=True, max_length=320)
+
     education_form = models.CharField('Форма обучения', max_length=170)
+    
     def __str__(self) -> str:
         return f"{self.name}"
 
@@ -79,6 +82,11 @@ class Criterion(models.Model):
     
 # 5
 class Student(AbstractBaseUser, PermissionsMixin):
+    SUBGROUP_CHOICES = (
+        (1, 1),
+        (2, 2),
+    )
+
     # required reg and auth field
     email = models.EmailField(_('Email'), unique=True)
 
@@ -88,6 +96,7 @@ class Student(AbstractBaseUser, PermissionsMixin):
     lastname = models.CharField(_('Отчество'), blank=True, null=True, default=None, max_length=320)
 
     group = models.ForeignKey('Group', verbose_name=_('Группа'), blank=True, null=True, default=None, on_delete=models.PROTECT)
+    subgroup_number = models.SmallIntegerField(_('Подгруппа'), default=1, choices=SUBGROUP_CHOICES)
 
     # permissions
     is_staff = models.BooleanField(_('Права администратора'), default=False)
@@ -178,6 +187,7 @@ class Audience(models.Model):
         ("Лекционная", 'Лекционная'),
         ("Лабораторная", 'Лабораторная')
     )
+
     audience_number = models.IntegerField('Номер аудитории', unique=True)
     campus = models.ForeignKey(Campus, verbose_name = 'Корпус', on_delete=models.CASCADE)
     audience_type = models.CharField('Тип аудитории', default="", choices=AUDIENCE_CHOISES, max_length=70)
@@ -217,17 +227,18 @@ class Schedule(models.Model):
         ("Числитель", 'Числитель'),
         ("Знаменатель", 'Знаменатель'),
     )
-    SUBGROUP_CHOISES = (
-        ("Подгруппа №1", 'Подгруппа №1'),
-        ("Подгруппа №2", 'Подгруппа №2'),
+    SUBGROUP_CHOICES = (
+        (1, 1),
+        (2, 2),
     )
+
     subject = models.ForeignKey(Subject, verbose_name = 'Дисциплина',on_delete=models.CASCADE)
     audience = models.ForeignKey(Audience, verbose_name = 'Аудитория', on_delete=models.CASCADE)
     group = models.ForeignKey(Group, verbose_name = 'Группа', on_delete=models.CASCADE)
+    subgroup_number = models.SmallIntegerField(_('Подгруппа'), default=1, choices=SUBGROUP_CHOICES)
     time = models.CharField('Время', default="", choices=TIME_CHOISES, max_length=40)
     weekday = models.CharField('День недели', default="", choices=WEEKDAY_CHOISES, max_length=20)
     even_week = models.CharField('Четность', default="", choices=EVEN_CHOISES, max_length=20)
-    subgroup_number = models.CharField('Подгруппа', default="", choices=SUBGROUP_CHOISES, max_length=20)
     teacher = models.ForeignKey(Teacher, verbose_name = 'Преподаватель', on_delete=models.CASCADE)
     semester_year = models.CharField('Семестр', max_length=70)
 
@@ -246,4 +257,8 @@ class Attendance(models.Model):
     student = models.ForeignKey(Student, on_delete=models.PROTECT)
 
     def __str__(self) -> str:
-        return self.student.surname
+        return f'{self.schedule.teacher} {self.schedule.subject.name} {self.schedule.group} {self.schedule.subgroup_number} {self.student}'
+
+    class Meta:
+        verbose_name = 'Посещаемость'
+        verbose_name_plural = _('Посещаемость')
