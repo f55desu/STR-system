@@ -71,7 +71,13 @@
                     </div>
                     <div class="rowLC">
                         <span class="propertyLC">Подгруппа</span>
-                        <span class="valueLC">{{ user.subgroup_number }}</span>
+                        <span class="valueLC" id="subgroup_number" name="subgroup_number">
+                            {% if user.subgroup_number %}
+                                {{ user.subgroup_number }}
+                            {% else %}
+                                -
+                            {% endif %}  
+                        </span>
                     </div>
                     <div class="rowLC">
                         <span class="propertyLC">Город</span>
