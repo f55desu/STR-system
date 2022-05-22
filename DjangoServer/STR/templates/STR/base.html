@@ -59,26 +59,28 @@
                     </div>
                     <span class="titleLC">{{ user.get_full_name }}</span>
                     <span class="subtitleLC">{{ user.email }}</span>
-                    <div class="rowLC">
-                        <span class="propertyLC">Группа</span>
-                        <span class="valueLC" id="group" name="group">
-                            {% if user.group %}
-                                {{ user.group }}
-                            {% else %}
-                                -
-                            {% endif %}    
-                        </span>
-                    </div>
-                    <div class="rowLC">
-                        <span class="propertyLC">Подгруппа</span>
-                        <span class="valueLC" id="subgroup_number" name="subgroup_number">
-                            {% if user.subgroup_number %}
-                                {{ user.subgroup_number }}
-                            {% else %}
-                                -
-                            {% endif %}  
-                        </span>
-                    </div>
+                    {% if user.is_student %}
+                        <div class="rowLC">
+                            <span class="propertyLC">Группа</span>
+                            <span class="valueLC" id="group" name="group">
+                                {% if user.student.group %}
+                                    {{ user.student.group }}
+                                {% else %}
+                                    -
+                                {% endif %}    
+                            </span>
+                        </div>
+                        <div class="rowLC">
+                            <span class="propertyLC">Подгруппа</span>
+                            <span class="valueLC" id="subgroup_number" name="subgroup_number">
+                                {% if user.student.subgroup_number %}
+                                    {{ user.student.subgroup_number }}
+                                {% else %}
+                                    -
+                                {% endif %}  
+                            </span>
+                        </div>
+                    {% endif %}
                     <div class="rowLC">
                         <span class="propertyLC">Город</span>
                         <span class="valueLC">Воронеж</span>

@@ -140,7 +140,7 @@ EMAIL_HOST_USER = 'sop.mailbot@gmail.com'
 EMAIL_HOST_PASSWORD = '(hawok_0235)'
 EMAIL_PORT = 587
 
-AUTH_USER_MODEL = 'STR.Student'
+AUTH_USER_MODEL = 'STR.User'
 LOGIN_REDIRECT_URL = 'home'
 
 CACHES = {

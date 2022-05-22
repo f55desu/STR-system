@@ -1,11 +1,14 @@
 # from typing import List, Tuple
-from random import choices
+# from random import choices
+from turtle import st
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 
+from django.utils.translation import gettext_lazy as _
+
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from django.core.exceptions import ValidationError
+# from django.core.exceptions import ValidationError
 from django.contrib.auth import authenticate
 # from django.core.validators import validate_email
 # from django.contrib.auth.password_validation import validate_password
@@ -40,18 +43,36 @@ class ScheduleForm(forms.ModelForm):
         }
         fields = '__all__'
 
-class StudentCreationForm(UserCreationForm):
+class MyUserCreationForm(UserCreationForm):
+
+    group = forms.CharField
 
     class Meta:
-        model = Student
-        fields = ('email', 'surname', 'name', 'lastname', 'password', 'group')
+        model = User
+        fields = ('email', 'surname', 'name', 'lastname', 'password', )
 
 
-class StudentChangeForm(UserChangeForm):
+class MyUserChangeForm(UserChangeForm):
 
     class Meta:
-        model = Student
-        fields = ('email', 'surname', 'name', 'lastname', 'password', 'group')
+        model = User
+        fields = ('email', 'surname', 'name', 'lastname', 'password', )
+
+
+# class MyUserCreationForm(UserCreationForm):
+
+#     group = forms.CharField
+
+#     class Meta:
+#         model = Student
+#         fields = ('email', 'surname', 'name', 'lastname', 'password', 'group')
+
+
+# class MyUserChangeForm(UserChangeForm):
+
+#     class Meta:
+#         model = Student
+#         fields = ('email', 'surname', 'name', 'lastname', 'password', 'group')
 
 # def _all_groups() -> List[Tuple[str, str]]:
 #     from django.db import connection
@@ -130,7 +151,6 @@ class RegistrationForm(UserCreationForm):
         model = get_user_model()
         help = {
            'surname': 'Не более 320 символов',
-           'surname': 'ПЕТУХ',
         }
         fields = (
             'surname',
@@ -169,14 +189,19 @@ class RegistrationForm(UserCreationForm):
 
         user.email = self.cleaned_data['email']
 
-        user.group = self.cleaned_data['group']
-        user.subgroup_number = self.cleaned_data['subgroup_number']
-
         user.password1 = self.cleaned_data['password1']
         user.password2 = self.cleaned_data['password2']
 
+        user.is_student = True
+
         if commit:
             user.save()
+
+            student = Student.objects.create(user=user)
+            student.group = self.cleaned_data['group']
+            student.subgroup_number = self.cleaned_data['subgroup_number']
+            student.save()
+
         return user
 
 class GetGroupForm(forms.Form):
@@ -193,4 +218,4 @@ class GetTeacherForm(forms.Form):
     # temp_group = Group.objects.all()
     # for i in range(0, len(temp_group)):
     #     GROUP_LIST[i] = f'{temp_group[i].name}'
-    teacherName = forms.ModelChoiceField(required=False, label='Преподаватель: ', queryset=Teacher.objects.values_list('surname', flat=True))
+    teacherName = forms.ModelChoiceField(required=False, label='Преподаватель: ', queryset=Teacher.objects.values_list('user__surname', flat=True))
