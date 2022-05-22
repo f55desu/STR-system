@@ -229,28 +229,30 @@ class Audience(models.Model):
 # 12
 class Schedule(models.Model):
     TIME_CHOICES = (
-        ("C 8:00 до 9:30", 'C 8:00 до 9:30'),
-        ("С 9:45 до 11:15", 'С 9:45 до 11:15'),
-        ("С 11:30 до 13:15", 'С 11:30 до 13:15'),
-        ("С 13:30 до 15:00", 'С 13:30 до 15:00'),
-        ("С 15:15 до 16:45", 'С 15:15 до 16:45'),
-        ("С 17:00 до 18:30", 'С 17:00 до 18:30'),
+        (1, "C 8:00 до 9:30"),
+        (2, "С 9:45 до 11:15"),
+        (3, "С 11:30 до 13:15"),
+        (4, "С 13:30 до 15:00"),
+        (5, "С 15:15 до 16:45"),
+        (6, "С 17:00 до 18:30"),
     )
     WEEKDAY_CHOICES = (
-        ("Понедельник", 'Понедельник'),
-        ("Вторник", 'Вторник'),
-        ("Среда", 'Среда'),
-        ("Четверг", 'Четверг'),
-        ("Пятница", 'Пятница'),
-        ("Суббота", 'Суббота'),
+        (1, "Понедельник"),
+        (2, "Вторник"),
+        (3, "Среда"),
+        (4, "Четверг"),
+        (5, "Пятница"),
+        (6, "Суббота"),
     )
     EVEN_CHOICES = (
-        ("Числитель", 'Числитель'),
-        ("Знаменатель", 'Знаменатель'),
+        (0, 'Всегда'),
+        (1, 'Числитель'),
+        (2, 'Знаменатель'),
     )
     SUBGROUP_CHOICES = (
-        (1, 1),
-        (2, 2),
+        (0, "Нет"),
+        (1, "Первая"),
+        (2, "Вторая"),
     )
     SUBJECT_CHOICES = (
         ("Лекция", 'Лекция'),
@@ -263,17 +265,18 @@ class Schedule(models.Model):
     subject_type = models.CharField(_('Тип занятия'), default="Лекция", choices=SUBJECT_CHOICES, max_length=50)
 
     group = models.ForeignKey(Group, verbose_name = 'Группа', on_delete=models.PROTECT)
-    subgroup_number = models.SmallIntegerField(_('Подгруппа'), blank=True, null=True, default=None, choices=SUBGROUP_CHOICES)
+    subgroup_number = models.PositiveSmallIntegerField(_('Подгруппа'), default=0, choices=SUBGROUP_CHOICES)
 
     semester_year = models.CharField('Семестр', max_length=70)
-    even_week = models.CharField('Четность', default="", choices=EVEN_CHOICES, max_length=20)
-    weekday = models.CharField('День недели', default="", choices=WEEKDAY_CHOICES, max_length=20)
-    time_range = models.CharField('Время', default="", choices=TIME_CHOICES, max_length=40)
+    even_week = models.PositiveSmallIntegerField('Четность', default=0, choices=EVEN_CHOICES, max_length=20)
+
+    weekday = models.PositiveSmallIntegerField('День недели', default=1, choices=WEEKDAY_CHOICES)
+    time_range = models.PositiveSmallIntegerField('Время', default=1, choices=TIME_CHOICES)
 
     audience = models.ForeignKey(Audience, verbose_name = 'Аудитория', on_delete=models.PROTECT)
 
     def __str__(self) -> str:
-        return f"[{self.subject}], [{self.audience}], [{self.group}], [{self.time_range}], [{self.weekday}], [{self.even_week}], [{self.subgroup_number}], [{self.teacher}], [{self.semester_year}]"
+        return f"[{self.teacher}], [{self.subject}], [{self.subject_type}], [{self.group}], [{self.subgroup_number}], [{self.semester_year}], [{self.even_week}], [{self.weekday}], [{self.time_range}], [{self.audience}]"
 
     class Meta:
         verbose_name = _('Расписание')

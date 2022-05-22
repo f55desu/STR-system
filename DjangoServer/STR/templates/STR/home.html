@@ -145,6 +145,73 @@
                                               <tr>
                                                 <th scope="row">Понедельник</th>
                                                 {% for sched in schedules %}
+                                                    {% if sched.0.weekday == 1 %}
+                                                        {% if sched.0.even_week == 1 or sched.0.even_week == 0 %}
+                                                            {% if sched.0.subgroup_number %}
+                                                            <!-- Если это подгруппа -->
+
+                                                            <td>
+                                                                <!-- Подгруппа 1 -->
+                                                                {{ sched.0.group }}/{{ sched.0.subgroup_number }}:
+                                                                {{ sched.0.subject }}
+                                                                <br>
+                                                                {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }}
+                                                                
+                                                                {% if sched.0.teacher.lastname %} 
+                                                                    {{ sched.0.teacher.lastname }} 
+                                                                {% endif %}
+                                                                <br>
+                                                                <!-- Подгруппа 2 -->
+
+                                                                {{ sched.1.group }}/{{ sched.1.subgroup_number }}:
+                                                                {{ sched.1.subject }}
+                                                                <br>
+                                                                {{ sched.1.teacher.surname }} {{ sched.1.teacher.name }}
+                                                                
+                                                                {% if sched.1.teacher.lastname %} 
+                                                                    {{ sched.1.teacher.lastname }} 
+                                                                {% endif %}
+                                                                <br>
+                                                            </td>
+                                                            
+                                                            {% else %}
+                                                            <!-- Если это единая пара -->
+
+                                                                {% if sched.0.subject_type == "Лекция" %}
+                                                                    <td>
+                                                                        {{ sched.0.group }}
+                                                                        <br>
+                                                                        {{ sched.0.subject }}
+                                                                        <br>
+                                                                        {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }}
+                                                                        
+                                                                        {% if sched.0.teacher.lastname %} 
+                                                                            {{ sched.0.teacher.lastname }}
+                                                                        {% endif %}
+                                                                        <br>
+                                                                    </td>
+                                                                {% else %}
+                                                                    <td>
+                                                                        {{ sched.0.group }}:
+                                                                        {{ sched.0.subject }}
+                                                                        <br>
+                                                                        {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }} 
+
+                                                                        {% if sched.0.teacher.lastname %} 
+                                                                            {{ sched.0.teacher.lastname }} 
+                                                                        {% endif %}
+                                                                        <br>
+                                                                    </td>
+                                                                {% endif %}
+
+                                                            {% endif %}
+                                                        {% endif %}
+                                                    {% endif %}
+
+                                                {% endfor %}
+
+
+                                                <!-- {% for sched in schedules %}
                                                     {% if sched.weekday == "Понедельник" and sched.even_week == "Числитель" %}
                                                         {% if sched.subject.type == "Лекция" %}
                                                         <td>{{ sched.group }}
@@ -161,7 +228,7 @@
                                                             <br></td>
                                                         {% endif %}
                                                     {% endif %}
-                                                {% endfor %}
+                                                {% endfor %} -->
                                                 <!-- {% for sched in schedules %}
                                                     {% if sched.weekday == "Понедельник" and sched.even_week == "Числитель" and sched.time == "C 8:00 до 9:30"%}
                                                         <td>
@@ -188,6 +255,72 @@
                                               <tr>
                                                 <th scope="row">Вторник</th>
                                                 {% for sched in schedules %}
+                                                    {% if sched.0.weekday == 2 %}
+                                                        {% if sched.0.even_week == 1 or sched.0.even_week == 0 %}
+                                                            {% if sched.0.subgroup_number %}
+                                                            <!-- Если это подгруппа -->
+
+                                                            <td>
+                                                                <!-- Подгруппа 1 -->
+                                                                {{ sched.0.group }}/{{ sched.0.subgroup_number }}:
+                                                                {{ sched.0.subject }}
+                                                                <br>
+                                                                {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }}
+                                                                
+                                                                {% if sched.0.teacher.lastname %} 
+                                                                    {{ sched.0.teacher.lastname }} 
+                                                                {% endif %}
+                                                                <br>
+                                                                <!-- Подгруппа 2 -->
+
+                                                                {{ sched.1.group }}/{{ sched.1.subgroup_number }}:
+                                                                {{ sched.1.subject }}
+                                                                <br>
+                                                                {{ sched.1.teacher.surname }} {{ sched.1.teacher.name }}
+                                                                
+                                                                {% if sched.1.teacher.lastname %} 
+                                                                    {{ sched.1.teacher.lastname }} 
+                                                                {% endif %}
+                                                                <br>
+                                                            </td>
+                                                            
+                                                            {% else %}
+                                                            <!-- Если это единая пара -->
+
+                                                                {% if sched.0.subject_type == "Лекция" %}
+                                                                    <td>
+                                                                        {{ sched.0.group }}
+                                                                        <br>
+                                                                        {{ sched.0.subject }}
+                                                                        <br>
+                                                                        {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }}
+                                                                        
+                                                                        {% if sched.0.teacher.lastname %} 
+                                                                            {{ sched.0.teacher.lastname }}
+                                                                        {% endif %}
+                                                                        <br>
+                                                                    </td>
+                                                                {% else %}
+                                                                    <td>
+                                                                        {{ sched.0.group }}:
+                                                                        {{ sched.0.subject }}
+                                                                        <br>
+                                                                        {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }} 
+
+                                                                        {% if sched.0.teacher.lastname %} 
+                                                                            {{ sched.0.teacher.lastname }} 
+                                                                        {% endif %}
+                                                                        <br>
+                                                                    </td>
+                                                                {% endif %}
+
+                                                            {% endif %}
+                                                        {% endif %}
+                                                    {% endif %}
+
+                                                {% endfor %}
+
+                                                <!-- {% for sched in schedules %}
                                                     {% if sched.weekday == "Вторник" and sched.even_week == "Числитель" %}
                                                         {% if sched.subject.type == "Лекция" %}
                                                         <td>{{ sched.group }}
@@ -246,7 +379,7 @@
                                                             <br></td>
                                                         {% endif %}
                                                     {% endif %}
-                                                {% endfor %}
+                                                {% endfor %} -->
                                                 <!-- <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -254,8 +387,73 @@
                                                     Проект. деят. (пр)</td> -->
                                               </tr>
                                               <tr>
-                                                <th scope="row">Пятница</th>
+                                                <th scope="row">Среда</th>
                                                 {% for sched in schedules %}
+                                                    {% if sched.0.weekday == 3 %}
+                                                        {% if sched.0.even_week == 1 or sched.0.even_week == 0 %}
+                                                            {% if sched.0.subgroup_number %}
+                                                            <!-- Если это подгруппа -->
+
+                                                            <td>
+                                                                <!-- Подгруппа 1 -->
+                                                                {{ sched.0.group }}/{{ sched.0.subgroup_number }}:
+                                                                {{ sched.0.subject }}
+                                                                <br>
+                                                                {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }}
+                                                                
+                                                                {% if sched.0.teacher.lastname %} 
+                                                                    {{ sched.0.teacher.lastname }} 
+                                                                {% endif %}
+                                                                <br>
+                                                                <!-- Подгруппа 2 -->
+
+                                                                {{ sched.1.group }}/{{ sched.1.subgroup_number }}:
+                                                                {{ sched.1.subject }}
+                                                                <br>
+                                                                {{ sched.1.teacher.surname }} {{ sched.1.teacher.name }}
+                                                                
+                                                                {% if sched.1.teacher.lastname %} 
+                                                                    {{ sched.1.teacher.lastname }} 
+                                                                {% endif %}
+                                                                <br>
+                                                            </td>
+                                                            
+                                                            {% else %}
+                                                            <!-- Если это единая пара -->
+
+                                                                {% if sched.0.subject_type == "Лекция" %}
+                                                                    <td>
+                                                                        {{ sched.0.group }}
+                                                                        <br>
+                                                                        {{ sched.0.subject }}
+                                                                        <br>
+                                                                        {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }}
+                                                                        
+                                                                        {% if sched.0.teacher.lastname %} 
+                                                                            {{ sched.0.teacher.lastname }}
+                                                                        {% endif %}
+                                                                        <br>
+                                                                    </td>
+                                                                {% else %}
+                                                                    <td>
+                                                                        {{ sched.0.group }}:
+                                                                        {{ sched.0.subject }}
+                                                                        <br>
+                                                                        {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }} 
+
+                                                                        {% if sched.0.teacher.lastname %} 
+                                                                            {{ sched.0.teacher.lastname }} 
+                                                                        {% endif %}
+                                                                        <br>
+                                                                    </td>
+                                                                {% endif %}
+
+                                                            {% endif %}
+                                                        {% endif %}
+                                                    {% endif %}
+
+                                                {% endfor %}
+                                                <!-- {% for sched in schedules %}
                                                     {% if sched.weekday == "Пятница" and sched.even_week == "Числитель" %}
                                                         {% if sched.subject.type == "Лекция" %}
                                                         <td>{{ sched.group }}
@@ -272,11 +470,248 @@
                                                             <br></td>
                                                         {% endif %}
                                                     {% endif %}
+                                                {% endfor %} -->
+                                              </tr>
+                                              <tr>
+                                                <th scope="row">Четверг</th>
+                                                {% for sched in schedules %}
+                                                    {% if sched.0.weekday == 4 %}
+                                                        {% if sched.0.even_week == 1 or sched.0.even_week == 0 %}
+                                                            {% if sched.0.subgroup_number %}
+                                                            <!-- Если это подгруппа -->
+
+                                                            <td>
+                                                                <!-- Подгруппа 1 -->
+                                                                {{ sched.0.group }}/{{ sched.0.subgroup_number }}:
+                                                                {{ sched.0.subject }}
+                                                                <br>
+                                                                {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }}
+                                                                
+                                                                {% if sched.0.teacher.lastname %} 
+                                                                    {{ sched.0.teacher.lastname }} 
+                                                                {% endif %}
+                                                                <br>
+                                                                <!-- Подгруппа 2 -->
+
+                                                                {{ sched.1.group }}/{{ sched.1.subgroup_number }}:
+                                                                {{ sched.1.subject }}
+                                                                <br>
+                                                                {{ sched.1.teacher.surname }} {{ sched.1.teacher.name }}
+                                                                
+                                                                {% if sched.1.teacher.lastname %} 
+                                                                    {{ sched.1.teacher.lastname }} 
+                                                                {% endif %}
+                                                                <br>
+                                                            </td>
+                                                            
+                                                            {% else %}
+                                                            <!-- Если это единая пара -->
+
+                                                                {% if sched.0.subject_type == "Лекция" %}
+                                                                    <td>
+                                                                        {{ sched.0.group }}
+                                                                        <br>
+                                                                        {{ sched.0.subject }}
+                                                                        <br>
+                                                                        {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }}
+                                                                        
+                                                                        {% if sched.0.teacher.lastname %} 
+                                                                            {{ sched.0.teacher.lastname }}
+                                                                        {% endif %}
+                                                                        <br>
+                                                                    </td>
+                                                                {% else %}
+                                                                    <td>
+                                                                        {{ sched.0.group }}:
+                                                                        {{ sched.0.subject }}
+                                                                        <br>
+                                                                        {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }} 
+
+                                                                        {% if sched.0.teacher.lastname %} 
+                                                                            {{ sched.0.teacher.lastname }} 
+                                                                        {% endif %}
+                                                                        <br>
+                                                                    </td>
+                                                                {% endif %}
+
+                                                            {% endif %}
+                                                        {% endif %}
+                                                    {% endif %}
+
                                                 {% endfor %}
+                                                <!-- {% for sched in schedules %}
+                                                    {% if sched.weekday == "Пятница" and sched.even_week == "Числитель" %}
+                                                        {% if sched.subject.type == "Лекция" %}
+                                                        <td>{{ sched.group }}
+                                                            <br>
+                                                            {{ sched.subject }}
+                                                            <br>
+                                                            {{ sched.teacher.surname }} {{ sched.teacher.name }} {% if sched.teacher.lastname %} {{ sched.teacher.lastname }} {% endif %}
+                                                            <br></td>
+                                                        {% else %}
+                                                        <td>{{ sched.group }}/{{ sched.subgroup_number }}:
+                                                            {{ sched.subject }}
+                                                            <br>
+                                                            {{ sched.teacher.surname }} {{ sched.teacher.name }} {% if sched.teacher.lastname %} {{ sched.teacher.lastname }} {% endif %}
+                                                            <br></td>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endfor %} -->
+                                              </tr>
+                                              <tr>
+                                                <th scope="row">Пятница</th>
+                                                {% for sched in schedules %}
+                                                    {% if sched.0.weekday == 5 %}
+                                                        {% if sched.0.even_week == 1 or sched.0.even_week == 0 %}
+                                                            {% if sched.0.subgroup_number %}
+                                                            <!-- Если это подгруппа -->
+
+                                                            <td>
+                                                                <!-- Подгруппа 1 -->
+                                                                {{ sched.0.group }}/{{ sched.0.subgroup_number }}:
+                                                                {{ sched.0.subject }}
+                                                                <br>
+                                                                {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }}
+                                                                
+                                                                {% if sched.0.teacher.lastname %} 
+                                                                    {{ sched.0.teacher.lastname }} 
+                                                                {% endif %}
+                                                                <br>
+                                                                <!-- Подгруппа 2 -->
+
+                                                                {{ sched.1.group }}/{{ sched.1.subgroup_number }}:
+                                                                {{ sched.1.subject }}
+                                                                <br>
+                                                                {{ sched.1.teacher.surname }} {{ sched.1.teacher.name }}
+                                                                
+                                                                {% if sched.1.teacher.lastname %} 
+                                                                    {{ sched.1.teacher.lastname }} 
+                                                                {% endif %}
+                                                                <br>
+                                                            </td>
+                                                            
+                                                            {% else %}
+                                                            <!-- Если это единая пара -->
+
+                                                                {% if sched.0.subject_type == "Лекция" %}
+                                                                    <td>
+                                                                        {{ sched.0.group }}
+                                                                        <br>
+                                                                        {{ sched.0.subject }}
+                                                                        <br>
+                                                                        {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }}
+                                                                        
+                                                                        {% if sched.0.teacher.lastname %} 
+                                                                            {{ sched.0.teacher.lastname }}
+                                                                        {% endif %}
+                                                                        <br>
+                                                                    </td>
+                                                                {% else %}
+                                                                    <td>
+                                                                        {{ sched.0.group }}:
+                                                                        {{ sched.0.subject }}
+                                                                        <br>
+                                                                        {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }} 
+
+                                                                        {% if sched.0.teacher.lastname %} 
+                                                                            {{ sched.0.teacher.lastname }} 
+                                                                        {% endif %}
+                                                                        <br>
+                                                                    </td>
+                                                                {% endif %}
+
+                                                            {% endif %}
+                                                        {% endif %}
+                                                    {% endif %}
+
+                                                {% endfor %}
+                                                <!-- {% for sched in schedules %}
+                                                    {% if sched.weekday == "Пятница" and sched.even_week == "Числитель" %}
+                                                        {% if sched.subject.type == "Лекция" %}
+                                                        <td>{{ sched.group }}
+                                                            <br>
+                                                            {{ sched.subject }}
+                                                            <br>
+                                                            {{ sched.teacher.surname }} {{ sched.teacher.name }} {% if sched.teacher.lastname %} {{ sched.teacher.lastname }} {% endif %}
+                                                            <br></td>
+                                                        {% else %}
+                                                        <td>{{ sched.group }}/{{ sched.subgroup_number }}:
+                                                            {{ sched.subject }}
+                                                            <br>
+                                                            {{ sched.teacher.surname }} {{ sched.teacher.name }} {% if sched.teacher.lastname %} {{ sched.teacher.lastname }} {% endif %}
+                                                            <br></td>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endfor %} -->
                                               </tr>
                                               <tr>
                                                 <th scope="row">Суббота</th>
                                                 {% for sched in schedules %}
+                                                    {% if sched.0.weekday == 6 %}
+                                                        {% if sched.0.even_week == 1 or sched.0.even_week == 0 %}
+                                                            {% if sched.0.subgroup_number %}
+                                                            <!-- Если это подгруппа -->
+
+                                                            <td>
+                                                                <!-- Подгруппа 1 -->
+                                                                {{ sched.0.group }}/{{ sched.0.subgroup_number }}:
+                                                                {{ sched.0.subject }}
+                                                                <br>
+                                                                {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }}
+                                                                
+                                                                {% if sched.0.teacher.lastname %} 
+                                                                    {{ sched.0.teacher.lastname }} 
+                                                                {% endif %}
+                                                                <br>
+                                                                <!-- Подгруппа 2 -->
+
+                                                                {{ sched.1.group }}/{{ sched.1.subgroup_number }}:
+                                                                {{ sched.1.subject }}
+                                                                <br>
+                                                                {{ sched.1.teacher.surname }} {{ sched.1.teacher.name }}
+                                                                
+                                                                {% if sched.1.teacher.lastname %} 
+                                                                    {{ sched.1.teacher.lastname }} 
+                                                                {% endif %}
+                                                                <br>
+                                                            </td>
+                                                            
+                                                            {% else %}
+                                                            <!-- Если это единая пара -->
+
+                                                                {% if sched.0.subject_type == "Лекция" %}
+                                                                    <td>
+                                                                        {{ sched.0.group }}
+                                                                        <br>
+                                                                        {{ sched.0.subject }}
+                                                                        <br>
+                                                                        {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }}
+                                                                        
+                                                                        {% if sched.0.teacher.lastname %} 
+                                                                            {{ sched.0.teacher.lastname }}
+                                                                        {% endif %}
+                                                                        <br>
+                                                                    </td>
+                                                                {% else %}
+                                                                    <td>
+                                                                        {{ sched.0.group }}:
+                                                                        {{ sched.0.subject }}
+                                                                        <br>
+                                                                        {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }} 
+
+                                                                        {% if sched.0.teacher.lastname %} 
+                                                                            {{ sched.0.teacher.lastname }} 
+                                                                        {% endif %}
+                                                                        <br>
+                                                                    </td>
+                                                                {% endif %}
+
+                                                            {% endif %}
+                                                        {% endif %}
+                                                    {% endif %}
+
+                                                {% endfor %}
+                                                <!-- {% for sched in schedules %}
                                                     {% if sched.weekday == "Суббота" and sched.even_week == "Числитель" %}
                                                         {% if sched.subject.type == "Лекция" %}
                                                         <td>{{ sched.group }}
@@ -293,7 +728,7 @@
                                                             <br></td>
                                                         {% endif %}
                                                     {% endif %}
-                                                {% endfor %}
+                                                {% endfor %} -->
                                               </tr>
                                             </tbody>
                                         </table>
@@ -314,22 +749,411 @@
                                             <tbody>
                                               <tr>
                                                 <th scope="row">Понедельник</th>
-                                                <td></td>
+                                                {% for sched in schedules %}
+                                                    {% if sched.0.weekday == 1 %}
+                                                        {% if sched.0.even_week == 2 or sched.0.even_week == 0 %}
+                                                            {% if sched.0.subgroup_number %}
+                                                            <!-- Если это подгруппа -->
+
+                                                            <td>
+                                                                <!-- Подгруппа 1 -->
+                                                                {{ sched.0.group }}/{{ sched.0.subgroup_number }}:
+                                                                {{ sched.0.subject }}
+                                                                <br>
+                                                                {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }}
+                                                                
+                                                                {% if sched.0.teacher.lastname %} 
+                                                                    {{ sched.0.teacher.lastname }} 
+                                                                {% endif %}
+                                                                <br>
+                                                                <!-- Подгруппа 2 -->
+
+                                                                {{ sched.1.group }}/{{ sched.1.subgroup_number }}:
+                                                                {{ sched.1.subject }}
+                                                                <br>
+                                                                {{ sched.1.teacher.surname }} {{ sched.1.teacher.name }}
+                                                                
+                                                                {% if sched.1.teacher.lastname %} 
+                                                                    {{ sched.1.teacher.lastname }} 
+                                                                {% endif %}
+                                                                <br>
+                                                            </td>
+                                                            
+                                                            {% else %}
+                                                            <!-- Если это единая пара -->
+
+                                                                {% if sched.0.subject_type == "Лекция" %}
+                                                                    <td>
+                                                                        {{ sched.0.group }}
+                                                                        <br>
+                                                                        {{ sched.0.subject }}
+                                                                        <br>
+                                                                        {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }}
+                                                                        
+                                                                        {% if sched.0.teacher.lastname %} 
+                                                                            {{ sched.0.teacher.lastname }}
+                                                                        {% endif %}
+                                                                        <br>
+                                                                    </td>
+                                                                {% else %}
+                                                                    <td>
+                                                                        {{ sched.0.group }}:
+                                                                        {{ sched.0.subject }}
+                                                                        <br>
+                                                                        {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }} 
+
+                                                                        {% if sched.0.teacher.lastname %} 
+                                                                            {{ sched.0.teacher.lastname }} 
+                                                                        {% endif %}
+                                                                        <br>
+                                                                    </td>
+                                                                {% endif %}
+
+                                                            {% endif %}
+                                                        {% endif %}
+                                                    {% endif %}
+
+                                                {% endfor %}
                                             </tr>
                                               <tr>
                                                 <th scope="row">Вторник</th>
+                                                {% for sched in schedules %}
+                                                    {% if sched.0.weekday == 2 %}
+                                                        {% if sched.0.even_week == 2 or sched.0.even_week == 0 %}
+                                                            {% if sched.0.subgroup_number %}
+                                                            <!-- Если это подгруппа -->
+
+                                                            <td>
+                                                                <!-- Подгруппа 1 -->
+                                                                {{ sched.0.group }}/{{ sched.0.subgroup_number }}:
+                                                                {{ sched.0.subject }}
+                                                                <br>
+                                                                {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }}
+                                                                
+                                                                {% if sched.0.teacher.lastname %} 
+                                                                    {{ sched.0.teacher.lastname }} 
+                                                                {% endif %}
+                                                                <br>
+                                                                <!-- Подгруппа 2 -->
+
+                                                                {{ sched.1.group }}/{{ sched.1.subgroup_number }}:
+                                                                {{ sched.1.subject }}
+                                                                <br>
+                                                                {{ sched.1.teacher.surname }} {{ sched.1.teacher.name }}
+                                                                
+                                                                {% if sched.1.teacher.lastname %} 
+                                                                    {{ sched.1.teacher.lastname }} 
+                                                                {% endif %}
+                                                                <br>
+                                                            </td>
+                                                            
+                                                            {% else %}
+                                                            <!-- Если это единая пара -->
+
+                                                                {% if sched.0.subject_type == "Лекция" %}
+                                                                    <td>
+                                                                        {{ sched.0.group }}
+                                                                        <br>
+                                                                        {{ sched.0.subject }}
+                                                                        <br>
+                                                                        {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }}
+                                                                        
+                                                                        {% if sched.0.teacher.lastname %} 
+                                                                            {{ sched.0.teacher.lastname }}
+                                                                        {% endif %}
+                                                                        <br>
+                                                                    </td>
+                                                                {% else %}
+                                                                    <td>
+                                                                        {{ sched.0.group }}:
+                                                                        {{ sched.0.subject }}
+                                                                        <br>
+                                                                        {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }} 
+
+                                                                        {% if sched.0.teacher.lastname %} 
+                                                                            {{ sched.0.teacher.lastname }} 
+                                                                        {% endif %}
+                                                                        <br>
+                                                                    </td>
+                                                                {% endif %}
+
+                                                            {% endif %}
+                                                        {% endif %}
+                                                    {% endif %}
+
+                                                {% endfor %}
                                               </tr>
                                               <tr>
                                                 <th scope="row">Среда</th>
+                                                {% for sched in schedules %}
+                                                    {% if sched.0.weekday == 3 %}
+                                                        {% if sched.0.even_week == 2 or sched.0.even_week == 0 %}
+                                                            {% if sched.0.subgroup_number %}
+                                                            <!-- Если это подгруппа -->
+
+                                                            <td>
+                                                                <!-- Подгруппа 1 -->
+                                                                {{ sched.0.group }}/{{ sched.0.subgroup_number }}:
+                                                                {{ sched.0.subject }}
+                                                                <br>
+                                                                {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }}
+                                                                
+                                                                {% if sched.0.teacher.lastname %} 
+                                                                    {{ sched.0.teacher.lastname }} 
+                                                                {% endif %}
+                                                                <br>
+                                                                <!-- Подгруппа 2 -->
+
+                                                                {{ sched.1.group }}/{{ sched.1.subgroup_number }}:
+                                                                {{ sched.1.subject }}
+                                                                <br>
+                                                                {{ sched.1.teacher.surname }} {{ sched.1.teacher.name }}
+                                                                
+                                                                {% if sched.1.teacher.lastname %} 
+                                                                    {{ sched.1.teacher.lastname }} 
+                                                                {% endif %}
+                                                                <br>
+                                                            </td>
+                                                            
+                                                            {% else %}
+                                                            <!-- Если это единая пара -->
+
+                                                                {% if sched.0.subject_type == "Лекция" %}
+                                                                    <td>
+                                                                        {{ sched.0.group }}
+                                                                        <br>
+                                                                        {{ sched.0.subject }}
+                                                                        <br>
+                                                                        {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }}
+                                                                        
+                                                                        {% if sched.0.teacher.lastname %} 
+                                                                            {{ sched.0.teacher.lastname }}
+                                                                        {% endif %}
+                                                                        <br>
+                                                                    </td>
+                                                                {% else %}
+                                                                    <td>
+                                                                        {{ sched.0.group }}:
+                                                                        {{ sched.0.subject }}
+                                                                        <br>
+                                                                        {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }} 
+
+                                                                        {% if sched.0.teacher.lastname %} 
+                                                                            {{ sched.0.teacher.lastname }} 
+                                                                        {% endif %}
+                                                                        <br>
+                                                                    </td>
+                                                                {% endif %}
+
+                                                            {% endif %}
+                                                        {% endif %}
+                                                    {% endif %}
+
+                                                {% endfor %}
                                               </tr>
                                               <tr>
                                                 <th scope="row">Четверг</th>
+                                                {% for sched in schedules %}
+                                                    {% if sched.0.weekday == 4 %}
+                                                        {% if sched.0.even_week == 2 or sched.0.even_week == 0 %}
+                                                            {% if sched.0.subgroup_number %}
+                                                            <!-- Если это подгруппа -->
+
+                                                            <td>
+                                                                <!-- Подгруппа 1 -->
+                                                                {{ sched.0.group }}/{{ sched.0.subgroup_number }}:
+                                                                {{ sched.0.subject }}
+                                                                <br>
+                                                                {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }}
+                                                                
+                                                                {% if sched.0.teacher.lastname %} 
+                                                                    {{ sched.0.teacher.lastname }} 
+                                                                {% endif %}
+                                                                <br>
+                                                                <!-- Подгруппа 2 -->
+
+                                                                {{ sched.1.group }}/{{ sched.1.subgroup_number }}:
+                                                                {{ sched.1.subject }}
+                                                                <br>
+                                                                {{ sched.1.teacher.surname }} {{ sched.1.teacher.name }}
+                                                                
+                                                                {% if sched.1.teacher.lastname %} 
+                                                                    {{ sched.1.teacher.lastname }} 
+                                                                {% endif %}
+                                                                <br>
+                                                            </td>
+                                                            
+                                                            {% else %}
+                                                            <!-- Если это единая пара -->
+
+                                                                {% if sched.0.subject_type == "Лекция" %}
+                                                                    <td>
+                                                                        {{ sched.0.group }}
+                                                                        <br>
+                                                                        {{ sched.0.subject }}
+                                                                        <br>
+                                                                        {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }}
+                                                                        
+                                                                        {% if sched.0.teacher.lastname %} 
+                                                                            {{ sched.0.teacher.lastname }}
+                                                                        {% endif %}
+                                                                        <br>
+                                                                    </td>
+                                                                {% else %}
+                                                                    <td>
+                                                                        {{ sched.0.group }}:
+                                                                        {{ sched.0.subject }}
+                                                                        <br>
+                                                                        {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }} 
+
+                                                                        {% if sched.0.teacher.lastname %} 
+                                                                            {{ sched.0.teacher.lastname }} 
+                                                                        {% endif %}
+                                                                        <br>
+                                                                    </td>
+                                                                {% endif %}
+
+                                                            {% endif %}
+                                                        {% endif %}
+                                                    {% endif %}
+
+                                                {% endfor %}
                                               </tr>
                                               <tr>
                                                 <th scope="row">Пятница</th>
+                                                {% for sched in schedules %}
+                                                    {% if sched.0.weekday == 5 %}
+                                                        {% if sched.0.even_week == 2 or sched.0.even_week == 0 %}
+                                                            {% if sched.0.subgroup_number %}
+                                                            <!-- Если это подгруппа -->
+
+                                                            <td>
+                                                                <!-- Подгруппа 1 -->
+                                                                {{ sched.0.group }}/{{ sched.0.subgroup_number }}:
+                                                                {{ sched.0.subject }}
+                                                                <br>
+                                                                {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }}
+                                                                
+                                                                {% if sched.0.teacher.lastname %} 
+                                                                    {{ sched.0.teacher.lastname }} 
+                                                                {% endif %}
+                                                                <br>
+                                                                <!-- Подгруппа 2 -->
+
+                                                                {{ sched.1.group }}/{{ sched.1.subgroup_number }}:
+                                                                {{ sched.1.subject }}
+                                                                <br>
+                                                                {{ sched.1.teacher.surname }} {{ sched.1.teacher.name }}
+                                                                
+                                                                {% if sched.1.teacher.lastname %} 
+                                                                    {{ sched.1.teacher.lastname }} 
+                                                                {% endif %}
+                                                                <br>
+                                                            </td>
+                                                            
+                                                            {% else %}
+                                                            <!-- Если это единая пара -->
+
+                                                                {% if sched.0.subject_type == "Лекция" %}
+                                                                    <td>
+                                                                        {{ sched.0.group }}
+                                                                        <br>
+                                                                        {{ sched.0.subject }}
+                                                                        <br>
+                                                                        {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }}
+                                                                        
+                                                                        {% if sched.0.teacher.lastname %} 
+                                                                            {{ sched.0.teacher.lastname }}
+                                                                        {% endif %}
+                                                                        <br>
+                                                                    </td>
+                                                                {% else %}
+                                                                    <td>
+                                                                        {{ sched.0.group }}:
+                                                                        {{ sched.0.subject }}
+                                                                        <br>
+                                                                        {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }} 
+
+                                                                        {% if sched.0.teacher.lastname %} 
+                                                                            {{ sched.0.teacher.lastname }} 
+                                                                        {% endif %}
+                                                                        <br>
+                                                                    </td>
+                                                                {% endif %}
+
+                                                            {% endif %}
+                                                        {% endif %}
+                                                    {% endif %}
+
+                                                {% endfor %}
                                               </tr>
                                               <tr>
                                                 <th scope="row">Суббота</th>
+                                                {% for sched in schedules %}
+                                                    {% if sched.0.weekday == 6 %}
+                                                        {% if sched.0.even_week == 2 or sched.0.even_week == 0 %}
+                                                            {% if sched.0.subgroup_number %}
+                                                            <!-- Если это подгруппа -->
+
+                                                            <td>
+                                                                <!-- Подгруппа 1 -->
+                                                                {{ sched.0.group }}/{{ sched.0.subgroup_number }}:
+                                                                {{ sched.0.subject }}
+                                                                <br>
+                                                                {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }}
+                                                                
+                                                                {% if sched.0.teacher.lastname %} 
+                                                                    {{ sched.0.teacher.lastname }} 
+                                                                {% endif %}
+                                                                <br>
+                                                                <!-- Подгруппа 2 -->
+
+                                                                {{ sched.1.group }}/{{ sched.1.subgroup_number }}:
+                                                                {{ sched.1.subject }}
+                                                                <br>
+                                                                {{ sched.1.teacher.surname }} {{ sched.1.teacher.name }}
+                                                                
+                                                                {% if sched.1.teacher.lastname %} 
+                                                                    {{ sched.1.teacher.lastname }} 
+                                                                {% endif %}
+                                                                <br>
+                                                            </td>
+                                                            
+                                                            {% else %}
+                                                            <!-- Если это единая пара -->
+
+                                                                {% if sched.0.subject_type == "Лекция" %}
+                                                                    <td>
+                                                                        {{ sched.0.group }}
+                                                                        <br>
+                                                                        {{ sched.0.subject }}
+                                                                        <br>
+                                                                        {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }}
+                                                                        
+                                                                        {% if sched.0.teacher.lastname %} 
+                                                                            {{ sched.0.teacher.lastname }}
+                                                                        {% endif %}
+                                                                        <br>
+                                                                    </td>
+                                                                {% else %}
+                                                                    <td>
+                                                                        {{ sched.0.group }}:
+                                                                        {{ sched.0.subject }}
+                                                                        <br>
+                                                                        {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }} 
+
+                                                                        {% if sched.0.teacher.lastname %} 
+                                                                            {{ sched.0.teacher.lastname }} 
+                                                                        {% endif %}
+                                                                        <br>
+                                                                    </td>
+                                                                {% endif %}
+
+                                                            {% endif %}
+                                                        {% endif %}
+                                                    {% endif %}
+
+                                                {% endfor %}
                                               </tr>
                                             </tbody>
                                         </table>

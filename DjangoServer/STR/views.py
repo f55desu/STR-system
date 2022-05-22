@@ -96,8 +96,10 @@ def home(request):
     # schedulesSaturday = None
     currGroup = None
     currTeacher = None
+
     groupForm = GetGroupForm()
     teacherForm = GetTeacherForm()
+
     if request.method == 'POST' and 'button_logout' in request.POST:
         logout(request)
         return redirect('registration')
@@ -112,7 +114,9 @@ def home(request):
         # Если выбрана группа
         if request.POST['group_name'] != '':
             currGroup = request.POST['group_name']
-            schedules = Schedule.objects.filter(group__in=Group.objects.filter(name=request.POST['group_name']))
+            group = Group.objects.filter(name=request.POST['group_name'])
+
+            schedules = Schedule.objects.filter(group__in=group)
             # Отчаяние
             # schedulesMonday800 = Schedule.objects.filter(group__in=Group.objects.filter(name=request.POST['group_name']), weekday='Понедельник', time='C 8:00 до 9:30')
             # schedulesMonday945 = Schedule.objects.filter(group__in=Group.objects.filter(name=request.POST['group_name']), weekday='Понедельник', time='С 9:45 до 11:15')
@@ -125,12 +129,21 @@ def home(request):
         # Если выбран препод
         if request.POST['teacherName'] != '':
             currTeacher = f"{request.POST['teacherName'][:-1]}ва"
-            schedules = Schedule.objects.filter(teacher__in=Teacher.objects.filter(user__surname=request.POST['teacherName']))
+            teacher = Teacher.objects.filter(user__surname=request.POST['teacherName'])
+
+            schedules = Schedule.objects.filter(teacher__in=teacher)
+
         # Если выбран препод и группа
         if request.POST['teacherName'] != '' and request.POST['group_name'] != '':
             currGroup = request.POST['group_name']
+
             currTeacher = f"{request.POST['teacherName'][:-1]}ва"
-            schedules = Schedule.objects.filter(teacher__in=Teacher.objects.filter(user__surname=request.POST['teacherName']), group__in=Group.objects.filter(name=request.POST['group_name']))
+            teacher = Teacher.objects.filter(user__surname=request.POST['teacherName'])
+
+            group = Group.objects.filter(name=request.POST['group_name'])
+
+            schedules = Schedule.objects.filter(teacher__in=teacher, group__in=group)
+
         # if schedules:
         #     currGroup = request.POST['group_name']
         #     currTeacher = f"{request.POST['teacherName'][:-1]}ва"
@@ -139,6 +152,20 @@ def home(request):
         # else:
         #     currGroup = request.POST['group_name']
         #     currTeacher = request.POST['teacherName']
+
+        if schedules:
+            schedules = schedules.order_by('weekday', 'time_range', '-even_week', 'subgroup_number')
+
+            schedules_subgroup_1 = schedules.filter(subgroup_number__in=[0, 1])
+            schedules_subgroup_2 = schedules.filter(subgroup_number__in=[0, 2])
+
+            schedules = list(zip(schedules_subgroup_1, schedules_subgroup_2))
+
+            # schedules = list(zip(schedules_subgroup_1, schedules_subgroup_2))          
+
+            # for item in list(schedules):
+            #     print(f'\n{item}')
+
     context = {
         'groupForm': groupForm,
         'teacherForm': teacherForm,
@@ -180,14 +207,6 @@ def registration(request):
         }
 
         return render(request, 'STR/registration.html', context)
-        
-            # email = request.POST.get('email', '')
-            # password = request.POST.get('password', '')
-
-            # user = auth.authenticate(email=email, password=password)
-
-            # if user is not None and user.is_active:
-            #     auth.login(request, user)
 
     elif request.method == 'POST' and 'reg_button' in request.POST:    
         form = RegistrationForm(request.POST)
