@@ -22,6 +22,9 @@ from . import AvgRatingFunc
 def str(request):
     if not request.user.is_authenticated:
         return redirect('registration')
+    if not request.user.is_student:
+        return redirect('registration')
+
     if request.method == 'POST' and 'button_logout' in request.POST:
         logout(request)
         return redirect('registration')
@@ -32,7 +35,7 @@ def str(request):
         print(request.POST)
 
         for crit in Criterion.objects.order_by('id'):
-            gradeObj = Grade.objects.filter(student=request.user, criterion=crit, teacher_subject=teacher_subject)
+            gradeObj = Grade.objects.filter(student=request.user.student, criterion=crit, teacher_subject=teacher_subject)
             print(f'GRADE_OBJ = {gradeObj}')
 
             if gradeObj:
@@ -44,10 +47,10 @@ def str(request):
                     gradeObj.update(grade=my_grade)
 
 
-    subjects_groups = Subject_Group.objects.filter(group=request.user.group).all()
+    subjects_groups = Subject_Group.objects.filter(group=request.user.student.group).all()
     teachers_subjects = Teacher_Subject.objects.order_by('id')
     criterions = Criterion.objects.order_by('id')
-    grades = Grade.objects.filter(student=request.user)
+    grades = Grade.objects.filter(student=request.user.student)
 
     curr_teacher_subjects = []
     for subject_group in subjects_groups:
@@ -60,8 +63,8 @@ def str(request):
             for teacher_subject in teachers_subjects:
                 if teacher_subject.subject == subject_group.subject:
                     for crit in criterions:
-                        if not Grade.objects.filter(teacher_subject=teacher_subject, student=request.user, criterion=crit).exists():
-                            newGrade = Grade(teacher_subject=teacher_subject, student=request.user, criterion=crit)
+                        if not Grade.objects.filter(teacher_subject=teacher_subject, student=request.user.student, criterion=crit).exists():
+                            newGrade = Grade(teacher_subject=teacher_subject, student=request.user.student, criterion=crit)
                             newGrade.save()
         
     # for grade in grades:
@@ -122,12 +125,12 @@ def home(request):
         # Если выбран препод
         if request.POST['teacherName'] != '':
             currTeacher = f"{request.POST['teacherName'][:-1]}ва"
-            schedules = Schedule.objects.filter(teacher__in=Teacher.objects.filter(surname=request.POST['teacherName']))
+            schedules = Schedule.objects.filter(teacher__in=Teacher.objects.filter(user__surname=request.POST['teacherName']))
         # Если выбран препод и группа
         if request.POST['teacherName'] != '' and request.POST['group_name'] != '':
             currGroup = request.POST['group_name']
             currTeacher = f"{request.POST['teacherName'][:-1]}ва"
-            schedules = Schedule.objects.filter(teacher__in=Teacher.objects.filter(surname=request.POST['teacherName']), group__in=Group.objects.filter(name=request.POST['group_name']))
+            schedules = Schedule.objects.filter(teacher__in=Teacher.objects.filter(user__surname=request.POST['teacherName']), group__in=Group.objects.filter(name=request.POST['group_name']))
         # if schedules:
         #     currGroup = request.POST['group_name']
         #     currTeacher = f"{request.POST['teacherName'][:-1]}ва"

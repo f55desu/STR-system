@@ -124,7 +124,7 @@ class Student(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
 
     group = models.ForeignKey('Group', verbose_name=_('Группа'), blank=True, null=True, default=None, on_delete=models.PROTECT)
-    subgroup_number = models.SmallIntegerField(_('Подгруппа'), default=1, choices=SUBGROUP_CHOICES)
+    subgroup_number = models.SmallIntegerField(_('Подгруппа'), blank=True, null=True, default=None, choices=SUBGROUP_CHOICES)
 
     def __str__(self) -> str:
         return f"{self.user.surname} {self.user.name} {self.user.lastname} ({self.group})"
@@ -263,7 +263,7 @@ class Schedule(models.Model):
     subject_type = models.CharField(_('Тип занятия'), default="Лекция", choices=SUBJECT_CHOICES, max_length=50)
 
     group = models.ForeignKey(Group, verbose_name = 'Группа', on_delete=models.PROTECT)
-    subgroup_number = models.SmallIntegerField(_('Подгруппа'), default=1, choices=SUBGROUP_CHOICES)
+    subgroup_number = models.SmallIntegerField(_('Подгруппа'), blank=True, null=True, default=None, choices=SUBGROUP_CHOICES)
 
     semester_year = models.CharField('Семестр', max_length=70)
     even_week = models.CharField('Четность', default="", choices=EVEN_CHOICES, max_length=20)
