@@ -259,13 +259,13 @@ class Schedule(models.Model):
         ("Практика", 'Практика'),
     )
 
-    teacher = models.ForeignKey(Teacher, verbose_name = 'Преподаватель', on_delete=models.PROTECT)
+    teacher = models.ForeignKey(Teacher, verbose_name = 'Преподаватель', on_delete=models.PROTECT, blank=True, null=True,)
 
-    subject = models.ForeignKey(Subject, verbose_name = 'Дисциплина',on_delete=models.PROTECT)
-    subject_type = models.CharField(_('Тип занятия'), default="Лекция", choices=SUBJECT_CHOICES, max_length=50)
+    subject = models.ForeignKey(Subject, verbose_name = 'Дисциплина',on_delete=models.PROTECT, blank=True, null=True,)
+    subject_type = models.CharField(_('Тип занятия'), default="Лекция", choices=SUBJECT_CHOICES, max_length=50, blank=True, null=True,)
 
-    group = models.ForeignKey(Group, verbose_name = 'Группа', on_delete=models.PROTECT)
-    subgroup_number = models.PositiveSmallIntegerField(_('Подгруппа'), default=0, choices=SUBGROUP_CHOICES)
+    group = models.ForeignKey(Group, verbose_name = 'Группа', on_delete=models.PROTECT, blank=True, null=True,)
+    subgroup_number = models.PositiveSmallIntegerField(_('Подгруппа'), default=0, choices=SUBGROUP_CHOICES, blank=True, null=True,)
 
     semester_year = models.CharField('Семестр', max_length=70)
     even_week = models.PositiveSmallIntegerField('Четность', default=0, choices=EVEN_CHOICES, max_length=20)
@@ -273,7 +273,7 @@ class Schedule(models.Model):
     weekday = models.PositiveSmallIntegerField('День недели', default=1, choices=WEEKDAY_CHOICES)
     time_range = models.PositiveSmallIntegerField('Время', default=1, choices=TIME_CHOICES)
 
-    audience = models.ForeignKey(Audience, verbose_name = 'Аудитория', on_delete=models.PROTECT)
+    audience = models.ForeignKey(Audience, verbose_name = 'Аудитория', on_delete=models.PROTECT, blank=True, null=True,)
 
     def __str__(self) -> str:
         return f"[{self.teacher}], [{self.subject}], [{self.subject_type}], [{self.group}], [{self.subgroup_number}], [{self.semester_year}], [{self.even_week}], [{self.weekday}], [{self.time_range}], [{self.audience}]"

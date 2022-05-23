@@ -155,22 +155,14 @@
                                                                 {{ sched.0.group }}/{{ sched.0.subgroup_number }}:
                                                                 {{ sched.0.subject }}
                                                                 <br>
-                                                                {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }}
-                                                                
-                                                                {% if sched.0.teacher.lastname %} 
-                                                                    {{ sched.0.teacher.lastname }} 
-                                                                {% endif %}
-                                                                <br>
+                                                                {{ sched.0.teacher }}
+                                                                <h2>-----------</h2>
                                                                 <!-- Подгруппа 2 -->
-
                                                                 {{ sched.1.group }}/{{ sched.1.subgroup_number }}:
                                                                 {{ sched.1.subject }}
                                                                 <br>
-                                                                {{ sched.1.teacher.surname }} {{ sched.1.teacher.name }}
+                                                                {{ sched.1.teacher }}
                                                                 
-                                                                {% if sched.1.teacher.lastname %} 
-                                                                    {{ sched.1.teacher.lastname }} 
-                                                                {% endif %}
                                                                 <br>
                                                             </td>
                                                             
@@ -183,11 +175,7 @@
                                                                         <br>
                                                                         {{ sched.0.subject }}
                                                                         <br>
-                                                                        {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }}
-                                                                        
-                                                                        {% if sched.0.teacher.lastname %} 
-                                                                            {{ sched.0.teacher.lastname }}
-                                                                        {% endif %}
+                                                                        {{ sched.0.teacher }}
                                                                         <br>
                                                                     </td>
                                                                 {% else %}
@@ -195,11 +183,7 @@
                                                                         {{ sched.0.group }}:
                                                                         {{ sched.0.subject }}
                                                                         <br>
-                                                                        {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }} 
-
-                                                                        {% if sched.0.teacher.lastname %} 
-                                                                            {{ sched.0.teacher.lastname }} 
-                                                                        {% endif %}
+                                                                        {{ sched.0.teacher }}
                                                                         <br>
                                                                     </td>
                                                                 {% endif %}
@@ -209,48 +193,6 @@
                                                     {% endif %}
 
                                                 {% endfor %}
-
-
-                                                <!-- {% for sched in schedules %}
-                                                    {% if sched.weekday == "Понедельник" and sched.even_week == "Числитель" %}
-                                                        {% if sched.subject.type == "Лекция" %}
-                                                        <td>{{ sched.group }}
-                                                            <br>
-                                                            {{ sched.subject }}
-                                                            <br>
-                                                            {{ sched.teacher.surname }} {{ sched.teacher.name }} {% if sched.teacher.lastname %} {{ sched.teacher.lastname }} {% endif %}
-                                                            <br></td>
-                                                        {% else %}
-                                                        <td>{{ sched.group }}/{{ sched.subgroup_number }}:
-                                                            {{ sched.subject }}
-                                                            <br>
-                                                            {{ sched.teacher.surname }} {{ sched.teacher.name }} {% if sched.teacher.lastname %} {{ sched.teacher.lastname }} {% endif %}
-                                                            <br></td>
-                                                        {% endif %}
-                                                    {% endif %}
-                                                {% endfor %} -->
-                                                <!-- {% for sched in schedules %}
-                                                    {% if sched.weekday == "Понедельник" and sched.even_week == "Числитель" and sched.time == "C 8:00 до 9:30"%}
-                                                        <td>
-                                                            {% for schedul in schedulesMonday800 %}
-                                                                    {% if schedul.even_week == "Числитель" %}
-                                                                        {% if schedul.subject.type == "Лекция" %}
-                                                                            {{ schedul.subject }}
-                                                                            <br>
-                                                                            {{ schedul.teacher.surname }} {{ schedul.teacher.name }} {% if schedul.teacher.lastname %} {{ schedul.teacher.lastname }} {% endif %}
-                                                                            <br>
-                                                                        {% else %}
-                                                                            {{ schedul.subgroup_number }}:
-                                                                            {{ schedul.subject }}
-                                                                            <br>
-                                                                            {{ schedul.teacher.surname }} {{ schedul.teacher.name }} {% if schedul.teacher.lastname %} {{ schedul.teacher.lastname }} {% endif %}
-                                                                            <br>
-                                                                        {% endif %}
-                                                                    {% endif %}
-                                                            {% endfor %}
-                                                        </td>
-                                                    {% endif %}
-                                                {% endfor %} -->
                                               </tr>
                                               <tr>
                                                 <th scope="row">Вторник</th>
@@ -265,22 +207,14 @@
                                                                 {{ sched.0.group }}/{{ sched.0.subgroup_number }}:
                                                                 {{ sched.0.subject }}
                                                                 <br>
-                                                                {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }}
-                                                                
-                                                                {% if sched.0.teacher.lastname %} 
-                                                                    {{ sched.0.teacher.lastname }} 
-                                                                {% endif %}
-                                                                <br>
+                                                                {{ sched.0.teacher }}
+                                                                <h2>----------</h2>
                                                                 <!-- Подгруппа 2 -->
 
                                                                 {{ sched.1.group }}/{{ sched.1.subgroup_number }}:
                                                                 {{ sched.1.subject }}
                                                                 <br>
-                                                                {{ sched.1.teacher.surname }} {{ sched.1.teacher.name }}
-                                                                
-                                                                {% if sched.1.teacher.lastname %} 
-                                                                    {{ sched.1.teacher.lastname }} 
-                                                                {% endif %}
+                                                                {{ sched.1.teacher }}
                                                                 <br>
                                                             </td>
                                                             
@@ -289,28 +223,23 @@
 
                                                                 {% if sched.0.subject_type == "Лекция" %}
                                                                     <td>
-                                                                        {{ sched.0.group }}
-                                                                        <br>
-                                                                        {{ sched.0.subject }}
-                                                                        <br>
-                                                                        {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }}
-                                                                        
-                                                                        {% if sched.0.teacher.lastname %} 
-                                                                            {{ sched.0.teacher.lastname }}
-                                                                        {% endif %}
-                                                                        <br>
-                                                                    </td>
-                                                                {% else %}
-                                                                    <td>
+                                                                        {% if sched.0.subject %}
                                                                         {{ sched.0.group }}:
                                                                         {{ sched.0.subject }}
                                                                         <br>
-                                                                        {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }} 
-
-                                                                        {% if sched.0.teacher.lastname %} 
-                                                                            {{ sched.0.teacher.lastname }} 
-                                                                        {% endif %}
+                                                                        {{ sched.0.teacher }}
                                                                         <br>
+                                                                        {% endif %}
+                                                                    </td>
+                                                                {% else %}
+                                                                    <td>
+                                                                        {% if sched.0.subject %}
+                                                                        {{ sched.0.group }}:
+                                                                        {{ sched.0.subject }}
+                                                                        <br>
+                                                                        {{ sched.0.teacher }}
+                                                                        <br>
+                                                                        {% endif %}
                                                                     </td>
                                                                 {% endif %}
 
@@ -319,72 +248,6 @@
                                                     {% endif %}
 
                                                 {% endfor %}
-
-                                                <!-- {% for sched in schedules %}
-                                                    {% if sched.weekday == "Вторник" and sched.even_week == "Числитель" %}
-                                                        {% if sched.subject.type == "Лекция" %}
-                                                        <td>{{ sched.group }}
-                                                            <br>
-                                                            {{ sched.subject }}
-                                                            <br>
-                                                            {{ sched.teacher.surname }} {{ sched.teacher.name }} {% if sched.teacher.lastname %} {{ sched.teacher.lastname }} {% endif %}
-                                                            <br></td>
-                                                        {% else %}
-                                                        <td>{{ sched.group }}/{{ sched.subgroup_number }}:
-                                                            {{ sched.subject }}
-                                                            <br>
-                                                            {{ sched.teacher.surname }} {{ sched.teacher.name }} {% if sched.teacher.lastname %} {{ sched.teacher.lastname }} {% endif %}
-                                                            <br></td>
-                                                        {% endif %}
-                                                    {% endif %}
-                                                {% endfor %}
-                                              </tr>
-                                              <tr>
-                                                <th scope="row">Среда</th>
-                                                {% for sched in schedules %}
-                                                    {% if sched.weekday == "Среда" and sched.even_week == "Числитель" %}
-                                                        {% if sched.subject.type == "Лекция" %}
-                                                        <td>{{ sched.group }}
-                                                            <br>
-                                                            {{ sched.subject }}
-                                                            <br>
-                                                            {{ sched.teacher.surname }} {{ sched.teacher.name }} {% if sched.teacher.lastname %} {{ sched.teacher.lastname }} {% endif %}
-                                                            <br></td>
-                                                        {% else %}
-                                                        <td>{{ sched.group }}/{{ sched.subgroup_number }}:
-                                                            {{ sched.subject }}
-                                                            <br>
-                                                            {{ sched.teacher.surname }} {{ sched.teacher.name }} {% if sched.teacher.lastname %} {{ sched.teacher.lastname }} {% endif %}
-                                                            <br></td>
-                                                        {% endif %}
-                                                    {% endif %}
-                                                {% endfor %}
-                                              </tr>
-                                              <tr>
-                                                <th scope="row">Четверг</th>
-                                                {% for sched in schedules %}
-                                                    {% if sched.weekday == "Четверг" and sched.even_week == "Числитель" %}
-                                                        {% if sched.subject.type == "Лекция" %}
-                                                        <td>{{ sched.group }}
-                                                            <br>
-                                                            {{ sched.subject }}
-                                                            <br>
-                                                            {{ sched.teacher.surname }} {{ sched.teacher.name }} {% if sched.teacher.lastname %} {{ sched.teacher.lastname }} {% endif %}
-                                                            <br></td>
-                                                        {% else %}
-                                                        <td>{{ sched.group }}/{{ sched.subgroup_number }}:
-                                                            {{ sched.subject }}
-                                                            <br>
-                                                            {{ sched.teacher.surname }} {{ sched.teacher.name }} {% if sched.teacher.lastname %} {{ sched.teacher.lastname }} {% endif %}
-                                                            <br></td>
-                                                        {% endif %}
-                                                    {% endif %}
-                                                {% endfor %} -->
-                                                <!-- <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td>бПО-191/2 <br>
-                                                    Проект. деят. (пр)</td> -->
                                               </tr>
                                               <tr>
                                                 <th scope="row">Среда</th>
@@ -399,22 +262,14 @@
                                                                 {{ sched.0.group }}/{{ sched.0.subgroup_number }}:
                                                                 {{ sched.0.subject }}
                                                                 <br>
-                                                                {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }}
-                                                                
-                                                                {% if sched.0.teacher.lastname %} 
-                                                                    {{ sched.0.teacher.lastname }} 
-                                                                {% endif %}
-                                                                <br>
+                                                                {{ sched.0.teacher }}
+                                                                <h2>-----------</h2>
                                                                 <!-- Подгруппа 2 -->
 
                                                                 {{ sched.1.group }}/{{ sched.1.subgroup_number }}:
                                                                 {{ sched.1.subject }}
                                                                 <br>
-                                                                {{ sched.1.teacher.surname }} {{ sched.1.teacher.name }}
-                                                                
-                                                                {% if sched.1.teacher.lastname %} 
-                                                                    {{ sched.1.teacher.lastname }} 
-                                                                {% endif %}
+                                                                {{ sched.1.teacher }}
                                                                 <br>
                                                             </td>
                                                             
@@ -427,11 +282,7 @@
                                                                         <br>
                                                                         {{ sched.0.subject }}
                                                                         <br>
-                                                                        {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }}
-                                                                        
-                                                                        {% if sched.0.teacher.lastname %} 
-                                                                            {{ sched.0.teacher.lastname }}
-                                                                        {% endif %}
+                                                                        {{ sched.0.teacher }}
                                                                         <br>
                                                                     </td>
                                                                 {% else %}
@@ -439,11 +290,7 @@
                                                                         {{ sched.0.group }}:
                                                                         {{ sched.0.subject }}
                                                                         <br>
-                                                                        {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }} 
-
-                                                                        {% if sched.0.teacher.lastname %} 
-                                                                            {{ sched.0.teacher.lastname }} 
-                                                                        {% endif %}
+                                                                        {{ sched.0.teacher }}
                                                                         <br>
                                                                     </td>
                                                                 {% endif %}
@@ -453,24 +300,6 @@
                                                     {% endif %}
 
                                                 {% endfor %}
-                                                <!-- {% for sched in schedules %}
-                                                    {% if sched.weekday == "Пятница" and sched.even_week == "Числитель" %}
-                                                        {% if sched.subject.type == "Лекция" %}
-                                                        <td>{{ sched.group }}
-                                                            <br>
-                                                            {{ sched.subject }}
-                                                            <br>
-                                                            {{ sched.teacher.surname }} {{ sched.teacher.name }} {% if sched.teacher.lastname %} {{ sched.teacher.lastname }} {% endif %}
-                                                            <br></td>
-                                                        {% else %}
-                                                        <td>{{ sched.group }}/{{ sched.subgroup_number }}:
-                                                            {{ sched.subject }}
-                                                            <br>
-                                                            {{ sched.teacher.surname }} {{ sched.teacher.name }} {% if sched.teacher.lastname %} {{ sched.teacher.lastname }} {% endif %}
-                                                            <br></td>
-                                                        {% endif %}
-                                                    {% endif %}
-                                                {% endfor %} -->
                                               </tr>
                                               <tr>
                                                 <th scope="row">Четверг</th>
@@ -485,22 +314,14 @@
                                                                 {{ sched.0.group }}/{{ sched.0.subgroup_number }}:
                                                                 {{ sched.0.subject }}
                                                                 <br>
-                                                                {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }}
-                                                                
-                                                                {% if sched.0.teacher.lastname %} 
-                                                                    {{ sched.0.teacher.lastname }} 
-                                                                {% endif %}
-                                                                <br>
+                                                                {{ sched.0.teacher }}
+                                                                <h2>-----------</h2>
                                                                 <!-- Подгруппа 2 -->
 
                                                                 {{ sched.1.group }}/{{ sched.1.subgroup_number }}:
                                                                 {{ sched.1.subject }}
                                                                 <br>
-                                                                {{ sched.1.teacher.surname }} {{ sched.1.teacher.name }}
-                                                                
-                                                                {% if sched.1.teacher.lastname %} 
-                                                                    {{ sched.1.teacher.lastname }} 
-                                                                {% endif %}
+                                                                {{ sched.1.teacher }}
                                                                 <br>
                                                             </td>
                                                             
@@ -513,11 +334,7 @@
                                                                         <br>
                                                                         {{ sched.0.subject }}
                                                                         <br>
-                                                                        {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }}
-                                                                        
-                                                                        {% if sched.0.teacher.lastname %} 
-                                                                            {{ sched.0.teacher.lastname }}
-                                                                        {% endif %}
+                                                                        {{ sched.0.teacher }}
                                                                         <br>
                                                                     </td>
                                                                 {% else %}
@@ -525,11 +342,7 @@
                                                                         {{ sched.0.group }}:
                                                                         {{ sched.0.subject }}
                                                                         <br>
-                                                                        {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }} 
-
-                                                                        {% if sched.0.teacher.lastname %} 
-                                                                            {{ sched.0.teacher.lastname }} 
-                                                                        {% endif %}
+                                                                        {{ sched.0.teacher }}
                                                                         <br>
                                                                     </td>
                                                                 {% endif %}
@@ -571,22 +384,14 @@
                                                                 {{ sched.0.group }}/{{ sched.0.subgroup_number }}:
                                                                 {{ sched.0.subject }}
                                                                 <br>
-                                                                {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }}
-                                                                
-                                                                {% if sched.0.teacher.lastname %} 
-                                                                    {{ sched.0.teacher.lastname }} 
-                                                                {% endif %}
-                                                                <br>
+                                                                {{ sched.0.teacher }}
+                                                                <h2>-----------</h2>
                                                                 <!-- Подгруппа 2 -->
 
                                                                 {{ sched.1.group }}/{{ sched.1.subgroup_number }}:
                                                                 {{ sched.1.subject }}
                                                                 <br>
-                                                                {{ sched.1.teacher.surname }} {{ sched.1.teacher.name }}
-                                                                
-                                                                {% if sched.1.teacher.lastname %} 
-                                                                    {{ sched.1.teacher.lastname }} 
-                                                                {% endif %}
+                                                                {{ sched.1.teacher }} 
                                                                 <br>
                                                             </td>
                                                             
@@ -599,11 +404,7 @@
                                                                         <br>
                                                                         {{ sched.0.subject }}
                                                                         <br>
-                                                                        {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }}
-                                                                        
-                                                                        {% if sched.0.teacher.lastname %} 
-                                                                            {{ sched.0.teacher.lastname }}
-                                                                        {% endif %}
+                                                                        {{ sched.0.teacher }}
                                                                         <br>
                                                                     </td>
                                                                 {% else %}
@@ -611,11 +412,7 @@
                                                                         {{ sched.0.group }}:
                                                                         {{ sched.0.subject }}
                                                                         <br>
-                                                                        {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }} 
-
-                                                                        {% if sched.0.teacher.lastname %} 
-                                                                            {{ sched.0.teacher.lastname }} 
-                                                                        {% endif %}
+                                                                        {{ sched.0.teacher }} 
                                                                         <br>
                                                                     </td>
                                                                 {% endif %}
@@ -657,22 +454,14 @@
                                                                 {{ sched.0.group }}/{{ sched.0.subgroup_number }}:
                                                                 {{ sched.0.subject }}
                                                                 <br>
-                                                                {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }}
-                                                                
-                                                                {% if sched.0.teacher.lastname %} 
-                                                                    {{ sched.0.teacher.lastname }} 
-                                                                {% endif %}
-                                                                <br>
+                                                                {{ sched.0.teacher }}
+                                                                <h2>-----------</h2>
                                                                 <!-- Подгруппа 2 -->
 
                                                                 {{ sched.1.group }}/{{ sched.1.subgroup_number }}:
                                                                 {{ sched.1.subject }}
                                                                 <br>
-                                                                {{ sched.1.teacher.surname }} {{ sched.1.teacher.name }}
-                                                                
-                                                                {% if sched.1.teacher.lastname %} 
-                                                                    {{ sched.1.teacher.lastname }} 
-                                                                {% endif %}
+                                                                {{ sched.1.teacher }} 
                                                                 <br>
                                                             </td>
                                                             
@@ -685,11 +474,7 @@
                                                                         <br>
                                                                         {{ sched.0.subject }}
                                                                         <br>
-                                                                        {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }}
-                                                                        
-                                                                        {% if sched.0.teacher.lastname %} 
-                                                                            {{ sched.0.teacher.lastname }}
-                                                                        {% endif %}
+                                                                        {{ sched.0.teacher }}
                                                                         <br>
                                                                     </td>
                                                                 {% else %}
@@ -697,11 +482,7 @@
                                                                         {{ sched.0.group }}:
                                                                         {{ sched.0.subject }}
                                                                         <br>
-                                                                        {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }} 
-
-                                                                        {% if sched.0.teacher.lastname %} 
-                                                                            {{ sched.0.teacher.lastname }} 
-                                                                        {% endif %}
+                                                                        {{ sched.0.teacher }} 
                                                                         <br>
                                                                     </td>
                                                                 {% endif %}
@@ -760,22 +541,14 @@
                                                                 {{ sched.0.group }}/{{ sched.0.subgroup_number }}:
                                                                 {{ sched.0.subject }}
                                                                 <br>
-                                                                {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }}
-                                                                
-                                                                {% if sched.0.teacher.lastname %} 
-                                                                    {{ sched.0.teacher.lastname }} 
-                                                                {% endif %}
-                                                                <br>
+                                                                {{ sched.0.teacher }}
+                                                                <h2>-----------</h2>
                                                                 <!-- Подгруппа 2 -->
 
                                                                 {{ sched.1.group }}/{{ sched.1.subgroup_number }}:
                                                                 {{ sched.1.subject }}
                                                                 <br>
-                                                                {{ sched.1.teacher.surname }} {{ sched.1.teacher.name }}
-                                                                
-                                                                {% if sched.1.teacher.lastname %} 
-                                                                    {{ sched.1.teacher.lastname }} 
-                                                                {% endif %}
+                                                                {{ sched.1.teacher }} 
                                                                 <br>
                                                             </td>
                                                             
@@ -788,11 +561,7 @@
                                                                         <br>
                                                                         {{ sched.0.subject }}
                                                                         <br>
-                                                                        {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }}
-                                                                        
-                                                                        {% if sched.0.teacher.lastname %} 
-                                                                            {{ sched.0.teacher.lastname }}
-                                                                        {% endif %}
+                                                                        {{ sched.0.teacher }}
                                                                         <br>
                                                                     </td>
                                                                 {% else %}
@@ -800,11 +569,7 @@
                                                                         {{ sched.0.group }}:
                                                                         {{ sched.0.subject }}
                                                                         <br>
-                                                                        {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }} 
-
-                                                                        {% if sched.0.teacher.lastname %} 
-                                                                            {{ sched.0.teacher.lastname }} 
-                                                                        {% endif %}
+                                                                        {{ sched.0.teacher }}
                                                                         <br>
                                                                     </td>
                                                                 {% endif %}
@@ -828,22 +593,14 @@
                                                                 {{ sched.0.group }}/{{ sched.0.subgroup_number }}:
                                                                 {{ sched.0.subject }}
                                                                 <br>
-                                                                {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }}
-                                                                
-                                                                {% if sched.0.teacher.lastname %} 
-                                                                    {{ sched.0.teacher.lastname }} 
-                                                                {% endif %}
-                                                                <br>
+                                                                {{ sched.0.teacher }}
+                                                                <h2>----------</h2>
                                                                 <!-- Подгруппа 2 -->
 
                                                                 {{ sched.1.group }}/{{ sched.1.subgroup_number }}:
                                                                 {{ sched.1.subject }}
                                                                 <br>
-                                                                {{ sched.1.teacher.surname }} {{ sched.1.teacher.name }}
-                                                                
-                                                                {% if sched.1.teacher.lastname %} 
-                                                                    {{ sched.1.teacher.lastname }} 
-                                                                {% endif %}
+                                                                {{ sched.1.teacher }}
                                                                 <br>
                                                             </td>
                                                             
@@ -852,28 +609,23 @@
 
                                                                 {% if sched.0.subject_type == "Лекция" %}
                                                                     <td>
-                                                                        {{ sched.0.group }}
-                                                                        <br>
-                                                                        {{ sched.0.subject }}
-                                                                        <br>
-                                                                        {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }}
-                                                                        
-                                                                        {% if sched.0.teacher.lastname %} 
-                                                                            {{ sched.0.teacher.lastname }}
-                                                                        {% endif %}
-                                                                        <br>
-                                                                    </td>
-                                                                {% else %}
-                                                                    <td>
+                                                                        {% if sched.0.subject %}
                                                                         {{ sched.0.group }}:
                                                                         {{ sched.0.subject }}
                                                                         <br>
-                                                                        {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }} 
-
-                                                                        {% if sched.0.teacher.lastname %} 
-                                                                            {{ sched.0.teacher.lastname }} 
-                                                                        {% endif %}
+                                                                        {{ sched.0.teacher }}
                                                                         <br>
+                                                                        {% endif %}
+                                                                    </td>
+                                                                {% else %}
+                                                                    <td>
+                                                                        {% if sched.0.subject %}
+                                                                        {{ sched.0.group }}:
+                                                                        {{ sched.0.subject }}
+                                                                        <br>
+                                                                        {{ sched.0.teacher }}
+                                                                        <br>
+                                                                        {% endif %}
                                                                     </td>
                                                                 {% endif %}
 
@@ -896,22 +648,14 @@
                                                                 {{ sched.0.group }}/{{ sched.0.subgroup_number }}:
                                                                 {{ sched.0.subject }}
                                                                 <br>
-                                                                {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }}
-                                                                
-                                                                {% if sched.0.teacher.lastname %} 
-                                                                    {{ sched.0.teacher.lastname }} 
-                                                                {% endif %}
-                                                                <br>
+                                                                {{ sched.0.teacher }}
+                                                                <h2>-----------</h2>
                                                                 <!-- Подгруппа 2 -->
 
                                                                 {{ sched.1.group }}/{{ sched.1.subgroup_number }}:
                                                                 {{ sched.1.subject }}
                                                                 <br>
-                                                                {{ sched.1.teacher.surname }} {{ sched.1.teacher.name }}
-                                                                
-                                                                {% if sched.1.teacher.lastname %} 
-                                                                    {{ sched.1.teacher.lastname }} 
-                                                                {% endif %}
+                                                                {{ sched.1.teacher }}
                                                                 <br>
                                                             </td>
                                                             
@@ -924,11 +668,7 @@
                                                                         <br>
                                                                         {{ sched.0.subject }}
                                                                         <br>
-                                                                        {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }}
-                                                                        
-                                                                        {% if sched.0.teacher.lastname %} 
-                                                                            {{ sched.0.teacher.lastname }}
-                                                                        {% endif %}
+                                                                        {{ sched.0.teacher }}
                                                                         <br>
                                                                     </td>
                                                                 {% else %}
@@ -936,11 +676,7 @@
                                                                         {{ sched.0.group }}:
                                                                         {{ sched.0.subject }}
                                                                         <br>
-                                                                        {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }} 
-
-                                                                        {% if sched.0.teacher.lastname %} 
-                                                                            {{ sched.0.teacher.lastname }} 
-                                                                        {% endif %}
+                                                                        {{ sched.0.teacher }}
                                                                         <br>
                                                                     </td>
                                                                 {% endif %}
@@ -964,22 +700,14 @@
                                                                 {{ sched.0.group }}/{{ sched.0.subgroup_number }}:
                                                                 {{ sched.0.subject }}
                                                                 <br>
-                                                                {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }}
-                                                                
-                                                                {% if sched.0.teacher.lastname %} 
-                                                                    {{ sched.0.teacher.lastname }} 
-                                                                {% endif %}
-                                                                <br>
+                                                                {{ sched.0.teacher }}
+                                                                <h2>-----------</h2>
                                                                 <!-- Подгруппа 2 -->
 
                                                                 {{ sched.1.group }}/{{ sched.1.subgroup_number }}:
                                                                 {{ sched.1.subject }}
                                                                 <br>
-                                                                {{ sched.1.teacher.surname }} {{ sched.1.teacher.name }}
-                                                                
-                                                                {% if sched.1.teacher.lastname %} 
-                                                                    {{ sched.1.teacher.lastname }} 
-                                                                {% endif %}
+                                                                {{ sched.1.teacher }}
                                                                 <br>
                                                             </td>
                                                             
@@ -992,11 +720,7 @@
                                                                         <br>
                                                                         {{ sched.0.subject }}
                                                                         <br>
-                                                                        {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }}
-                                                                        
-                                                                        {% if sched.0.teacher.lastname %} 
-                                                                            {{ sched.0.teacher.lastname }}
-                                                                        {% endif %}
+                                                                        {{ sched.0.teacher }}
                                                                         <br>
                                                                     </td>
                                                                 {% else %}
@@ -1004,11 +728,7 @@
                                                                         {{ sched.0.group }}:
                                                                         {{ sched.0.subject }}
                                                                         <br>
-                                                                        {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }} 
-
-                                                                        {% if sched.0.teacher.lastname %} 
-                                                                            {{ sched.0.teacher.lastname }} 
-                                                                        {% endif %}
+                                                                        {{ sched.0.teacher }} 
                                                                         <br>
                                                                     </td>
                                                                 {% endif %}
@@ -1032,22 +752,14 @@
                                                                 {{ sched.0.group }}/{{ sched.0.subgroup_number }}:
                                                                 {{ sched.0.subject }}
                                                                 <br>
-                                                                {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }}
-                                                                
-                                                                {% if sched.0.teacher.lastname %} 
-                                                                    {{ sched.0.teacher.lastname }} 
-                                                                {% endif %}
-                                                                <br>
+                                                                {{ sched.0.teacher }} 
+                                                                <h2>-----------</h2>
                                                                 <!-- Подгруппа 2 -->
 
                                                                 {{ sched.1.group }}/{{ sched.1.subgroup_number }}:
                                                                 {{ sched.1.subject }}
                                                                 <br>
-                                                                {{ sched.1.teacher.surname }} {{ sched.1.teacher.name }}
-                                                                
-                                                                {% if sched.1.teacher.lastname %} 
-                                                                    {{ sched.1.teacher.lastname }} 
-                                                                {% endif %}
+                                                                {{ sched.1.teacher }}
                                                                 <br>
                                                             </td>
                                                             
@@ -1060,11 +772,7 @@
                                                                         <br>
                                                                         {{ sched.0.subject }}
                                                                         <br>
-                                                                        {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }}
-                                                                        
-                                                                        {% if sched.0.teacher.lastname %} 
-                                                                            {{ sched.0.teacher.lastname }}
-                                                                        {% endif %}
+                                                                        {{ sched.0.teacher }}
                                                                         <br>
                                                                     </td>
                                                                 {% else %}
@@ -1072,11 +780,7 @@
                                                                         {{ sched.0.group }}:
                                                                         {{ sched.0.subject }}
                                                                         <br>
-                                                                        {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }} 
-
-                                                                        {% if sched.0.teacher.lastname %} 
-                                                                            {{ sched.0.teacher.lastname }} 
-                                                                        {% endif %}
+                                                                        {{ sched.0.teacher }}
                                                                         <br>
                                                                     </td>
                                                                 {% endif %}
@@ -1100,22 +804,14 @@
                                                                 {{ sched.0.group }}/{{ sched.0.subgroup_number }}:
                                                                 {{ sched.0.subject }}
                                                                 <br>
-                                                                {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }}
-                                                                
-                                                                {% if sched.0.teacher.lastname %} 
-                                                                    {{ sched.0.teacher.lastname }} 
-                                                                {% endif %}
-                                                                <br>
+                                                                {{ sched.0.teacher }}
+                                                                <h2>-----------</h2>
                                                                 <!-- Подгруппа 2 -->
 
                                                                 {{ sched.1.group }}/{{ sched.1.subgroup_number }}:
                                                                 {{ sched.1.subject }}
                                                                 <br>
-                                                                {{ sched.1.teacher.surname }} {{ sched.1.teacher.name }}
-                                                                
-                                                                {% if sched.1.teacher.lastname %} 
-                                                                    {{ sched.1.teacher.lastname }} 
-                                                                {% endif %}
+                                                                {{ sched.1.teacher }}
                                                                 <br>
                                                             </td>
                                                             
@@ -1128,11 +824,7 @@
                                                                         <br>
                                                                         {{ sched.0.subject }}
                                                                         <br>
-                                                                        {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }}
-                                                                        
-                                                                        {% if sched.0.teacher.lastname %} 
-                                                                            {{ sched.0.teacher.lastname }}
-                                                                        {% endif %}
+                                                                        {{ sched.0.teacher }}
                                                                         <br>
                                                                     </td>
                                                                 {% else %}
@@ -1140,11 +832,7 @@
                                                                         {{ sched.0.group }}:
                                                                         {{ sched.0.subject }}
                                                                         <br>
-                                                                        {{ sched.0.teacher.surname }} {{ sched.0.teacher.name }} 
-
-                                                                        {% if sched.0.teacher.lastname %} 
-                                                                            {{ sched.0.teacher.lastname }} 
-                                                                        {% endif %}
+                                                                        {{ sched.0.teacher }} 
                                                                         <br>
                                                                     </td>
                                                                 {% endif %}
