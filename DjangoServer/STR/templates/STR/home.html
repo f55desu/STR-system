@@ -156,14 +156,15 @@
                                                                 {{ sched.0.subject }}
                                                                 <br>
                                                                 {{ sched.0.teacher }}
+                                                                {{ sched.0.audience }}
                                                                 <h2>-----------</h2>
                                                                 <!-- Подгруппа 2 -->
                                                                 {{ sched.1.group }}/{{ sched.1.subgroup_number }}:
                                                                 {{ sched.1.subject }}
                                                                 <br>
                                                                 {{ sched.1.teacher }}
-                                                                
                                                                 <br>
+                                                                {{ sched.1.audience }}
                                                             </td>
                                                             
                                                             {% else %}
@@ -177,6 +178,7 @@
                                                                         <br>
                                                                         {{ sched.0.teacher }}
                                                                         <br>
+                                                                        {{ sched.0.audience }}
                                                                     </td>
                                                                 {% else %}
                                                                     <td>
@@ -185,6 +187,7 @@
                                                                         <br>
                                                                         {{ sched.0.teacher }}
                                                                         <br>
+                                                                        {{ sched.0.audience }}
                                                                     </td>
                                                                 {% endif %}
 
@@ -208,6 +211,8 @@
                                                                 {{ sched.0.subject }}
                                                                 <br>
                                                                 {{ sched.0.teacher }}
+                                                                <br>
+                                                                {{ sched.0.audience }}
                                                                 <h2>----------</h2>
                                                                 <!-- Подгруппа 2 -->
 
@@ -216,6 +221,7 @@
                                                                 <br>
                                                                 {{ sched.1.teacher }}
                                                                 <br>
+                                                                {{ sched.1.audience }}
                                                             </td>
                                                             
                                                             {% else %}
@@ -229,6 +235,7 @@
                                                                         <br>
                                                                         {{ sched.0.teacher }}
                                                                         <br>
+                                                                        {{ sched.0.audience }}
                                                                         {% endif %}
                                                                     </td>
                                                                 {% else %}
@@ -239,6 +246,7 @@
                                                                         <br>
                                                                         {{ sched.0.teacher }}
                                                                         <br>
+                                                                        {{ sched.0.audience }}
                                                                         {% endif %}
                                                                     </td>
                                                                 {% endif %}
@@ -263,6 +271,8 @@
                                                                 {{ sched.0.subject }}
                                                                 <br>
                                                                 {{ sched.0.teacher }}
+                                                                <br>
+                                                                {{ sched.0.audience }}
                                                                 <h2>-----------</h2>
                                                                 <!-- Подгруппа 2 -->
 
@@ -271,6 +281,7 @@
                                                                 <br>
                                                                 {{ sched.1.teacher }}
                                                                 <br>
+                                                                {{ sched.1.audience }}
                                                             </td>
                                                             
                                                             {% else %}
@@ -284,6 +295,7 @@
                                                                         <br>
                                                                         {{ sched.0.teacher }}
                                                                         <br>
+                                                                        {{ sched.0.audience }}
                                                                     </td>
                                                                 {% else %}
                                                                     <td>
@@ -292,6 +304,7 @@
                                                                         <br>
                                                                         {{ sched.0.teacher }}
                                                                         <br>
+                                                                        {{ sched.0.audience }}
                                                                     </td>
                                                                 {% endif %}
 
@@ -315,6 +328,8 @@
                                                                 {{ sched.0.subject }}
                                                                 <br>
                                                                 {{ sched.0.teacher }}
+                                                                <br>
+                                                                {{ sched.0.audience }}
                                                                 <h2>-----------</h2>
                                                                 <!-- Подгруппа 2 -->
 
@@ -323,6 +338,7 @@
                                                                 <br>
                                                                 {{ sched.1.teacher }}
                                                                 <br>
+                                                                {{ sched.1.audience }}
                                                             </td>
                                                             
                                                             {% else %}
@@ -336,6 +352,7 @@
                                                                         <br>
                                                                         {{ sched.0.teacher }}
                                                                         <br>
+                                                                        {{ sched.0.audience }}
                                                                     </td>
                                                                 {% else %}
                                                                     <td>
@@ -344,6 +361,7 @@
                                                                         <br>
                                                                         {{ sched.0.teacher }}
                                                                         <br>
+                                                                        {{ sched.0.audience }}
                                                                     </td>
                                                                 {% endif %}
 
@@ -352,24 +370,6 @@
                                                     {% endif %}
 
                                                 {% endfor %}
-                                                <!-- {% for sched in schedules %}
-                                                    {% if sched.weekday == "Пятница" and sched.even_week == "Числитель" %}
-                                                        {% if sched.subject.type == "Лекция" %}
-                                                        <td>{{ sched.group }}
-                                                            <br>
-                                                            {{ sched.subject }}
-                                                            <br>
-                                                            {{ sched.teacher.surname }} {{ sched.teacher.name }} {% if sched.teacher.lastname %} {{ sched.teacher.lastname }} {% endif %}
-                                                            <br></td>
-                                                        {% else %}
-                                                        <td>{{ sched.group }}/{{ sched.subgroup_number }}:
-                                                            {{ sched.subject }}
-                                                            <br>
-                                                            {{ sched.teacher.surname }} {{ sched.teacher.name }} {% if sched.teacher.lastname %} {{ sched.teacher.lastname }} {% endif %}
-                                                            <br></td>
-                                                        {% endif %}
-                                                    {% endif %}
-                                                {% endfor %} -->
                                               </tr>
                                               <tr>
                                                 <th scope="row">Пятница</th>
@@ -385,6 +385,8 @@
                                                                 {{ sched.0.subject }}
                                                                 <br>
                                                                 {{ sched.0.teacher }}
+                                                                <br>
+                                                                {{ sched.0.audience }}
                                                                 <h2>-----------</h2>
                                                                 <!-- Подгруппа 2 -->
 
@@ -393,6 +395,7 @@
                                                                 <br>
                                                                 {{ sched.1.teacher }} 
                                                                 <br>
+                                                                {{ sched.1.audience }}
                                                             </td>
                                                             
                                                             {% else %}
@@ -406,6 +409,7 @@
                                                                         <br>
                                                                         {{ sched.0.teacher }}
                                                                         <br>
+                                                                        {{ sched.0.audience }}
                                                                     </td>
                                                                 {% else %}
                                                                     <td>
@@ -414,6 +418,7 @@
                                                                         <br>
                                                                         {{ sched.0.teacher }} 
                                                                         <br>
+                                                                        {{ sched.0.audience }}
                                                                     </td>
                                                                 {% endif %}
 
@@ -422,24 +427,6 @@
                                                     {% endif %}
 
                                                 {% endfor %}
-                                                <!-- {% for sched in schedules %}
-                                                    {% if sched.weekday == "Пятница" and sched.even_week == "Числитель" %}
-                                                        {% if sched.subject.type == "Лекция" %}
-                                                        <td>{{ sched.group }}
-                                                            <br>
-                                                            {{ sched.subject }}
-                                                            <br>
-                                                            {{ sched.teacher.surname }} {{ sched.teacher.name }} {% if sched.teacher.lastname %} {{ sched.teacher.lastname }} {% endif %}
-                                                            <br></td>
-                                                        {% else %}
-                                                        <td>{{ sched.group }}/{{ sched.subgroup_number }}:
-                                                            {{ sched.subject }}
-                                                            <br>
-                                                            {{ sched.teacher.surname }} {{ sched.teacher.name }} {% if sched.teacher.lastname %} {{ sched.teacher.lastname }} {% endif %}
-                                                            <br></td>
-                                                        {% endif %}
-                                                    {% endif %}
-                                                {% endfor %} -->
                                               </tr>
                                               <tr>
                                                 <th scope="row">Суббота</th>
@@ -455,6 +442,8 @@
                                                                 {{ sched.0.subject }}
                                                                 <br>
                                                                 {{ sched.0.teacher }}
+                                                                <br>
+                                                                {{ sched.0.audience }}
                                                                 <h2>-----------</h2>
                                                                 <!-- Подгруппа 2 -->
 
@@ -463,6 +452,7 @@
                                                                 <br>
                                                                 {{ sched.1.teacher }} 
                                                                 <br>
+                                                                {{ sched.1.audience }}
                                                             </td>
                                                             
                                                             {% else %}
@@ -476,6 +466,7 @@
                                                                         <br>
                                                                         {{ sched.0.teacher }}
                                                                         <br>
+                                                                        {{ sched.0.audience }}
                                                                     </td>
                                                                 {% else %}
                                                                     <td>
@@ -484,6 +475,7 @@
                                                                         <br>
                                                                         {{ sched.0.teacher }} 
                                                                         <br>
+                                                                        {{ sched.0.audience }}
                                                                     </td>
                                                                 {% endif %}
 
@@ -492,24 +484,6 @@
                                                     {% endif %}
 
                                                 {% endfor %}
-                                                <!-- {% for sched in schedules %}
-                                                    {% if sched.weekday == "Суббота" and sched.even_week == "Числитель" %}
-                                                        {% if sched.subject.type == "Лекция" %}
-                                                        <td>{{ sched.group }}
-                                                            <br>
-                                                            {{ sched.subject }}
-                                                            <br>
-                                                            {{ sched.teacher.surname }} {{ sched.teacher.name }} {% if sched.teacher.lastname %} {{ sched.teacher.lastname }} {% endif %}
-                                                            <br></td>
-                                                        {% else %}
-                                                        <td>{{ sched.group }}/{{ sched.subgroup_number }}:
-                                                            {{ sched.subject }}
-                                                            <br>
-                                                            {{ sched.teacher.surname }} {{ sched.teacher.name }} {% if sched.teacher.lastname %} {{ sched.teacher.lastname }} {% endif %}
-                                                            <br></td>
-                                                        {% endif %}
-                                                    {% endif %}
-                                                {% endfor %} -->
                                               </tr>
                                             </tbody>
                                         </table>
@@ -542,6 +516,8 @@
                                                                 {{ sched.0.subject }}
                                                                 <br>
                                                                 {{ sched.0.teacher }}
+                                                                <br>
+                                                                {{ sched.0.audience }}
                                                                 <h2>-----------</h2>
                                                                 <!-- Подгруппа 2 -->
 
@@ -550,6 +526,7 @@
                                                                 <br>
                                                                 {{ sched.1.teacher }} 
                                                                 <br>
+                                                                {{ sched.1.audience }}
                                                             </td>
                                                             
                                                             {% else %}
@@ -563,6 +540,7 @@
                                                                         <br>
                                                                         {{ sched.0.teacher }}
                                                                         <br>
+                                                                        {{ sched.0.audience }}
                                                                     </td>
                                                                 {% else %}
                                                                     <td>
@@ -571,6 +549,7 @@
                                                                         <br>
                                                                         {{ sched.0.teacher }}
                                                                         <br>
+                                                                        {{ sched.0.audience }}
                                                                     </td>
                                                                 {% endif %}
 
@@ -594,6 +573,8 @@
                                                                 {{ sched.0.subject }}
                                                                 <br>
                                                                 {{ sched.0.teacher }}
+                                                                <br>
+                                                                {{ sched.0.audience }}
                                                                 <h2>----------</h2>
                                                                 <!-- Подгруппа 2 -->
 
@@ -602,6 +583,7 @@
                                                                 <br>
                                                                 {{ sched.1.teacher }}
                                                                 <br>
+                                                                {{ sched.1.audience }}
                                                             </td>
                                                             
                                                             {% else %}
@@ -615,6 +597,7 @@
                                                                         <br>
                                                                         {{ sched.0.teacher }}
                                                                         <br>
+                                                                        {{ sched.0.audience }}
                                                                         {% endif %}
                                                                     </td>
                                                                 {% else %}
@@ -625,6 +608,7 @@
                                                                         <br>
                                                                         {{ sched.0.teacher }}
                                                                         <br>
+                                                                        {{ sched.0.audience }}
                                                                         {% endif %}
                                                                     </td>
                                                                 {% endif %}
@@ -649,6 +633,8 @@
                                                                 {{ sched.0.subject }}
                                                                 <br>
                                                                 {{ sched.0.teacher }}
+                                                                <br>
+                                                                {{ sched.0.audience }}
                                                                 <h2>-----------</h2>
                                                                 <!-- Подгруппа 2 -->
 
@@ -657,6 +643,7 @@
                                                                 <br>
                                                                 {{ sched.1.teacher }}
                                                                 <br>
+                                                                {{ sched.1.audience }}
                                                             </td>
                                                             
                                                             {% else %}
@@ -670,6 +657,7 @@
                                                                         <br>
                                                                         {{ sched.0.teacher }}
                                                                         <br>
+                                                                        {{ sched.0.audience }}
                                                                     </td>
                                                                 {% else %}
                                                                     <td>
@@ -678,6 +666,7 @@
                                                                         <br>
                                                                         {{ sched.0.teacher }}
                                                                         <br>
+                                                                        {{ sched.0.audience }}
                                                                     </td>
                                                                 {% endif %}
 
@@ -701,6 +690,8 @@
                                                                 {{ sched.0.subject }}
                                                                 <br>
                                                                 {{ sched.0.teacher }}
+                                                                <br>
+                                                                {{ sched.0.audience }}
                                                                 <h2>-----------</h2>
                                                                 <!-- Подгруппа 2 -->
 
@@ -709,6 +700,7 @@
                                                                 <br>
                                                                 {{ sched.1.teacher }}
                                                                 <br>
+                                                                {{ sched.1.audience }}
                                                             </td>
                                                             
                                                             {% else %}
@@ -722,6 +714,7 @@
                                                                         <br>
                                                                         {{ sched.0.teacher }}
                                                                         <br>
+                                                                        {{ sched.0.audience }}
                                                                     </td>
                                                                 {% else %}
                                                                     <td>
@@ -730,6 +723,7 @@
                                                                         <br>
                                                                         {{ sched.0.teacher }} 
                                                                         <br>
+                                                                        {{ sched.0.audience }}
                                                                     </td>
                                                                 {% endif %}
 
@@ -752,7 +746,9 @@
                                                                 {{ sched.0.group }}/{{ sched.0.subgroup_number }}:
                                                                 {{ sched.0.subject }}
                                                                 <br>
-                                                                {{ sched.0.teacher }} 
+                                                                {{ sched.0.teacher }}
+                                                                <br>
+                                                                {{ sched.0.audience }}
                                                                 <h2>-----------</h2>
                                                                 <!-- Подгруппа 2 -->
 
@@ -761,6 +757,7 @@
                                                                 <br>
                                                                 {{ sched.1.teacher }}
                                                                 <br>
+                                                                {{ sched.1.audience }}
                                                             </td>
                                                             
                                                             {% else %}
@@ -774,6 +771,7 @@
                                                                         <br>
                                                                         {{ sched.0.teacher }}
                                                                         <br>
+                                                                        {{ sched.0.audience }}
                                                                     </td>
                                                                 {% else %}
                                                                     <td>
@@ -782,6 +780,7 @@
                                                                         <br>
                                                                         {{ sched.0.teacher }}
                                                                         <br>
+                                                                        {{ sched.0.audience }}
                                                                     </td>
                                                                 {% endif %}
 
@@ -805,6 +804,8 @@
                                                                 {{ sched.0.subject }}
                                                                 <br>
                                                                 {{ sched.0.teacher }}
+                                                                <br>
+                                                                {{ sched.0.audience }}
                                                                 <h2>-----------</h2>
                                                                 <!-- Подгруппа 2 -->
 
@@ -813,6 +814,7 @@
                                                                 <br>
                                                                 {{ sched.1.teacher }}
                                                                 <br>
+                                                                {{ sched.1.audience }}
                                                             </td>
                                                             
                                                             {% else %}
@@ -826,6 +828,7 @@
                                                                         <br>
                                                                         {{ sched.0.teacher }}
                                                                         <br>
+                                                                        {{ sched.0.audience }}
                                                                     </td>
                                                                 {% else %}
                                                                     <td>
@@ -834,6 +837,7 @@
                                                                         <br>
                                                                         {{ sched.0.teacher }} 
                                                                         <br>
+                                                                        {{ sched.0.audience }}
                                                                     </td>
                                                                 {% endif %}
 
