@@ -287,6 +287,6 @@ class AttendanceForm(forms.Form):
 
         self.fields['subject'].queryset = Subject.objects.none()
         self.fields['groups'].queryset = Group.objects.none()
-        self.fields['subject_dates'].choices = self.WEEK_NUMBER_CHOICES
+        self.fields['week_numbers'].choices = self.WEEK_NUMBER_CHOICES
 
     # lesson_date = forms.ModelChoiceField(required=False, label='Дата: ', queryset=Schedule.objects.)
