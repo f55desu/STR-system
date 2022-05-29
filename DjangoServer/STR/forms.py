@@ -1,6 +1,6 @@
 # from typing import List, Tuple
 # from random import choices
-from turtle import st
+from random import choices
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
@@ -14,6 +14,8 @@ from django.contrib.auth import authenticate
 # from django.contrib.auth.password_validation import validate_password
 
 from .models import *
+
+import datetime
 
 
 class SubjectForm(forms.ModelForm):
@@ -219,3 +221,72 @@ class GetTeacherForm(forms.Form):
     # for i in range(0, len(temp_group)):
     #     GROUP_LIST[i] = f'{temp_group[i].name}'
     teacherName = forms.ModelChoiceField(required=False, label='Преподаватель: ', queryset=Teacher.objects.values_list('user__surname', flat=True))
+
+class AttendanceForm(forms.Form):
+    SEMESTER_CHOICES = (
+        ('Весна 2022', "Весна 2022"),
+        ('Осень 2022', "Осень 2022"),
+    )
+
+    subject = forms.ModelChoiceField(required=False, label='Предмет', queryset=None)
+    groups = forms.ModelChoiceField(required=False, label='Группа', queryset=None)
+    semesters = forms.ChoiceField(required=False, label='Дата', choices=SEMESTER_CHOICES)
+    week_numbers = forms.ChoiceField(required=False, label='Неделя')
+
+    def __init__(self, request, *args, **kwargs):
+        super(AttendanceForm, self).__init__(*args, **kwargs)
+        
+        self.WEEK_NUMBER_CHOICES = (
+
+        )
+
+        if (request.user.is_teacher):
+            teacher = Teacher.objects.get(user=request.user)
+            schedules = Schedule.objects.filter(teacher=teacher)
+
+            # for item in schedules:
+            #     print('\n' + str(item))
+
+            subjects = Subject.objects.filter(schedule__in=schedules).distinct()
+            groups = Group.objects.filter(schedule__in=schedules).distinct()
+
+            # tokens = schedules[0].semester_year.split(' ')
+            # print(f'TOKENS = {tokens}')
+
+            # if (tokens[0] == 'Весна'):
+            #     # spring
+            #     week_number = datetime.date(int(tokens[1]), 2, 1).isocalendar()[1]
+            # else:
+            #     # autumn
+            #     week_number = datetime.date(int(tokens[1]), 9, 1).isocalendar()[1]
+
+            # print(f'WEEK_NUMBER = {week_number}')
+            SEMESTER_LEN = 17
+
+            for week in range(1, SEMESTER_LEN + 1):
+                self.WEEK_NUMBER_CHOICES = self.WEEK_NUMBER_CHOICES + ((week, week),)
+
+            # while SEMESTER_LEN > 0:
+            #     SEMESTER_LEN -= 1
+
+            #     if week_number % 2 == 0:
+            #         # знаменатель
+            #         pass
+            #     else:
+            #         # числитель
+            #         pass
+
+            #     week_number += 1
+
+            # print(f'WEEK_NUMBER_FINAL = {week_number}')
+
+            self.fields['subject'].queryset = subjects
+            self.fields['groups'].queryset = groups
+            self.fields['week_numbers'].choices = self.WEEK_NUMBER_CHOICES
+            return
+
+        self.fields['subject'].queryset = Subject.objects.none()
+        self.fields['groups'].queryset = Group.objects.none()
+        self.fields['subject_dates'].choices = self.WEEK_NUMBER_CHOICES
+
+    # lesson_date = forms.ModelChoiceField(required=False, label='Дата: ', queryset=Schedule.objects.)

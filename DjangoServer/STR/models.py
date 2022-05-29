@@ -268,7 +268,7 @@ class Schedule(models.Model):
     subgroup_number = models.PositiveSmallIntegerField(_('Подгруппа'), default=0, choices=SUBGROUP_CHOICES, blank=True, null=True,)
 
     semester_year = models.CharField('Семестр', max_length=70)
-    even_week = models.PositiveSmallIntegerField('Четность', default=0, choices=EVEN_CHOICES, max_length=20)
+    even_week = models.PositiveSmallIntegerField('Четность', default=0, choices=EVEN_CHOICES)
 
     weekday = models.PositiveSmallIntegerField('День недели', default=1, choices=WEEKDAY_CHOICES)
     time_range = models.PositiveSmallIntegerField('Время', default=1, choices=TIME_CHOICES)
@@ -288,12 +288,13 @@ class Schedule(models.Model):
 class Attendance(models.Model):
     attended = models.BooleanField()
 
-    schedule = models.ForeignKey(Schedule, on_delete=models.PROTECT)
     student = models.ForeignKey(Student, on_delete=models.PROTECT)
+    subject = models.ForeignKey(Subject, on_delete=models.PROTECT)
+    subject_date = models.DateField(_('Дата'), default=None)
 
     def __str__(self) -> str:
-        return f'{self.schedule.teacher} {self.schedule.subject.name} {self.schedule.group} {self.schedule.subgroup_number} {self.student}'
+        return f'{self.subject_date} {self.subject.name} {self.student.user.surname} {self.student.user.name} {self.student.user.lastname}'
 
     class Meta:
-        verbose_name = 'Посещаемость'
-        verbose_name_plural = _('Посещаемость')
+        verbose_name = 'Журнал посещаемости'
+        verbose_name_plural = _('Журнал посещаемости')

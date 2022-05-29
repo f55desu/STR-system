@@ -14,7 +14,7 @@ from django.core.mail import EmailMessage
 from django.shortcuts import redirect, render
 from django.contrib.auth import login, logout
 
-from .forms import GetTeacherForm, GetGroupForm, LoginForm, RegistrationForm
+from .forms import AttendanceForm, GetTeacherForm, GetGroupForm, LoginForm, RegistrationForm
 from .models import *
 
 from . import AvgRatingFunc
@@ -100,6 +100,8 @@ def home(request):
     groupForm = GetGroupForm()
     teacherForm = GetTeacherForm()
 
+    attendanceForm = AttendanceForm(request=request)
+
     if request.method == 'POST' and 'button_logout' in request.POST:
         logout(request)
         return redirect('registration')
@@ -180,7 +182,8 @@ def home(request):
         # 'schedulesFriday': schedulesFriday,
         # 'schedulesSaturday': schedulesSaturday,
         'currGroupName': currGroup,
-        'currTeacher': currTeacher
+        'currTeacher': currTeacher,
+        'attendanceForm': attendanceForm,
     }
     currGroup = None
     currTeacher = None
