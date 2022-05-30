@@ -19,6 +19,9 @@ from .models import *
 
 from . import AvgRatingFunc
 
+import datetime
+from dateutil.relativedelta import relativedelta
+
 def str(request):
     if not request.user.is_authenticated:
         return redirect('registration')
@@ -101,6 +104,94 @@ def home(request):
     teacherForm = GetTeacherForm()
 
     attendanceForm = AttendanceForm(request=request)
+
+    if request.method == 'POST' and 'get_attendance_teacher' in request.POST:        
+        subject = Subject.objects.get(pk=int(request.POST['subject']))
+        group = Group.objects.get(pk=int(request.POST['groups']))
+        semester = request.POST['semesters']
+
+        print(f'SUBJECT = {subject} GROUP = {group} SEMESTER = {semester}')
+
+        tokens = semester.split(' ')
+        print(f'TOKENS = {tokens}')
+
+        week_number = int(request.POST['week_numbers'])
+        year = int(tokens[1])
+        print(f'YEAR = {year} WEEK_NUMBER = {week_number}')
+
+        teacher = Teacher.objects.get(user=request.user)
+
+        if tokens[0] == 'Весна':
+            # весна
+            date = datetime.date(year, 2, 1) + relativedelta(weeks=+(week_number - 1))
+            print(f'DATE = {date}')
+
+            # если не понедельник
+            if date.weekday != 1:
+                monday = date - datetime.timedelta(days=date.weekday())
+                print(f'MONDAY = {monday}')
+                date = monday
+
+            # если выпало на январь, сдвинуть на неделю
+            if date.month == 1:
+                date = date + datetime.timedelta(days=7)
+            
+            print(f'FINAL DATE = {date}')
+
+        else:
+            # осень
+            date = datetime.date(year, 9, 1) + relativedelta(weeks=+(week_number - 1))
+            print(f'DATE = {date}')
+
+            # если не понедельник
+            if date.weekday != 1:
+                monday = date - datetime.timedelta(days=date.weekday())
+                print(f'MONDAY = {monday}')
+                date = monday
+            
+            # если выпало на август, сдвинуть на неделю
+            if date.month == 8:
+                date = date + datetime.timedelta(days=7)
+            
+            print(f'FINAL DATE = {date}')
+
+        if week_number % 2 == 0:
+            # знаменатель и всегда
+            schedules = Schedule.objects.filter(teacher=teacher, subject=subject, group=group, semester_year=semester, even_week__in=[0, 2])
+        else:
+            # числитель и всегда
+            schedules = Schedule.objects.filter(teacher=teacher, subject=subject, group=group, semester_year=semester, even_week__in=[0, 1])
+
+        dates_student = {}
+        prev_date = None
+
+        for item in schedules:
+            lesson_date = date + datetime.timedelta(days=(item.weekday - 1))
+            prev_date = lesson_date
+
+            if item.subgroup_number == 0:
+                if prev_date == lesson_date and dates_student.keys().__contains__(prev_date):
+                    students = dates_student[prev_date]
+                    students |= Student.objects.filter(group=group, subgroup_number__in=[0, 1, 2])
+
+                    dates_student.update({prev_date: students})
+                else:
+                    dates_student[prev_date] = Student.objects.filter(group=group, subgroup_number__in=[0, 1, 2])
+            else:
+                if prev_date == lesson_date and dates_student.keys().__contains__(prev_date):
+                    students = dates_student[prev_date]
+                    students |= Student.objects.filter(group=group, subgroup_number=item.subgroup_number)
+
+                    dates_student.update({prev_date: students})
+                else:
+                    dates_student[prev_date] = Student.objects.filter(group=group, subgroup_number=item.subgroup_number)
+        
+        for item in dates_student:
+            print(f'\nDATE = {item} VALUE =  {dates_student[item]}')
+
+    if request.method == 'POST' and 'get_attendance_student' in request.POST:
+        pass
+
 
     if request.method == 'POST' and 'button_logout' in request.POST:
         logout(request)

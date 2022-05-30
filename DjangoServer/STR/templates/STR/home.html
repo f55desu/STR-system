@@ -113,6 +113,12 @@
                                         {{ attendanceForm.as_p }}
                                         <button name="get_attendance_teacher">Показать</button>
                                     </form>
+                                {% else %}
+                                    <form method="post">
+                                        {% csrf_token %}
+                                        {{ attendanceForm.as_p }}
+                                        <button name="get_attendance_student">Показать</button>
+                                    </form>
                                 {% endif %}
                             </div>
                         </div>
