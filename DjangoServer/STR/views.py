@@ -118,9 +118,9 @@ def home(request):
     attendance_service = {}
 
     if request.method == 'POST' and 'get_attendance_teacher' in request.POST:  
-        if request.POST['subject'] is None or request.POST['subject'] is '':
+        if request.POST['subject'] == None or request.POST['subject'] == '':
             return redirect('home')
-        if request.POST['groups'] is None or request.POST['groups'] is '':
+        if request.POST['groups'] == None or request.POST['groups'] == '':
             return redirect('home')
               
         subject = Subject.objects.get(pk=int(request.POST['subject']))
