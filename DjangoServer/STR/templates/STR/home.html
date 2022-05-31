@@ -161,9 +161,27 @@
                                 {% else %}
                                     <form method="post">
                                         {% csrf_token %}
-                                        {{ attendanceForm.as_p }}
+                                        {{ attendanceForStudentForm.as_p }}
                                         <button name="get_attendance_student">Показать</button>
                                     </form>
+                                    {% if subject_counts %}
+                                        <hr />
+                                        <p>Количество посещенных занятий ({{ attendance_service.semester }})</p>
+                                        <hr />
+                                        <hr />
+                                        <table style="width: 100%;">
+                                            {% for subject, counts in subject_counts.items %}
+                                                <tr>
+                                                    <td>
+                                                        {{ subject.name }}
+                                                    </td>
+                                                    <td>
+                                                        {{ counts.1 }} из {{ counts.0 }}
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </table>
+                                    {% endif %}
                                 {% endif %}
                             </div>
                         </div>

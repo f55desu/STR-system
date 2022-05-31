@@ -289,4 +289,10 @@ class AttendanceForm(forms.Form):
         self.fields['groups'].queryset = Group.objects.none()
         self.fields['week_numbers'].choices = self.WEEK_NUMBER_CHOICES
 
-    # lesson_date = forms.ModelChoiceField(required=False, label='Дата: ', queryset=Schedule.objects.)
+class Attendance_For_Student_Form(forms.Form):
+    SEMESTER_CHOICES = (
+        ('Весна 2022', "Весна 2022"),
+        ('Осень 2022', "Осень 2022"),
+    )
+
+    semesters = forms.ChoiceField(required=False, label='Семестр', choices=SEMESTER_CHOICES)

@@ -17,7 +17,7 @@ from django.core.mail import EmailMessage
 from django.shortcuts import redirect, render
 from django.contrib.auth import login, logout
 
-from .forms import AttendanceForm, GetTeacherForm, GetGroupForm, LoginForm, RegistrationForm
+from .forms import Attendance_For_Student_Form, AttendanceForm, GetTeacherForm, GetGroupForm, LoginForm, RegistrationForm
 from .models import *
 
 from . import AvgRatingFunc
@@ -91,7 +91,7 @@ def home(request):
     if not request.user.is_authenticated:
         return redirect('registration')
 
-    print(request.POST)
+    # print(request.POST)
     #print(Group.objects.values_list('name'))
     # groups = Group.objects.values_list('name', flat=True)
     schedules = None
@@ -111,6 +111,9 @@ def home(request):
     teacherForm = GetTeacherForm()
 
     attendanceForm = AttendanceForm(request=request)
+    attendanceForStudentForm = Attendance_For_Student_Form()
+
+    result_subject_counts = {}
     result_dates_student = {}
     attendance_service = {}
 
@@ -185,6 +188,10 @@ def home(request):
         prev_date = None
 
         for item in schedules:
+            # if date.weekday == item.weekday:
+            #     lesson_date = date
+            # else:
+            #     lesson_date = date + datetime.timedelta(days=(item.weekday - 1))
             lesson_date = date + datetime.timedelta(days=(item.weekday - 1))
             prev_date = lesson_date
 
@@ -217,9 +224,6 @@ def home(request):
 
                 attendance.append(attendance_local)
             result_dates_student[date] = attendance
-
-        # for item in result_dates_student:
-        #     print(f'\n {result_dates_student}')
                 
     if request.method == 'POST' and 'send_attendance' in request.POST:
         for key, value in dict(request.POST).items():
@@ -230,9 +234,93 @@ def home(request):
                 my_att.save()
 
     if request.method == 'POST' and 'get_attendance_student' in request.POST:
-        pass
+        semester = request.POST['semesters']
+        attendance_service['semester'] = semester
+        print(semester)
 
+        tokens = semester.split(' ')        
+        year = int(tokens[1])
 
+        student = Student.objects.get(user=request.user)
+
+        if tokens[0] == 'Весна':
+            # весна
+            date = datetime.date(year, 2, 1)
+            # print(f'DATE = {date}')
+
+            # если не понедельник
+            if date.weekday != 1:
+                monday = date - datetime.timedelta(days=date.weekday())
+                # print(f'MONDAY = {monday}')
+                date = monday
+
+            # если выпало на январь, сдвинуть на неделю
+            if date.month == 1:
+                date = date + datetime.timedelta(days=7)
+            
+            # print(f'FINAL DATE = {date}')
+
+        else:
+            # осень
+            date = datetime.date(year, 9, 1)
+            # print(f'DATE = {date}')
+
+            # если не понедельник
+            if date.weekday != 1:
+                monday = date - datetime.timedelta(days=date.weekday())
+                # print(f'MONDAY = {monday}')
+                date = monday
+            
+            # если выпало на август, сдвинуть на неделю
+            if date.month == 8:
+                date = date + datetime.timedelta(days=7)
+            
+            # print(f'FINAL DATE = {date}')
+
+        subjects = Subject.objects.filter(schedule__in=Schedule.objects.filter(group=student.group, semester_year=semester)).distinct()
+
+        # for item in subjects:
+        #     print(f'\n{item}')
+
+        for subject in subjects:
+            for week in range(1, 18):
+                if week % 2 == 0:
+                    # знаменатель и всегда
+                    schedules = Schedule.objects.filter(subject=subject, group=student.group, subgroup_number__in=[0, student.subgroup_number], semester_year=semester, even_week__in=[0, 2])
+                else:
+                    # числитель и всегда
+                    schedules = Schedule.objects.filter(subject=subject, group=student.group, subgroup_number__in=[0, student.subgroup_number], semester_year=semester, even_week__in=[0, 1])
+
+                dates = {}
+
+                for item in schedules:
+                    # if date.weekday == item.weekday:
+                    #     lesson_date = date
+                    # else:
+                    #     lesson_date = date + datetime.timedelta(days=(item.weekday - 1))
+                    lesson_date = date + datetime.timedelta(days=(item.weekday - 1))
+                    if dates.keys().__contains__(lesson_date):
+                        continue
+                    dates[lesson_date] = 1
+
+                if result_subject_counts.keys().__contains__(subject):
+                    new_len = result_subject_counts[subject][0] + len(dates)
+                    result_subject_counts.update({subject: [new_len]})
+                else:
+                    result_subject_counts[subject] = [len(dates)]
+        
+        # print(result_subject_counts)
+        for subject, count in result_subject_counts.items():
+            print(f'BEFORE: SUBJECT = {subject}, COUNT = {count}')
+
+            student_attendance = Attendance.objects.filter(subject=subject, student=student, attended=True)
+            result_subject_counts.update({subject: [result_subject_counts[subject][0], len(student_attendance)]})
+
+        print('\n\n')
+        for subject, count in result_subject_counts.items():
+            print(f'AFTER: SUBJECT = {subject}, COUNT = {count}')
+        
+        attendance_service['semester'] = semester
 
     if request.method == 'POST' and 'button_logout' in request.POST:
         logout(request)
@@ -318,6 +406,8 @@ def home(request):
         'currGroupName': currGroup,
         'currTeacher': currTeacher,
         'attendanceForm': attendanceForm,
+        'attendanceForStudentForm': attendanceForStudentForm,
+        'subject_counts': result_subject_counts,
     }
     currGroup = None
     currTeacher = None
