@@ -113,6 +113,33 @@
                                         {{ attendanceForm.as_p }}
                                         <button name="get_attendance_teacher">Показать</button>
                                     </form>
+                                    {% if dates_student %}
+                                        <form method="POST">
+                                            {% csrf_token %}
+                                            {% for date, attendance_list in dates_student.items %}
+                                                <hr />
+                                                <p>{{ date }}</p>
+                                                <table style="width: 100%;">
+                                                    {% for attendance in attendance_list %}
+                                                        <tr>
+                                                            <td>
+                                                                {{ attendance.student.user.surname }} {{ attendance.student.user.name }} 
+                                                                {% if attendance.student.user.lastname %}
+                                                                    {{ attendance.student.user.lastname }}
+                                                                {% endif %}
+                                                            </td>
+                                                            <td>
+                                                                <input type="hidden" name="attendance_{{ attendance.pk }}" value="0" {% if not attendance.attended %} checked {% endif %}>
+                                                                <input type="checkbox" name="attendance_{{ attendance.pk }}" value="1" {% if attendance.attended %} checked {% endif %} >
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </table>
+                                            {% endfor %}
+                                            <br />
+                                            <button name="send_attendance">Отправить</button>
+                                        </form>
+                                    {% endif %}
                                 {% else %}
                                     <form method="post">
                                         {% csrf_token %}

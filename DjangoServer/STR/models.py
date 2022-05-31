@@ -286,7 +286,7 @@ class Schedule(models.Model):
 # Attendance-module models:
 # 13
 class Attendance(models.Model):
-    attended = models.BooleanField()
+    attended = models.BooleanField(default=False)
 
     student = models.ForeignKey(Student, on_delete=models.PROTECT)
     subject = models.ForeignKey(Subject, on_delete=models.PROTECT)

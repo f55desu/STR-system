@@ -1,5 +1,7 @@
+from optparse import Values
 from time import time
 from tokenize import group
+from xml.etree.ElementTree import Comment
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model
@@ -85,6 +87,10 @@ def str(request):
     return render(request, 'STR/str.html', context)
 
 def home(request):
+    if not request.user.is_authenticated:
+        return redirect('registration')
+
+    print(request.POST)
     #print(Group.objects.values_list('name'))
     # groups = Group.objects.values_list('name', flat=True)
     schedules = None
@@ -104,56 +110,62 @@ def home(request):
     teacherForm = GetTeacherForm()
 
     attendanceForm = AttendanceForm(request=request)
+    result_dates_student = {}
 
-    if request.method == 'POST' and 'get_attendance_teacher' in request.POST:        
+    if request.method == 'POST' and 'get_attendance_teacher' in request.POST:  
+        if request.POST['subject'] is None or request.POST['subject'] is '':
+            return redirect('home')
+        if request.POST['groups'] is None or request.POST['groups'] is '':
+            return redirect('home')
+              
         subject = Subject.objects.get(pk=int(request.POST['subject']))
         group = Group.objects.get(pk=int(request.POST['groups']))
         semester = request.POST['semesters']
 
-        print(f'SUBJECT = {subject} GROUP = {group} SEMESTER = {semester}')
+        # print(f'SUBJECT = {subject} GROUP = {group} SEMESTER = {semester}')
 
         tokens = semester.split(' ')
-        print(f'TOKENS = {tokens}')
-
+        # print(f'TOKENS = {tokens}')
+        
         week_number = int(request.POST['week_numbers'])
         year = int(tokens[1])
-        print(f'YEAR = {year} WEEK_NUMBER = {week_number}')
+        # print(f'YEAR = {year} WEEK_NUMBER = {week_number}')
 
         teacher = Teacher.objects.get(user=request.user)
 
         if tokens[0] == 'Весна':
             # весна
             date = datetime.date(year, 2, 1) + relativedelta(weeks=+(week_number - 1))
-            print(f'DATE = {date}')
+            # print(f'DATE = {date}')
 
             # если не понедельник
             if date.weekday != 1:
                 monday = date - datetime.timedelta(days=date.weekday())
-                print(f'MONDAY = {monday}')
+                # print(f'MONDAY = {monday}')
                 date = monday
 
             # если выпало на январь, сдвинуть на неделю
             if date.month == 1:
                 date = date + datetime.timedelta(days=7)
             
-            print(f'FINAL DATE = {date}')
+            # print(f'FINAL DATE = {date}')
 
         else:
             # осень
             date = datetime.date(year, 9, 1) + relativedelta(weeks=+(week_number - 1))
-            print(f'DATE = {date}')
+            # print(f'DATE = {date}')
 
             # если не понедельник
             if date.weekday != 1:
                 monday = date - datetime.timedelta(days=date.weekday())
-                print(f'MONDAY = {monday}')
+                # print(f'MONDAY = {monday}')
                 date = monday
             
             # если выпало на август, сдвинуть на неделю
             if date.month == 8:
                 date = date + datetime.timedelta(days=7)
             
-            print(f'FINAL DATE = {date}')
+            # print(f'FINAL DATE = {date}')
 
         if week_number % 2 == 0:
             # знаменатель и всегда
@@ -186,11 +198,33 @@ def home(request):
                 else:
                     dates_student[prev_date] = Student.objects.filter(group=group, subgroup_number=item.subgroup_number)
         
-        for item in dates_student:
-            print(f'\nDATE = {item} VALUE =  {dates_student[item]}')
+        for date, students in dates_student.items():
+            # print(f'\nDATE = {date} STUDENTS = {students}')
+            attendance = []
+            for student in students:
+                try:
+                    attendance_local = Attendance.objects.get(student=student, subject=subject, subject_date=date)
+                except:
+                    attendance_local = Attendance.objects.create(student=student, subject=subject, subject_date=date, attended=False)
+                    attendance_local.save()
+
+                attendance.append(attendance_local)
+            result_dates_student[date] = attendance
+
+        # for item in result_dates_student:
+        #     print(f'\n {result_dates_student}')
+                
+    if request.method == 'POST' and 'send_attendance' in request.POST:
+        for key, value in dict(request.POST).items():
+            splt = key.split('_')
+            if splt[0] == 'attendance':
+                my_att = Attendance.objects.get(pk=int(splt[1]))
+                my_att.attended = bool(int(value[-1]))
+                my_att.save()
 
     if request.method == 'POST' and 'get_attendance_student' in request.POST:
         pass
+
 
 
     if request.method == 'POST' and 'button_logout' in request.POST:
@@ -263,6 +297,7 @@ def home(request):
         'groupForm': groupForm,
         'teacherForm': teacherForm,
         'schedules': schedules,
+        'dates_student': result_dates_student,
         # Отчаяние
         # 'schedulesMonday800': schedulesMonday800,
         # 'schedulesMonday945': schedulesMonday945,
