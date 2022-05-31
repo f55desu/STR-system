@@ -230,7 +230,7 @@ class AttendanceForm(forms.Form):
 
     subject = forms.ModelChoiceField(required=False, label='Предмет', queryset=None)
     groups = forms.ModelChoiceField(required=False, label='Группа', queryset=None)
-    semesters = forms.ChoiceField(required=False, label='Дата', choices=SEMESTER_CHOICES)
+    semesters = forms.ChoiceField(required=False, label='Семестр', choices=SEMESTER_CHOICES)
     week_numbers = forms.ChoiceField(required=False, label='Неделя')
 
     def __init__(self, request, *args, **kwargs):

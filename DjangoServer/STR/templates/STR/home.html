@@ -114,6 +114,24 @@
                                         <button name="get_attendance_teacher">Показать</button>
                                     </form>
                                     {% if dates_student %}
+                                        <hr />
+                                        <table style="width: 100%;">
+                                            <tr>
+                                                <td>
+                                                    {{ attendance_service.subject }}
+                                                </td>
+                                                <td>
+                                                    {{ attendance_service.group }}
+                                                </td>
+                                                <td>
+                                                    {{ attendance_service.semester }}
+                                                </td>
+                                                <td>
+                                                    Неделя {{ attendance_service.week_number }}
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <hr />
                                         <form method="POST">
                                             {% csrf_token %}
                                             {% for date, attendance_list in dates_student.items %}

@@ -1,4 +1,5 @@
 from optparse import Values
+from re import sub
 from time import time
 from tokenize import group
 from xml.etree.ElementTree import Comment
@@ -111,6 +112,7 @@ def home(request):
 
     attendanceForm = AttendanceForm(request=request)
     result_dates_student = {}
+    attendance_service = {}
 
     if request.method == 'POST' and 'get_attendance_teacher' in request.POST:  
         if request.POST['subject'] is None or request.POST['subject'] is '':
@@ -121,13 +123,18 @@ def home(request):
         subject = Subject.objects.get(pk=int(request.POST['subject']))
         group = Group.objects.get(pk=int(request.POST['groups']))
         semester = request.POST['semesters']
+        week_number = int(request.POST['week_numbers'])
+        
+        attendance_service['subject'] = subject
+        attendance_service['group'] = group
+        attendance_service['semester'] = semester
+        attendance_service['week_number'] = week_number
 
         # print(f'SUBJECT = {subject} GROUP = {group} SEMESTER = {semester}')
 
         tokens = semester.split(' ')
         # print(f'TOKENS = {tokens}')
         
-        week_number = int(request.POST['week_numbers'])
         year = int(tokens[1])
         # print(f'YEAR = {year} WEEK_NUMBER = {week_number}')
 
@@ -297,6 +304,7 @@ def home(request):
         'groupForm': groupForm,
         'teacherForm': teacherForm,
         'schedules': schedules,
+        'attendance_service': attendance_service,
         'dates_student': result_dates_student,
         # Отчаяние
         # 'schedulesMonday800': schedulesMonday800,
