@@ -25,6 +25,21 @@ from . import AvgRatingFunc
 import datetime
 from dateutil.relativedelta import relativedelta
 
+from rest_framework import generics
+from rest_framework.views import APIView
+from rest_framework.response import Response
+
+from .serializers import *
+
+
+class APIAttendance(generics.ListCreateAPIView):
+    queryset = Attendance.objects.all()
+    serializer_class = AttendanceSerializer
+
+class APISchedule(generics.ListCreateAPIView):
+    queryset = Schedule.objects.all()
+    serializer_class = ScheduleSerializer
+
 def str(request):
     if not request.user.is_authenticated:
         return redirect('registration')
