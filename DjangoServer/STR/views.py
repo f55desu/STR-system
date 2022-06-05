@@ -40,6 +40,19 @@ class APISchedule(generics.ListCreateAPIView):
     queryset = Schedule.objects.all()
     serializer_class = ScheduleSerializer
 
+def auth_check(request):
+    # API без авторизации - так делать не хоорошо, айаййай...
+    # if not request.user.is_authenticated:
+    #     return redirect('auth/login/')
+
+    api = None
+    if request.path == '/api/v1/attendance_list':
+        api = APIAttendance()
+    if request.path == '/api/v1/schedule_list':
+        api = APISchedule()
+    
+    return api.as_view()(request)
+
 def str(request):
     if not request.user.is_authenticated:
         return redirect('registration')
@@ -324,16 +337,16 @@ def home(request):
                 else:
                     result_subject_counts[subject] = [len(dates)]
         
-        # print(result_subject_counts)
-        for subject, count in result_subject_counts.items():
-            print(f'BEFORE: SUBJECT = {subject}, COUNT = {count}')
+        # # print(result_subject_counts)
+        # for subject, count in result_subject_counts.items():
+        #     print(f'BEFORE: SUBJECT = {subject}, COUNT = {count}')
 
             student_attendance = Attendance.objects.filter(subject=subject, student=student, attended=True)
             result_subject_counts.update({subject: [result_subject_counts[subject][0], len(student_attendance)]})
 
-        print('\n\n')
-        for subject, count in result_subject_counts.items():
-            print(f'AFTER: SUBJECT = {subject}, COUNT = {count}')
+        # print('\n\n')
+        # for subject, count in result_subject_counts.items():
+        #     print(f'AFTER: SUBJECT = {subject}, COUNT = {count}')
         
         attendance_service['semester'] = semester
 
@@ -400,8 +413,12 @@ def home(request):
 
             # schedules = list(zip(schedules_subgroup_1, schedules_subgroup_2))          
 
-            # for item in list(schedules):
-            #     print(f'\n{item}')
+            for item in list(schedules):
+                print(f'\n{item}')
+
+    if result_subject_counts.items():
+        for subject, count in result_subject_counts.items():
+            print(f'SUBJECT = {subject}, COUNT = {count}')
 
     context = {
         'groupForm': groupForm,

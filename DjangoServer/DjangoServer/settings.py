@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-65ul*$d$z7mx_6c1ax=-a6_r#_6f4=f)v_2&gd9!3zob6t)6pv
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['jmillennial.pythonanywhere.com', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['jmillennial.pythonanywhere.com', '127.0.0.1', 'localhost', '10.0.2.2', '192.168.1.61', '192.168.1.81']
 
 
 # Application definition
@@ -147,4 +147,11 @@ CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
     }
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ]
 }
