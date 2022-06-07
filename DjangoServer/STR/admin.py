@@ -141,6 +141,14 @@ class Schedule_Admin(admin.ModelAdmin):
     search_fields = ('subject', 'subject_type', 'audience', 'group', 'time_range', 'weekday', 'even_week', 'subgroup_number', 'teacher', 'semester_year')
     ordering = ('subject', 'subject_type', 'audience', 'group', 'time_range', 'weekday', 'even_week', 'subgroup_number', 'teacher', 'semester_year')
 
+
+# Attendance-module admin:
+class Attendance_Admin(admin.ModelAdmin):
+    model = Attendance
+    list_display = ('subject', 'subject_date', 'student', 'attended')
+    search_fields = ('subject', 'subject_date', 'student', 'attended')
+    ordering = ('subject', 'subject_date', 'student', 'attended')
+
 admin.site.unregister(mod.Group)
 
 admin.site.register(User, User_Admin)
@@ -159,4 +167,4 @@ admin.site.register(Campus, Campus_Admin)
 admin.site.register(Audience, Audience_Admin)
 admin.site.register(Schedule, Schedule_Admin)
 
-admin.site.register(Attendance)
+admin.site.register(Attendance, Attendance_Admin)
