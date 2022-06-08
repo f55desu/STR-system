@@ -1,0 +1,178 @@
+{% extends 'STR/base.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+    <div class="container body-teacher">
+        <h1>Преподаватели</h1>
+        <div class="row info">
+            <div class="col-md-12">
+                <div class="infovote">
+                    <div class="semester">
+                        Семестр
+                    </div>
+                    <div class="timer">
+                        Таймер
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% load static %}
+        <script src='{% static "STR/js/StarRating.js" %}'></script>
+        <div id="row" class="row teacher">
+            {% if data %}
+                {% for item in data %}
+                    <div type="button" class="card" onclick="showModalWin('{{ item.teacher_subject.id }}')">
+                        <h6>{{ item.teacher_subject.teacher.surname }} {{ item.teacher_subject.teacher.name }} {{ item.teacher_subject.teacher.lastname }}</h6>
+                        <img src="{% static 'STR/media/userava.png' %}" alt="User avatar"/>
+                        <div class="markANDsubject">
+                            <p id="SubjectName">{{ item.teacher_subject.subject.name }}</p>
+                            <p id="SubjectType">{{ item.teacher_subject.subject.type }}</p>
+                            <p>Почта: {{ item.teacher_subject.teacher.email }}</p>
+                            <div class="avgrow">
+                                <div class="markavg" type="text" id="markavg/{{ item.teacher_subject.id }}">{{ item.grade_avg }}</div>
+                                <div class="starratingavg">
+                                    <div class="stars__body">
+                                        <div class="stars__active" id="stars__active/{{ item.teacher_subject.id }}"></div>
+                                        <div class="stars__items">
+                                            <input type="radio" class="stars__item" value="1" name="star3">
+                                            <input type="radio" class="stars__item" value="2" name="star3">
+                                            <input type="radio" class="stars__item" value="3" name="star3">
+                                            <input type="radio" class="stars__item" value="4" name="star3">
+                                            <input type="radio" class="stars__item" value="5" name="star3">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <br>
+                    <div class="popup" id="popup{{ item.teacher_subject.id }}">
+                        <div class="popupget">
+                            <div class="formget1">
+                                <div class="headerpopup">Оценивание</div>
+                                <div class="formget1item">
+                                    <form method="post">
+                                    {% csrf_token %}
+                                    <input id="id_input" name="id_input" value="{{ item.teacher_subject.id }}" style="visibility: collapse;">
+                                    <div id="half-stars-example">
+                                        {% if item.crits_data %}
+                                            {% for crit_obj in item.crits_data %}
+                                                <div class="form_item">
+                                                    <h6>{{ crit_obj.crit.name }}:</h6>
+                                                    <div class="rating rating_set" id="rating{{ crit_obj.crit.id }}">
+                                                        <div class="rating__body">
+                                                            <div class="rating__active"></div>
+                                                            <div class="rating__items">
+                                                                <input type="radio" class="rating__item" value="1" name="rating{{ crit_obj.crit.id }}">
+                                                                <input type="radio" class="rating__item" value="2" name="rating{{ crit_obj.crit.id }}">
+                                                                <input type="radio" class="rating__item" value="3" name="rating{{ crit_obj.crit.id }}">
+                                                                <input type="radio" class="rating__item" value="4" name="rating{{ crit_obj.crit.id }}">
+                                                                <input type="radio" class="rating__item" value="5" name="rating{{ crit_obj.crit.id }}">
+                                                            </div>
+                                                        </div>
+                                                        <div type="text" class="rating__value" id="rating_value-1">{{ crit_obj.user_grade }}</div>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        {% endif %}
+                                        <div class="form-save">           
+                                            <button type="submit" class="form_btn btn" name="save_button">Сохранить</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            </div>
+                            <div class="formget2">
+                                <div class="headerpopup">Средняя оценка</div>
+                                <input id="plug" style="visibility: collapse;">
+                                    <div id="half-stars-example">
+                                        {% if item.crits_data %}
+                                            {% for crit_obj in item.crits_data %}
+                                                <div class="form_item">
+                                                    <h6>{{ crit_obj.crit.name }}:</h6>
+                                                    <div class="starsCrit starsCrit_set">
+                                                        <div class="starsCrit__body">
+                                                            <div class="starsCrit__active" id="starsCrit__active,{{ item.teacher_subject.id }},{{ crit_obj.id }}"></div>
+                                                            <div class="starsCrit__items">
+                                                                <input type="radio" class="starsCrit__item" value="1" name="star3">
+                                                                <input type="radio" class="starsCrit__item" value="2" name="star3">
+                                                                <input type="radio" class="starsCrit__item" value="3" name="star3">
+                                                                <input type="radio" class="starsCrit__item" value="4" name="star3">
+                                                                <input type="radio" class="starsCrit__item" value="5" name="star3">
+                                                            </div>
+                                                        </div>
+                                                        <div type="text" class="markavgCrit" id="markavgCrit,{{ item.teacher_subject.id }},{{ crit_obj.id }}">{{ crit_obj.avg_grade }}</div>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                <script>
+                function showModalWin(variable) {
+                    let id_input = document.getElementById('id_input');
+                    id_input.setAttribute('value', variable);
+                    
+                    var darkLayer = document.createElement('div'); // слой затемнения
+                    darkLayer.id = 'shadow'; // id чтобы подхватить стиль
+                    document.body.appendChild(darkLayer); // включаем затемнение
+     
+                    var modalWin = document.getElementById('popup' + variable); // находим наше "окно"
+                    initRatings('#popup' + variable);
+                    modalWin.style.display = 'unset'; // "включаем" его
+     
+                    darkLayer.onclick = function () {  // при клике на слой затемнения все исчезнет
+                        darkLayer.parentNode.removeChild(darkLayer); // удаляем затемнение
+                        modalWin.style.display = 'none'; // делаем окно невидимым
+                        return false;
+                    };
+                }
+         
+                    let divTeachers = document.getElementById("row");
+                    let numberOfChildren = divTeachers.getElementsByClassName('card').length;
+                    let markavgArray = document.getElementsByClassName('markavg');
+                    let starsActiveArray = document.getElementsByClassName('stars__active');
+                    let markavgCritArray = document.getElementsByClassName('markavgCrit');
+                    let starsActiveCritArray = document.getElementsByClassName('starsCrit__active');
+
+                    for (let i = 0; i < numberOfChildren; i++)
+                    {
+                        for (var j = 0; j < markavgArray.length; j++) {
+                            let markavgID = markavgArray[j].id.split('/');
+                            let starsActiveID = starsActiveArray[j].id.split('/');
+                            if (starsActiveID[1] == markavgID[1])
+                            {
+                                let markavg = document.getElementById('markavg/' + markavgID[1]).textContent;
+                                console.log('Not null, ID = ' + markavgID[1]);
+                                markavg = markavg.replace(/,/, '.');
+                                document.getElementById('stars__active/' + starsActiveID[1]).style.width = (parseFloat(markavg) / 5.0 * 100.0) + "%";
+                            }
+                        };
+
+                        for (var k = 0; k < markavgCritArray.length; k++) {
+                            let markavgCritID = markavgCritArray[k].id.split(',');
+                            let starsActiveCritID = starsActiveCritArray[k].id.split(',');
+                            if ((starsActiveCritID[1] + ',' + starsActiveCritID[2]) == (markavgCritID[1] + ',' + markavgCritID[2]))
+                            {
+                                console.log(markavgCritID[1] + ',' + markavgCritID[2]);
+                                let markavg = document.getElementById('markavgCrit,' + markavgCritID[1] + ',' + markavgCritID[2]).textContent;
+                                markavg = markavg.replace(/,/, '.');
+                                document.getElementById('starsCrit__active,' + starsActiveCritID[1] + ',' + starsActiveCritID[2]).style.width = (parseFloat(markavg) / 5.0 * 100.0) + "%";
+                                console.log(document.getElementById('starsCrit__active,' + starsActiveCritID[1] + ',' + starsActiveCritID[2]).style.width)
+                            }
+                        };
+                    }
+                </script>
+            {% else %}
+                <p>У нас нет записей</p>    
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

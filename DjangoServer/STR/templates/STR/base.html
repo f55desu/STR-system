@@ -15,11 +15,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     {% load static %}
-    <link rel="stylesheet" type='text/css' href='{% static "STR/css/SOP.css" %}'>
+    <link rel="stylesheet" type='text/css' href='{% static "STR/css/registration.css" %}'>
     <link rel="stylesheet" type='text/css' href='{% static "STR/css/StarRating.css" %}'>
     <link rel="stylesheet" type='text/css' href='{% static "STR/css/activation_email.css" %}'>
+    <link rel="stylesheet" type='text/css' href='{% static "STR/css/str.css" %}'>
     <link rel="stylesheet" type='text/css' href='{% static "STR/css/home.css" %}'>
-
+    
+    <script type="text/javascript" src='{% static "STR/js/tabs.js" %}'></script>
     <script type="text/javascript" src='{% static "STR/js/index.js" %}'></script>
     <!-- <script src='{% static "STR/js/script.js" %}'></script> -->
     <!-- <script src='{% static "STR/js/StarRating.js" %}'></script> -->
@@ -28,7 +30,7 @@
 <body>
     <header>
         <div class="lefteltop">
-            <h3>СОП</h3>
+            <h3>ПСЕВДОЭИОС</h3>
         <select name="language">
             <option value="1">Русский (RU)</option>
             <option value="2">Английский (EN)</option>
@@ -57,16 +59,28 @@
                     </div>
                     <span class="titleLC">{{ user.get_full_name }}</span>
                     <span class="subtitleLC">{{ user.email }}</span>
-                    <div class="rowLC">
-                        <span class="propertyLC">Группа</span>
-                        <span class="valueLC" id="group" name="group">
-                            {% if user.group %}
-                                {{ user.group }}
-                            {% else %}
-                                -
-                            {% endif %}    
-                        </span>
-                    </div>
+                    {% if user.is_student %}
+                        <div class="rowLC">
+                            <span class="propertyLC">Группа</span>
+                            <span class="valueLC" id="group" name="group">
+                                {% if user.student.group %}
+                                    {{ user.student.group }}
+                                {% else %}
+                                    -
+                                {% endif %}    
+                            </span>
+                        </div>
+                        <div class="rowLC">
+                            <span class="propertyLC">Подгруппа</span>
+                            <span class="valueLC" id="subgroup_number" name="subgroup_number">
+                                {% if user.student.subgroup_number %}
+                                    {{ user.student.subgroup_number }}
+                                {% else %}
+                                    -
+                                {% endif %}  
+                            </span>
+                        </div>
+                    {% endif %}
                     <div class="rowLC">
                         <span class="propertyLC">Город</span>
                         <span class="valueLC">Воронеж</span>

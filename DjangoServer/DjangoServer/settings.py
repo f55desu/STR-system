@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-65ul*$d$z7mx_6c1ax=-a6_r#_6f4=f)v_2&gd9!3zob6t)6pv
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['jmillennial.pythonanywhere.com', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['jmillennial.pythonanywhere.com', '127.0.0.1', 'localhost', '10.0.2.2', '192.168.1.61', '192.168.1.81']
 
 
 # Application definition
@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    'rest_framework',
     'STR',
 ]
 
@@ -140,11 +140,18 @@ EMAIL_HOST_USER = 'sop.mailbot@gmail.com'
 EMAIL_HOST_PASSWORD = '(hawok_0235)'
 EMAIL_PORT = 587
 
-AUTH_USER_MODEL = 'STR.Student'
+AUTH_USER_MODEL = 'STR.User'
 LOGIN_REDIRECT_URL = 'home'
 
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
     }
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ]
 }

@@ -1,15 +1,21 @@
 # from typing import List, Tuple
+# from random import choices
+from random import choices
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 
+from django.utils.translation import gettext_lazy as _
+
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from django.core.exceptions import ValidationError
+# from django.core.exceptions import ValidationError
 from django.contrib.auth import authenticate
 # from django.core.validators import validate_email
 # from django.contrib.auth.password_validation import validate_password
 
 from .models import *
+
+import datetime
 
 
 class SubjectForm(forms.ModelForm):
@@ -20,19 +26,55 @@ class SubjectForm(forms.ModelForm):
         }
         fields = '__all__'
 
+class AudienceForm(forms.ModelForm):
+    class Meta:
+        model = Audience
+        widgets = {
+            'audience_type': forms.Select
+        }
+        fields = '__all__'
 
-class StudentCreationForm(UserCreationForm):
+class ScheduleForm(forms.ModelForm):
+    class Meta:
+        model = Schedule
+        widgets = {
+            'time': forms.Select,
+            'weekday': forms.Select,
+            'even_week': forms.Select,
+            'subgroup_number': forms.Select
+        }
+        fields = '__all__'
+
+class MyUserCreationForm(UserCreationForm):
+
+    group = forms.CharField
 
     class Meta:
-        model = Student
-        fields = ('email', 'surname', 'name', 'lastname', 'password', 'group')
+        model = User
+        fields = ('email', 'surname', 'name', 'lastname', 'password', )
 
 
-class StudentChangeForm(UserChangeForm):
+class MyUserChangeForm(UserChangeForm):
 
     class Meta:
-        model = Student
-        fields = ('email', 'surname', 'name', 'lastname', 'password', 'group')
+        model = User
+        fields = ('email', 'surname', 'name', 'lastname', 'password', )
+
+
+# class MyUserCreationForm(UserCreationForm):
+
+#     group = forms.CharField
+
+#     class Meta:
+#         model = Student
+#         fields = ('email', 'surname', 'name', 'lastname', 'password', 'group')
+
+
+# class MyUserChangeForm(UserChangeForm):
+
+#     class Meta:
+#         model = Student
+#         fields = ('email', 'surname', 'name', 'lastname', 'password', 'group')
 
 # def _all_groups() -> List[Tuple[str, str]]:
 #     from django.db import connection
@@ -76,7 +118,10 @@ class LoginForm(forms.Form):
         return user
 
 class RegistrationForm(UserCreationForm):
-
+    SUBGROUP_CHOICES = (
+        (1, 1),
+        (2, 2),
+    )
     # def __init__(self, *args, **kwargs) -> None:
     #     super().__init__(*args, **kwargs)
     #     self.fields['group'].choices = _all_groups()
@@ -89,6 +134,7 @@ class RegistrationForm(UserCreationForm):
 
     # group = forms.ChoiceField(required=True, label='Группа', choices=[])
     group = forms.ModelChoiceField(required=True, label='* Группа', queryset=Group.objects.all().order_by('name'), initial=0)
+    subgroup_number = forms.ChoiceField(required=True, label='* Подгруппа', choices=SUBGROUP_CHOICES, initial=0)
 
     # groupNumber = forms.ChoiceField(required=True, label='Группа', choices=GROUP_NUMBERS)
 
@@ -107,7 +153,6 @@ class RegistrationForm(UserCreationForm):
         model = get_user_model()
         help = {
            'surname': 'Не более 320 символов',
-           'surname': 'ПЕТУХ',
         }
         fields = (
             'surname',
@@ -115,6 +160,7 @@ class RegistrationForm(UserCreationForm):
             'lastname',
             'email',
             'group',
+            'subgroup_number',
             'password1',
             'password2',
        )
@@ -145,11 +191,108 @@ class RegistrationForm(UserCreationForm):
 
         user.email = self.cleaned_data['email']
 
-        user.group = self.cleaned_data['group']
-
         user.password1 = self.cleaned_data['password1']
         user.password2 = self.cleaned_data['password2']
 
+        user.is_student = True
+
         if commit:
             user.save()
+
+            student = Student.objects.create(user=user)
+            student.group = self.cleaned_data['group']
+            student.subgroup_number = self.cleaned_data['subgroup_number']
+            student.save()
+
         return user
+
+class GetGroupForm(forms.Form):
+    # GROUP_LIST = {}
+    # temp_group = Group.objects.all()
+    # for i in range(0, len(temp_group)):
+    #     GROUP_LIST[i] = f'{temp_group[i].name}'
+    group_name = forms.ModelChoiceField(required=False, label='Группа: ', queryset=Group.objects.values_list('name', flat=True))
+
+    # group_name = forms.ChoiceField(required=True, label='Группа: ')
+
+class GetTeacherForm(forms.Form):
+    # GROUP_LIST = {}
+    # temp_group = Group.objects.all()
+    # for i in range(0, len(temp_group)):
+    #     GROUP_LIST[i] = f'{temp_group[i].name}'
+    teacherName = forms.ModelChoiceField(required=False, label='Преподаватель: ', queryset=Teacher.objects.values_list('user__surname', flat=True))
+
+class AttendanceForm(forms.Form):
+    SEMESTER_CHOICES = (
+        ('Весна 2022', "Весна 2022"),
+        ('Осень 2022', "Осень 2022"),
+    )
+
+    subject = forms.ModelChoiceField(required=False, label='Предмет', queryset=None)
+    groups = forms.ModelChoiceField(required=False, label='Группа', queryset=None)
+    semesters = forms.ChoiceField(required=False, label='Семестр', choices=SEMESTER_CHOICES)
+    week_numbers = forms.ChoiceField(required=False, label='Неделя')
+
+    def __init__(self, request, *args, **kwargs):
+        super(AttendanceForm, self).__init__(*args, **kwargs)
+        
+        self.WEEK_NUMBER_CHOICES = (
+
+        )
+
+        if (request.user.is_teacher):
+            teacher = Teacher.objects.get(user=request.user)
+            schedules = Schedule.objects.filter(teacher=teacher)
+
+            # for item in schedules:
+            #     print('\n' + str(item))
+
+            subjects = Subject.objects.filter(schedule__in=schedules).distinct()
+            groups = Group.objects.filter(schedule__in=schedules).distinct()
+
+            # tokens = schedules[0].semester_year.split(' ')
+            # print(f'TOKENS = {tokens}')
+
+            # if (tokens[0] == 'Весна'):
+            #     # spring
+            #     week_number = datetime.date(int(tokens[1]), 2, 1).isocalendar()[1]
+            # else:
+            #     # autumn
+            #     week_number = datetime.date(int(tokens[1]), 9, 1).isocalendar()[1]
+
+            # print(f'WEEK_NUMBER = {week_number}')
+            SEMESTER_LEN = 17
+
+            for week in range(1, SEMESTER_LEN + 1):
+                self.WEEK_NUMBER_CHOICES = self.WEEK_NUMBER_CHOICES + ((week, week),)
+
+            # while SEMESTER_LEN > 0:
+            #     SEMESTER_LEN -= 1
+
+            #     if week_number % 2 == 0:
+            #         # знаменатель
+            #         pass
+            #     else:
+            #         # числитель
+            #         pass
+
+            #     week_number += 1
+
+            # print(f'WEEK_NUMBER_FINAL = {week_number}')
+
+            self.fields['subject'].queryset = subjects
+            self.fields['groups'].queryset = groups
+            self.fields['week_numbers'].choices = self.WEEK_NUMBER_CHOICES
+            return
+
+        self.fields['subject'].queryset = Subject.objects.none()
+        self.fields['groups'].queryset = Group.objects.none()
+        self.fields['week_numbers'].choices = self.WEEK_NUMBER_CHOICES
+
+class Attendance_For_Student_Form(forms.Form):
+    SEMESTER_CHOICES = (
+        ('Весна 2022', "Весна 2022"),
+        ('Осень 2022', "Осень 2022"),
+    )
+
+    semesters = forms.ChoiceField(required=False, label='Семестр', choices=SEMESTER_CHOICES)
