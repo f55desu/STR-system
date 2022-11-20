@@ -13,4 +13,12 @@ urlpatterns = [
     path('api/v1/auth/', include('rest_framework.urls')),
     path('api/v1/attendance_list', views.auth_check),
     path('api/v1/schedule_list', views.auth_check),
+    
+    path('api/v1/teacher_subj_list', views.auth_check),
+    path('api/v1/criterion_list', views.auth_check),
+    path('api/v1/subject_group_list', views.auth_check),
+    path('api/v1/grade_list', views.auth_check),
+    path('api/v1/teacher_list', views.auth_check),
+    path('api/v1/subject_list', views.auth_check),
+    path('api/v1/group_list', views.auth_check),
 ]   

@@ -31,7 +31,6 @@ from rest_framework.response import Response
 
 from .serializers import *
 
-
 class APIAttendance(generics.ListCreateAPIView):
     queryset = Attendance.objects.all()
     serializer_class = AttendanceSerializer
@@ -39,6 +38,34 @@ class APIAttendance(generics.ListCreateAPIView):
 class APISchedule(generics.ListCreateAPIView):
     queryset = Schedule.objects.all()
     serializer_class = ScheduleSerializer
+
+class APIGrade(generics.ListCreateAPIView):
+    queryset = Grade.objects.all()
+    serializer_class = GradeSerializer
+
+class APISubject_group(generics.ListCreateAPIView):
+    queryset = Subject_Group.objects.all()
+    serializer_class = Subject_GroupSerializer
+
+class APICriterion(generics.ListCreateAPIView):
+    queryset = Criterion.objects.all()
+    serializer_class = CriterionSerializer
+
+class APITeacher_subj(generics.ListCreateAPIView):
+    queryset = Teacher_Subject.objects.all()
+    serializer_class = Teacher_SubjectSerializer
+
+class APITeacher(generics.ListCreateAPIView):
+    queryset = Teacher.objects.all()
+    serializer_class = TeacherSerializer
+
+class APISubject(generics.ListCreateAPIView):
+    queryset = Subject.objects.all()
+    serializer_class = SubjectSerializer
+
+class APIGroup(generics.ListCreateAPIView):
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer
 
 def auth_check(request):
     # API без авторизации - так делать не хоорошо, айаййай...
@@ -50,6 +77,20 @@ def auth_check(request):
         api = APIAttendance()
     if request.path == '/api/v1/schedule_list':
         api = APISchedule()
+    if request.path == '/api/v1/teacher_subj_list':
+        api = APITeacher_subj()
+    if request.path == '/api/v1/criterion_list':
+        api = APICriterion()
+    if request.path == '/api/v1/subject_group_list':
+        api = APISubject_group()
+    if request.path == '/api/v1/grade_list':
+        api = APIGrade()
+    if request.path == '/api/v1/teacher_list':
+        api = APITeacher()
+    if request.path == '/api/v1/subject_list':
+        api = APISubject()
+    if request.path == '/api/v1/group_list':
+        api = APIGroup()      
     
     return api.as_view()(request)
 
