@@ -21,4 +21,5 @@ urlpatterns = [
     path('api/v1/teacher_list', views.auth_check),
     path('api/v1/subject_list', views.auth_check),
     path('api/v1/group_list', views.auth_check),
+    path('api/v1/user_list', views.auth_check),
 ]   

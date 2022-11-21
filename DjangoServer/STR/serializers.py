@@ -5,7 +5,12 @@ from rest_framework import serializers
 # from rest_framework.renderers import JSONRenderer
 # import io
 
-from .models import Attendance, Schedule, Teacher_Subject, Criterion, Subject_Group, Grade, Teacher, Subject, Group
+from .models import Attendance, Schedule, Teacher_Subject, Criterion, Subject_Group, Grade, Teacher, Subject, Group, User
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = '__all__'
 
 class GroupSerializer(serializers.ModelSerializer):
     class Meta:
