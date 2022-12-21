@@ -10,6 +10,12 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
+from django.views.decorators.csrf import csrf_exempt
+
+import json
+
+from django.contrib.auth import authenticate, login
+from django.http import JsonResponse
 
 from .tokens import account_activation_token
 from django.core.mail import EmailMessage
@@ -33,6 +39,7 @@ from .api import *
 
 
 def auth_check(request):
+    print(request)
     # API без авторизации - так делать не хоорошо, айаййай...
     # if not request.user.is_authenticated:
     #     return redirect('auth/login/')
@@ -62,6 +69,7 @@ def auth_check(request):
     return api.as_view()(request)
 
 def str(request):
+    print(request)
     if not request.user.is_authenticated:
         return redirect('registration')
     if not request.user.is_student:
@@ -124,6 +132,7 @@ def str(request):
     return render(request, 'STR/str.html', context)
 
 def home(request):
+    print(request)
     if not request.user.is_authenticated:
         return redirect('registration')
 
@@ -453,11 +462,12 @@ def home(request):
     currTeacher = None
     return render(request, 'STR/home.html', context)
 
+@csrf_exempt
 def registration(request):
+    print(request)
     if request.user.is_authenticated:
         return redirect('home')
 
-    # error = ''
     if request.method == 'POST' and 'login_button' in request.POST:
         login_form = LoginForm(request.POST)
         if login_form.is_valid():
@@ -506,6 +516,21 @@ def registration(request):
     elif request.method == 'POST' and 'button_logout' in request.POST:
         logout(request)
         return redirect('registration')
+    elif request.method == 'POST':
+        # Parse the JSON payload
+        data = json.loads(request.body)
+        username = data['email']
+        password = data['password']
+
+        # Authenticate the user
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            # Log the user in
+            login(request, user)
+            return JsonResponse({'success': True}, status=200)
+        else:
+            return JsonResponse({'success': False, 'error': 'Invalid login credentials'})
 
     login_form = LoginForm()
     form = RegistrationForm()
